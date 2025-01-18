@@ -1,8 +1,10 @@
-import React from 'react';
+
+import MealsCategory from '../../Components/MealsCategory';
 
 const Home = () => {
         return (
-                <div>
+                <div className=''>
+                <MealsCategory></MealsCategory>
                         
                 </div>
         );

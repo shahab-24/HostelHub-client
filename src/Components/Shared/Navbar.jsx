@@ -7,17 +7,20 @@ const Navbar = () => {
         <NavLink to="/">Home</NavLink>
       </li>
       <li>
-        <NavLink to="/about">About</NavLink>
+        <NavLink to="/meals">Meals</NavLink>
       </li>
       <li>
-        <NavLink to="/contact">Contact</NavLink>
+        <NavLink to="/upcoming-meals">Upcoming Meals</NavLink>
+      </li>
+      <li>
+        <NavLink to="/join-us">Join Us</NavLink>
       </li>
     </>
   );
 
   return (
     <div className="bg-base-100">
-      <div className="navbar px-4 py-3 lg:px-16">
+      <div className="navbar px-4 py-3 lg:px-16 font-roboto">
         {/* Navbar Start */}
         <div className="navbar-start">
           <div className="dropdown">
@@ -49,7 +52,7 @@ const Navbar = () => {
               {links}
             </ul>
           </div>
-          <a className="btn btn-ghost text-xl">daisyUI</a>
+          <a className="btn btn-ghost text-xl font-poppins">HostelHub</a>
         </div>
 
         {/* Navbar Center */}
@@ -110,16 +113,16 @@ const Navbar = () => {
             </div>
             <ul
               tabIndex={0}
-              className="menu menu-sm dropdown-content mt-3 z-[1] w-52 bg-base-100 rounded-box shadow"
+              className="menu menu-sm dropdown-content mt-3 z-[1] w-32 bg-base-100 rounded-box shadow"
             >
               <li>
                 <a className="justify-between">
-                  Profile
-                  <span className="badge">New</span>
+                  UserName
+                  {/* <span className="badge">New</span> */}
                 </a>
               </li>
               <li>
-                <a>Settings</a>
+                <a>Dashboard</a>
               </li>
               <li>
                 <a>Logout</a>

@@ -10,8 +10,8 @@ import {
   signOut,
   updateProfile,
 } from 'firebase/auth'
-import { app } from '../firebase/firebase.config'
-import axios from 'axios'
+import { app } from '../firebase/firebase.config.js'
+// import axios from 'axios'
 
 // eslint-disable-next-line react-refresh/only-export-components
 export const AuthContext = createContext(null)
