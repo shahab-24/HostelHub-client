@@ -8,6 +8,7 @@ import SignUp from "../Pages/Signup/SignUp";
 import Login from "../Pages/Login/Login";
 import MealsPage from "../Pages/MealsPage";
 import UpcomingMeals from "../Pages/UpcomingMeals";
+import DashboardLayout from "../Layouts/DashboardLayout";
 
     export  const router = createBrowserRouter([
         {
@@ -39,5 +40,16 @@ import UpcomingMeals from "../Pages/UpcomingMeals";
         {
                 path: '/login',
                 element: <Login></Login>
+        },
+        {
+                path: '/dashboard',
+                element: <DashboardLayout></DashboardLayout>,
+//                         children:[
+//                                 {
+// path:'/'
+//                                 }
+//                         ]
+                
         }
+
       ]);
