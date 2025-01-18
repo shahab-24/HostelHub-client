@@ -1,28 +1,27 @@
+import { Outlet } from "react-router-dom";
+
 const DashboardLayout = () => {
         return (
-          <div className="min-h-screen flex flex-col">
+          <div className="flex min-h-screen">
             {/* Sidebar */}
-            <nav className="bg-gray-800 text-white flex items-center px-6 py-4">
-              <span className="text-lg font-bold">Dashboard</span>
-              <div className="ml-auto flex space-x-4">
-                <button className="btn btn-sm">Home</button>
-                <button className="btn btn-sm">Meals</button>
-                <button className="btn btn-sm">Profile</button>
-              </div>
-            </nav>
-            
+            <aside className="bg-gray-800 text-white w-64 p-4">
+              <h2 className="text-2xl font-bold mb-4">User Dashboard</h2>
+              <nav>
+                <ul className="space-y-2">
+                  <li><a href="#" className="block py-2 px-4 hover:bg-gray-700 rounded">Profile</a></li>
+                  <li><a href="#" className="block py-2 px-4 hover:bg-gray-700 rounded">Manage Users</a></li>
+                  <li><a href="#" className="block py-2 px-4 hover:bg-gray-700 rounded">Meals</a></li>
+                </ul>
+              </nav>
+            </aside>
+      
             {/* Main Content */}
             <main className="flex-1 p-6 bg-gray-100">
-              <h2 className="text-xl font-bold">Welcome to the Dashboard</h2>
-              <div className="mt-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <div className="bg-white shadow rounded-lg p-6">Card 1</div>
-                <div className="bg-white shadow rounded-lg p-6">Card 2</div>
-                <div className="bg-white shadow rounded-lg p-6">Card 3</div>
-              </div>
+              <h2 className="text-xl font-bold">Dashboard Content</h2>
+              <div className="mt-6 bg-white shadow rounded-lg p-6">Main content goes here.</div>
+              <Outlet></Outlet>
             </main>
           </div>
         );
       };
-
-      export default DashboardLayout;
-      
+export default DashboardLayout;      
