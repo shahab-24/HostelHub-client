@@ -6,20 +6,23 @@ import { RouterProvider } from "react-router-dom";
 import { router } from "./routes/Routes.jsx";
 import AuthProvider from "./Providers/AuthProvider.jsx";
 // import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-// import { Toaster } from "react-hot-toast";
+
 // import { HelmetProvider } from "react-helmet-async";
+
+import { Toaster } from "react-hot-toast";
 
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <AuthProvider>
-      {/* <HelmetProvider>
-        <Toaster>
-          <QueryClientProvider client={QueryClient}> */}
+      {/* <HelmetProvider> */}
+        {/* <ToastContainer> */}
+          {/* <QueryClientProvider client={QueryClient}> */}
             <RouterProvider router={router} />
-          {/* </QueryClientProvider>
-        </Toaster>
-      </HelmetProvider> */}
+            <Toaster position='top-right' reverseOrder={false} />
+          {/* </QueryClientProvider> */}
+        {/* </ToastContainer> */}
+      {/* </HelmetProvider> */}
     </AuthProvider>
   </StrictMode>
 );

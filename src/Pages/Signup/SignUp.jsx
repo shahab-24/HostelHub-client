@@ -1,11 +1,13 @@
 import Lottie from "lottie-react";
 import lottieLoginData from "../../assets/signup.json";
 import toast from "react-hot-toast";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
 import { FcGoogle } from "react-icons/fc";
 import { useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+
+// import axios from "axios";
 
 const SignUp = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -18,11 +20,26 @@ const SignUp = () => {
     const name = form.name.value;
     const email = form.email.value;
     const password = form.password.value;
+    console.log("hello from sign up", name, email, password);
+
+    const passwordRegex =
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/;
+
+    if (!passwordRegex.test(password)) {
+      toast.error(
+        "Password must be at least 6 characters, include uppercase, lowercase, number, and a special character."
+      );
+      return;
+    }
 
     try {
       const result = await createUser(email, password);
+      console.log("user created", result);
+
       await updateUserProfile(name);
+
       console.log(result);
+      form.reset();
       navigate("/");
       toast.success("Signup Successful");
     } catch (err) {
@@ -56,12 +73,17 @@ const SignUp = () => {
       {/* Signup Form */}
       <div className="w-full lg:w-1/3">
         <div className="text-center mb-6">
-          <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">Sign Up Now!</h1>
+          <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 font-poppins">
+            Sign Up Now!
+          </h1>
         </div>
         <form onSubmit={handleSubmit} className="space-y-6">
           <div className="space-y-4">
             <div>
-              <label htmlFor="name" className="block text-sm font-medium text-gray-700">
+              <label
+                htmlFor="name"
+                className="block text-sm font-medium text-gray-700"
+              >
                 Name
               </label>
               <input
@@ -74,8 +96,11 @@ const SignUp = () => {
               />
             </div>
             <div>
-              <label htmlFor="email" className="block text-sm font-medium text-gray-700">
-                Email 
+              <label
+                htmlFor="email"
+                className="block text-sm font-medium text-gray-700"
+              >
+                Email
               </label>
               <input
                 type="email"
@@ -87,7 +112,10 @@ const SignUp = () => {
               />
             </div>
             <div className="relative">
-              <label htmlFor="password" className="block text-sm font-medium text-gray-700">
+              <label
+                htmlFor="password"
+                className="block text-sm font-medium text-gray-700"
+              >
                 Password
               </label>
               <input
@@ -109,13 +137,17 @@ const SignUp = () => {
           </div>
           <button
             type="submit"
-            className="w-full py-3 bg-lime-500 text-white rounded-md font-medium hover:bg-lime-600 transition duration-200"
+            className="btn btn-outline w-full py-3 bg-lime-500 text-white rounded-md font-medium hover:bg-lime-600 transition duration-200"
           >
             Sign Up
           </button>
         </form>
+        <p className="text-center my-2">Already Sing up ? please <Link to="/login" className="text-lime-500 hover:underline">Login</Link> </p>
         <div className="flex items-center my-4">
+        
           <div className="flex-grow border-t border-gray-300"></div>
+          
+          
           <p className="mx-4 text-sm text-gray-500">or</p>
           <div className="flex-grow border-t border-gray-300"></div>
         </div>

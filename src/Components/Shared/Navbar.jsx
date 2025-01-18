@@ -1,7 +1,9 @@
 import { NavLink } from "react-router-dom";
 import img from "../../assets/logo2.webp";
+import useAuth from "../../hooks/useAuth";
 
 const Navbar = () => {
+        const {user, logOut} = useAuth()
   const links = (
     <>
       <li>
@@ -14,7 +16,7 @@ const Navbar = () => {
         <NavLink to="/upcoming-meals">Upcoming Meals</NavLink>
       </li>
       <li>
-        <NavLink to="/join-us">Join Us</NavLink>
+        <NavLink to="/signup">Join Us</NavLink>
       </li>
     </>
   );
@@ -119,7 +121,7 @@ const Navbar = () => {
               <div className="w-10 rounded-full">
                 <img
                   alt="User Avatar"
-                  src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
+                  src={user?.photoURL || 'user Photo'}
                 />
               </div>
             </div>
@@ -129,7 +131,7 @@ const Navbar = () => {
             >
               <li>
                 <a className="justify-between">
-                  UserName
+                 {user?.displayName || 'user name'}
                   {/* <span className="badge">New</span> */}
                 </a>
               </li>
@@ -137,7 +139,7 @@ const Navbar = () => {
                 <a>Dashboard</a>
               </li>
               <li>
-                <a>Logout</a>
+                <button onClick={logOut} className="btn btn-sm">Logout</button>
               </li>
             </ul>
           </div>
