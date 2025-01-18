@@ -7,6 +7,7 @@ import MealsPage from "../Pages/MealsPage";
 import UpcomingMeals from "../Pages/UpcomingMeals";
 import DashboardLayout from "../Layouts/DashboardLayout";
 import UserDashboard from "../Pages/UserDashboard";
+import AdminDashboard from "../Pages/Dashboard/AdminDashboard";
 
 export const router = createBrowserRouter([
   {
@@ -43,6 +44,10 @@ export const router = createBrowserRouter([
       {
         path: "user-dashboard",
         element: <UserDashboard></UserDashboard>,
+      },
+      {
+        path: "admin-dashboard",
+        element: <AdminDashboard></AdminDashboard>,
       },
     ],
   },
