@@ -4,8 +4,11 @@ import useAuth from '../../hooks/useAuth';
 import toast from 'react-hot-toast';
 import Lottie from 'lottie-react';
 import lottieLoginData from '../../assets/login.json';
+import { useState } from "react";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 const Login = () => {
+        const [showPassword, setShowPassword] = useState(false);
   const { signIn, signInWithGoogle, loading, user } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
@@ -39,6 +42,9 @@ const Login = () => {
       toast.error(err?.message);
     }
   };
+  const handleShowPassword = () => {
+        setShowPassword(!showPassword);
+      };
 
   return (
     <div className="flex justify-center items-center min-h-screen bg-white px-4 sm:px-6 lg:px-8">
@@ -61,7 +67,7 @@ const Login = () => {
             <div className="space-y-4">
               <div>
                 <label htmlFor="email" className="block text-sm font-medium text-gray-700">
-                  Email address
+                  Email
                 </label>
                 <input
                   type="email"
@@ -72,19 +78,26 @@ const Login = () => {
                   className="w-full px-4 py-2 border rounded-md border-gray-300 focus:ring-lime-500 focus:border-lime-500 text-gray-900"
                 />
               </div>
-              <div>
-                <label htmlFor="password" className="block text-sm font-medium text-gray-700">
-                  Password
-                </label>
-                <input
-                  type="password"
-                  name="password"
-                  id="password"
-                  required
-                  placeholder="Enter your password"
-                  className="w-full px-4 py-2 border rounded-md border-gray-300 focus:ring-lime-500 focus:border-lime-500 text-gray-900"
-                />
-              </div>
+              <div className="relative">
+              <label htmlFor="password" className="block text-sm font-medium text-gray-700">
+                Password
+              </label>
+              <input
+                type={showPassword ? "text" : "password"}
+                name="password"
+                id="password"
+                placeholder="Enter your password"
+                className="w-full px-4 py-2 border rounded-md border-gray-300 focus:ring-lime-500 focus:border-lime-500 text-gray-900"
+                required
+              />
+              <button
+                type="button"
+                onClick={handleShowPassword}
+                className="absolute inset-y-0 right-3 top-5 flex items-center text-gray-600"
+              >
+                {showPassword ? <FaEyeSlash /> : <FaEye />}
+              </button>
+            </div>
             </div>
             <button
               type="submit"
