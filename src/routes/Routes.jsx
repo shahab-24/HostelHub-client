@@ -6,14 +6,15 @@ import Login from "../Pages/Login/Login";
 import MealsPage from "../Pages/MealsPage";
 import UpcomingMeals from "../Pages/UpcomingMeals";
 import DashboardLayout from "../Layouts/DashboardLayout";
-import UserDashboard from "../Pages/UserDashboard";
+
 import AdminDashboard from "../Pages/Dashboard/AdminDashboard";
+import UserDashboard from "../Pages/Dashboard/UserDashboard";
 
 export const router = createBrowserRouter([
   {
     path: "/",
     element: <MainLayout></MainLayout>,
-    errorElement: <h3>Error, page not found</h3>,
+    errorElement: <h3>Error, page not found</h3>,//to do error page
     children: [
       {
         path: "/",
@@ -42,11 +43,11 @@ export const router = createBrowserRouter([
     element: <DashboardLayout></DashboardLayout>,
     children: [
       {
-        path: "user-dashboard",
+        path: "user",
         element: <UserDashboard></UserDashboard>,
       },
       {
-        path: "admin-dashboard",
+        path: "admin",
         element: <AdminDashboard></AdminDashboard>,
       },
     ],
