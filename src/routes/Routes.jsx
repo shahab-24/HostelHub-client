@@ -22,7 +22,7 @@ export const router = createBrowserRouter([
         element: <Home></Home>,
       },
       {
-        path: "meals-page",
+        path: "meals",
         element: <MealsPage></MealsPage>,
       },
       {
@@ -51,6 +51,7 @@ export const router = createBrowserRouter([
         path: "admin",
         element: <AdminDashboard></AdminDashboard>,
       },
+     
       {
         path: "admin/add-meals",
         element: <MealForm></MealForm>,

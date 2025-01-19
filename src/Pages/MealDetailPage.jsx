@@ -1,7 +1,24 @@
 import React from "react";
 import { motion } from "framer-motion";
+import Loader from "../Components/Shared/Loader";
+import { useQuery } from "@tanstack/react-query";
+import { useParams } from "react-router-dom";
 
 const MealDetailPage = () => {
+
+        const { id } = useParams();
+        const { data: meal=[], isLoading, isError, error } = useQuery({
+          queryKey: ["meal", id],
+          queryFn: () => fetchMealById(id),
+        });
+      
+        if (isLoading) {
+          return <Loader></Loader>
+        }
+      
+        if (isError) {
+          return <p className="text-center text-red-500">{error.message}</p>;
+        }
   return (
     <section className="py-10 px-4 md:px-10 bg-gray-50">
       <div className="max-w-6xl mx-auto bg-white rounded-lg shadow-lg overflow-hidden">
