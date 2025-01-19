@@ -9,6 +9,7 @@ import DashboardLayout from "../Layouts/DashboardLayout";
 
 import AdminDashboard from "../Pages/Dashboard/AdminDashboard";
 import UserDashboard from "../Pages/Dashboard/UserDashboard";
+import MealForm from "../Components/MealForm";
 
 export const router = createBrowserRouter([
   {
@@ -49,6 +50,10 @@ export const router = createBrowserRouter([
       {
         path: "admin",
         element: <AdminDashboard></AdminDashboard>,
+      },
+      {
+        path: "admin/add-meals",
+        element: <MealForm></MealForm>,
       },
     ],
   },

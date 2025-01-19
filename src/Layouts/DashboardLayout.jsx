@@ -1,4 +1,4 @@
-import { Outlet } from "react-router-dom";
+import { NavLink, Outlet } from "react-router-dom";
 
 const DashboardLayout = () => {
         return (
@@ -10,7 +10,7 @@ const DashboardLayout = () => {
                 <ul className="space-y-2">
                   <li><a href="#" className="block py-2 px-4 hover:bg-gray-700 rounded">Profile</a></li>
                   <li><a href="#" className="block py-2 px-4 hover:bg-gray-700 rounded">Manage Users</a></li>
-                  <li><a href="#" className="block py-2 px-4 hover:bg-gray-700 rounded">Meals</a></li>
+                  <li><NavLink to='admin/add-meals' className="block py-2 px-4 hover:bg-gray-700 rounded">Add Meals</NavLink></li>
                 </ul>
               </nav>
             </aside>
