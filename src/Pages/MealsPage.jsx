@@ -1,28 +1,20 @@
-import React from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
-import axios from "axios";
 import Loader from "../Components/Shared/Loader";
 import useAxiosPublic from "../hooks/useAxiosPublic";
 
-// const fetchMeals = async () => {
-//   const response = await fetch("https://your-backend-api.com/meals"); // Replace with your API URL
-//   if (!response.ok) throw new Error("Failed to fetch meals");
-//   return response.json();
-// };
-
 const MealsPage = () => {
-        const axiosPublic = useAxiosPublic()
-  const { data: meals =[], isLoading, isError, error } = useQuery({
+  const axiosPublic = useAxiosPublic();
+  const { data: meals = [], isLoading, isError, error } = useQuery({
     queryKey: ["meals"],
     queryFn: async () => {
-        const {data} = await axiosPublic('/api/meals')
-        return data
-    }
+      const { data } = await axiosPublic("/api/meals");
+      return data;
+    },
   });
 
   if (isLoading) {
-    return <Loader></Loader>
+    return <Loader />;
   }
 
   if (isError) {
@@ -67,8 +59,9 @@ const MealsPage = () => {
 
               {/* Details Button */}
               <Link
-                to={`/meals/${meal._id}`}
+                to={`/api/meals/${meal._id}`} // Correct dynamic route for Meal Details
                 className="block w-full bg-blue-500 text-white text-center py-2 rounded-md hover:bg-blue-600 transition"
+                title={`View details for ${meal.title}`}
               >
                 View Details
               </Link>

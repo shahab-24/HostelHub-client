@@ -1,26 +1,32 @@
-import React from "react";
+
 import { motion } from "framer-motion";
 import Loader from "../Components/Shared/Loader";
 import { useQuery } from "@tanstack/react-query";
 import { useParams } from "react-router-dom";
+import useAxiosPublic from "../hooks/useAxiosPublic";
 
 const MealDetailPage = () => {
+  const axiosPublic = useAxiosPublic();
+  const { id } = useParams();
 
-        const { id } = useParams();
-        const { data: meal=[], isLoading, isError, error } = useQuery({
-          queryKey: ["meal", id],
-          queryFn: () => fetchMealById(id),
-        });
-      
-        if (isLoading) {
-          return <Loader></Loader>
-        }
-      
-        if (isError) {
-          return <p className="text-center text-red-500">{error.message}</p>;
-        }
+  const { data: meal = {}, isLoading, isError, error } = useQuery({
+    queryKey: ["meal", id],
+    queryFn: async () => {
+      const { data } = await axiosPublic(`/api/meals/${id}`);
+      return data;
+    },
+  });
+
+  if (isLoading) {
+    return <Loader />;
+  }
+
+  if (isError) {
+    return <p className="text-center text-red-500">{error.message}</p>;
+  }
+
   return (
-    <section className="py-10 px-4 md:px-10 bg-gray-50">
+    <section className="py-10 px-4 md:px-10 bg-gradient-to-r from-gray-50 to-gray-100">
       <div className="max-w-6xl mx-auto bg-white rounded-lg shadow-lg overflow-hidden">
         {/* Meal Image */}
         <motion.div
@@ -30,49 +36,46 @@ const MealDetailPage = () => {
           transition={{ duration: 0.5 }}
         >
           <img
-            src="https://via.placeholder.com/800x400"
-            alt="Meal"
+            src={meal?.image}
+            alt={meal?.title || "Meal Image"}
             className="w-full h-full object-cover"
           />
         </motion.div>
 
         <div className="p-6 md:p-10">
           {/* Meal Details */}
-          <div className="flex flex-col md:flex-row md:justify-between md:items-center">
+          <div className="flex flex-col md:flex-row md:justify-between md:items-center mb-6">
             <div>
-              <h2 className="text-2xl font-bold text-blue-600 mb-2">
-                Delicious Meal Name
+              <h2 className="text-3xl font-bold text-blue-600 mb-2">
+                {meal?.title}
               </h2>
-              <p className="text-gray-500 mb-4">By: Distributor Name</p>
+              <p className="text-gray-500">
+                By: {meal?.distributorName || "N/A"}
+              </p>
             </div>
-            <p className="text-gray-400">Posted on: Jan 17, 2025</p>
+            <p className="text-gray-400">Posted on: {new Date(meal?.post_time).toLocaleDateString()}</p>
           </div>
 
-          <p className="text-gray-700 mb-6">
-            Description: This is a placeholder description for the meal. It will
-            describe the taste, ingredients, and more details about the meal.
-          </p>
+          <p className="text-gray-700 mb-6">{meal?.description}</p>
 
           {/* Ingredients */}
           <div className="mb-6">
             <h3 className="text-xl font-semibold mb-3">Ingredients:</h3>
             <ul className="list-disc list-inside text-gray-600">
-              <li>Ingredient 1</li>
-              <li>Ingredient 2</li>
-              <li>Ingredient 3</li>
+              {meal?.ingredients?.split(",").map((ingredient, index) => (
+                <li key={index}>{ingredient.trim()}</li>
+              ))}
             </ul>
           </div>
 
           {/* Action Buttons */}
           <div className="flex flex-wrap gap-4 items-center mb-6">
-            {/* Like Button */}
             <button
               className="flex items-center bg-blue-500 text-white py-2 px-4 rounded-lg shadow-md hover:bg-blue-600 transition"
-              onClick={() => alert("Like button clicked!")}
+              onClick={() => alert("Liked this meal!")}
             >
-              👍 Like <span className="ml-2">(100)</span>
+              👍 Like <span className="ml-2">({meal?.likes})</span>
             </button>
-            {/* Meal Request Button */}
             <button
               className="flex items-center bg-green-500 text-white py-2 px-4 rounded-lg shadow-md hover:bg-green-600 transition"
               onClick={() => alert("Meal requested!")}
@@ -83,7 +86,8 @@ const MealDetailPage = () => {
 
           {/* Review Section */}
           <div className="border-t pt-6">
-            <h3 className="text-xl font-semibold mb-4">Reviews:</h3>
+            <h3 className="text-2xl font-semibold mb-4">Reviews</h3>
+
             {/* Review Form */}
             <div className="mb-6">
               <textarea
@@ -95,19 +99,21 @@ const MealDetailPage = () => {
                 Submit Review
               </button>
             </div>
+
             {/* Reviews List */}
-            <div className="space-y-4">
-              <div className="bg-gray-100 p-4 rounded-md shadow-sm">
-                <p className="text-gray-700">
-                  <strong>User 1:</strong> This meal was amazing! I loved it.
-                </p>
+            {meal?.reviews_count > 0 ? (
+              <div className="space-y-4">
+                {meal?.reviews?.map((review, index) => (
+                  <div key={index} className="bg-gray-100 p-4 rounded-md shadow-sm">
+                    <p className="text-gray-700">
+                      <strong>{review?.user}:</strong> {review?.comment}
+                    </p>
+                  </div>
+                ))}
               </div>
-              <div className="bg-gray-100 p-4 rounded-md shadow-sm">
-                <p className="text-gray-700">
-                  <strong>User 2:</strong> Great taste and fresh ingredients!
-                </p>
-              </div>
-            </div>
+            ) : (
+              <p className="text-gray-500">No reviews yet. Be the first to review this meal!</p>
+            )}
           </div>
         </div>
       </div>
