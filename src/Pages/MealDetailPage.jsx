@@ -1,21 +1,75 @@
-
 import { motion } from "framer-motion";
 import Loader from "../Components/Shared/Loader";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useParams } from "react-router-dom";
 import useAxiosPublic from "../hooks/useAxiosPublic";
+import useAxiosSecure from "../hooks/useAxiosSecure";
+import toast from "react-hot-toast";
+import useAuth from "../hooks/useAuth";
+import { useState } from "react";
 
 const MealDetailPage = () => {
+        const [reviewText, setReviewText] = useState("")
   const axiosPublic = useAxiosPublic();
+  const axiosSecure = useAxiosSecure();
+  const queryClient = useQueryClient()
   const { id } = useParams();
+  const {user} = useAuth()
 
-  const { data: meal = {}, isLoading, isError, error } = useQuery({
+  const {
+    data: meal = {},
+    isLoading,
+    isError,
+    error,
+    refetch
+  } = useQuery({
     queryKey: ["meal", id],
     queryFn: async () => {
       const { data } = await axiosPublic(`/api/meals/${id}`);
       return data;
     },
   });
+
+
+  const { data: reviews } = useQuery({
+        queryKey: ["reviews", id],
+        queryFn: async () => {
+          const response = await axiosPublic(`/api/reviews/${id}`);
+          return response.data;
+        },
+      });
+  //   like function =======================
+ // Like function with validation
+const handleLike = useMutation({
+        mutationFn: async () => {
+          if (meal?.likedBy?.includes(user?.email)) {
+            throw new Error("You have already liked this meal.");
+          }
+          await axiosSecure.patch(`/api/meals/${id}/like`);
+        },
+        onSuccess: () => {
+          toast.success("Liked the meal successfully!");
+          queryClient.invalidateQueries(["meal", id]);
+          refetch()
+        },
+        onError: (error) => {
+          toast.error(error.response?.data?.message || error.message || "Failed to like the meal.");
+        },
+      });
+
+
+//       review==============
+const handleAddReview = useMutation(
+        { mutationFn: async () => {
+                await axiosSecure.post('/api/reviews', { mealId: id, comment: reviewText, rating:5})
+        },
+        onSuccess:  () => {
+                toast.success("Review added!");
+                queryClient.invalidateQueries(["reviews", id]);
+        }
+}
+)
+      
 
   if (isLoading) {
     return <Loader />;
@@ -53,7 +107,9 @@ const MealDetailPage = () => {
                 By: {meal?.distributorName || "N/A"}
               </p>
             </div>
-            <p className="text-gray-400">Posted on: {new Date(meal?.post_time).toLocaleDateString()}</p>
+            <p className="text-gray-400">
+              Posted on: {new Date(meal?.post_time).toLocaleDateString()}
+            </p>
           </div>
 
           <p className="text-gray-700 mb-6">{meal?.description}</p>
@@ -70,12 +126,18 @@ const MealDetailPage = () => {
 
           {/* Action Buttons */}
           <div className="flex flex-wrap gap-4 items-center mb-6">
-            <button
-              className="flex items-center bg-blue-500 text-white py-2 px-4 rounded-lg shadow-md hover:bg-blue-600 transition"
-              onClick={() => alert("Liked this meal!")}
-            >
-              👍 Like <span className="ml-2">({meal?.likes})</span>
-            </button>
+          <button
+  className={`flex items-center ${
+    meal?.likedBy?.includes(user?.email)
+      ? "bg-gray-400 cursor-not-allowed"
+      : "bg-blue-500 hover:bg-blue-600"
+  } text-white py-2 px-4 rounded-lg shadow-md transition`}
+  onClick={() => handleLike.mutate()}
+  disabled={meal?.likedBy?.includes(user?.email)}
+>
+  👍 Like <span className="ml-2">({meal?.likes})</span>
+</button>
+
             <button
               className="flex items-center bg-green-500 text-white py-2 px-4 rounded-lg shadow-md hover:bg-green-600 transition"
               onClick={() => alert("Meal requested!")}
@@ -90,12 +152,14 @@ const MealDetailPage = () => {
 
             {/* Review Form */}
             <div className="mb-6">
-              <textarea
+              <textarea 
+              value={reviewText}
+              onChange={(e) => {setReviewText(e.target.value)}}
                 className="w-full p-3 border rounded-md focus:outline-none focus:ring focus:ring-blue-300"
                 placeholder="Write your review..."
                 rows="3"
               ></textarea>
-              <button className="mt-2 bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 transition">
+              <button onClick={()=>handleAddReview.mutate()} className="mt-2 bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 transition">
                 Submit Review
               </button>
             </div>
@@ -103,8 +167,11 @@ const MealDetailPage = () => {
             {/* Reviews List */}
             {meal?.reviews_count > 0 ? (
               <div className="space-y-4">
-                {meal?.reviews?.map((review, index) => (
-                  <div key={index} className="bg-gray-100 p-4 rounded-md shadow-sm">
+                {reviews?.map((review, index) => (
+                  <div
+                    key={index}
+                    className="bg-gray-100 p-4 rounded-md shadow-sm"
+                  >
                     <p className="text-gray-700">
                       <strong>{review?.user}:</strong> {review?.comment}
                     </p>
@@ -112,7 +179,9 @@ const MealDetailPage = () => {
                 ))}
               </div>
             ) : (
-              <p className="text-gray-500">No reviews yet. Be the first to review this meal!</p>
+              <p className="text-gray-500">
+                No reviews yet. Be the first to review this meal!
+              </p>
             )}
           </div>
         </div>
@@ -122,3 +191,5 @@ const MealDetailPage = () => {
 };
 
 export default MealDetailPage;
+
+

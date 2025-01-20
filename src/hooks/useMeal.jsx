@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 
-const useMenu = () => {
-	const [menu, setMenu] = useState([])
+const useMeal = () => {
+	const [meal, setMeal] = useState([])
 	const [loading, setLoading] = useState(true)
 
 	useEffect(() => {
@@ -9,13 +9,13 @@ const useMenu = () => {
 		.then(res => res.json())
 		.then(data =>{
 			
-			setMenu(data)
+			setMeal(data)
 			setLoading(false)
 		} )
 		
 	},[])
-	return [menu, loading]
+	return [meal, loading]
 
 }
 
-export default useMenu
+export default useMeal

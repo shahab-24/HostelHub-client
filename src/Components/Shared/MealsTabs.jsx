@@ -1,6 +1,6 @@
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import "react-tabs/style/react-tabs.css";
-import useMenu from "../../hooks/useMenu";
+import useMeal from "../../hooks/useMeal";
 import MealsCategoryTab from "../MealsCategoryTab";
 
 const MealsTabs = () => {
@@ -12,14 +12,14 @@ const MealsTabs = () => {
     "Snacks",
     "All Meals",
   ];
-  const [menu] = useMenu();
+  const [meal] = useMeal();
 
-  const breakfast = menu.filter((item) => item.category === "breakfast");
-  const lunch = menu.filter((item) => item.category === "lunch");
-  const dinner = menu.filter((item) => item.category === "dinner");
-  const snacks = menu.filter((item) => item.category === "snacks");
-  const vegetarian = menu.filter((item) => item.category === "vegetarian");
-  const all_Meals = menu.filter((item) => item.category === "all Meals");
+  const breakfast = meal.filter((item) => item.category === "breakfast");
+  const lunch = meal.filter((item) => item.category === "lunch");
+  const dinner = meal.filter((item) => item.category === "dinner");
+  const snacks = meal.filter((item) => item.category === "snacks");
+  const vegetarian = meal.filter((item) => item.category === "vegetarian");
+  const all_Meals = meal.filter((item) => item.category === "all Meals");
 
   return (
     <div className="px-4 md:px-10 py-10 bg-gray-50">

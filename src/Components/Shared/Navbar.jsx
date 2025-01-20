@@ -25,7 +25,7 @@ const Navbar = () => {
   );
 
   return (
-    <div className="bg-base-100">
+    <div className="bg-base-200">
       <div className="navbar px-4 py-3 lg:px-16 font-roboto">
         {/* Navbar Start */}
         <div className="navbar-start">
