@@ -1,9 +1,9 @@
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import img from "../../assets/logo2.webp";
 import useAuth from "../../hooks/useAuth";
 
 const Navbar = () => {
-        const {user, logOut} = useAuth()
+  const { user, logOut } = useAuth();
   const links = (
     <>
       <li>
@@ -60,7 +60,11 @@ const Navbar = () => {
           </div>
 
           <div className="flex">
-            <img alt="User Avatar" src={img} className="w-10 rounded-lg hidden"/>
+            <img
+              alt="User Avatar"
+              src={img}
+              className="w-10 rounded-lg hidden"
+            />
 
             <a className="btn btn-ghost text-xl font-poppins">HostelHub</a>
           </div>
@@ -122,10 +126,7 @@ const Navbar = () => {
               className="btn btn-ghost btn-circle avatar"
             >
               <div className="w-10 rounded-full">
-                <img
-                  alt="User Avatar"
-                  src={user?.photoURL || 'user Photo'}
-                />
+                <img alt="User Avatar" src={user?.photoURL || "user Photo"} />
               </div>
             </div>
             <ul
@@ -134,15 +135,23 @@ const Navbar = () => {
             >
               <li>
                 <a className="justify-between">
-                 {user?.displayName || 'user name'}
+                  {user?.displayName || "user name"}
                   {/* <span className="badge">New</span> */}
                 </a>
               </li>
               <li>
-                <a>Dashboard</a>
+                <NavLink to="/dashboard">Dashboard</NavLink>
               </li>
               <li>
-                <button onClick={logOut} className="btn btn-sm">Logout</button>
+                {user?.email ? (
+                  <button onClick={logOut} className="btn btn-sm">
+                    Logout
+                  </button>
+                ) : (
+                  <Link to="/login">
+                    <button className="btn btn-sm">Login</button>
+                  </Link>
+                )}
               </li>
             </ul>
           </div>

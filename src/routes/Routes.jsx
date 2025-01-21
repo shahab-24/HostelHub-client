@@ -11,6 +11,9 @@ import AdminDashboard from "../Pages/Dashboard/AdminDashboard";
 import UserDashboard from "../Pages/Dashboard/UserDashboard";
 import MealForm from "../Components/MealForm";
 import MealDetailPage from "../Pages/MealDetailPage";
+import UserProfile from "../Components/UserProfile";
+import ManageUsers from "../Pages/ManageUsers";
+import PrivateRoute from "./PrivateRoute";
 
 export const router = createBrowserRouter([
   {
@@ -46,11 +49,19 @@ export const router = createBrowserRouter([
   },
   {
     path: "/dashboard",
-    element: <DashboardLayout></DashboardLayout>,
+    element: <PrivateRoute><DashboardLayout></DashboardLayout></PrivateRoute>,
     children: [
       {
         path: "user",
         element: <UserDashboard></UserDashboard>,
+      },
+      {
+        path: "user-profile",
+        element: <UserProfile></UserProfile>,
+      },
+      {
+        path: "admin/manage-users",
+        element: <ManageUsers></ManageUsers>,
       },
       {
         path: "admin",

@@ -1,0 +1,203 @@
+[
+        {
+          "category": "Breakfast",
+          "mealName": "Pancakes with Maple Syrup",
+          "image": "https://i.ibb.co.com/CsTddNX/pancake.jpg",
+          "distributor": "Morning Delights",
+          "description": "Fluffy pancakes served with pure maple syrup and butter.",
+          "ingredients": ["Flour", "Milk", "Eggs", "Maple Syrup", "Butter"],
+          "postTime": "2025-01-20T08:00:00Z",
+          "rating": 4.8,
+          "likes": 145,
+          "likeButton": true,
+          "mealRequestButton": true,
+          "reviews": [
+            {
+              "username": "foodie123",
+              "review": "Best pancakes I've ever had!",
+              "rating": 5
+            },
+            {
+              "username": "breakfastlover",
+              "review": "Loved the syrup quality.",
+              "rating": 4.5
+            }
+          ]
+        },
+        {
+          "category": "Breakfast",
+          "mealName": "Avocado Toast",
+          "image": "https://i.ibb.co.com/TH9GKZs/toast.jpg",
+          "distributor": "Healthy Bites",
+          "description": "Whole grain toast topped with fresh avocado and seasoning.",
+          "ingredients": ["Whole Grain Bread", "Avocado", "Salt", "Pepper", "Lemon Juice"],
+          "postTime": "2025-01-20T08:30:00Z",
+          "rating": 4.5,
+          "likes": 200,
+          "likeButton": true,
+          "mealRequestButton": true,
+          "reviews": [
+            {
+              "username": "veganlover",
+              "review": "So fresh and healthy!",
+              "rating": 5
+            },
+            {
+              "username": "toastfan",
+              "review": "Could use a bit more seasoning.",
+              "rating": 4
+            }
+          ]
+        },
+        {
+          "category": "Lunch",
+          "mealName": "Grilled Chicken Salad",
+          "image": "https://i.ibb.co.com/FHnYdjL/grilled.jpg",
+          "distributor": "Fresh Eats",
+          "description": "A healthy mix of grilled chicken, fresh greens, and vinaigrette.",
+          "ingredients": ["Chicken", "Lettuce", "Tomatoes", "Cucumber", "Vinaigrette"],
+          "postTime": "2025-01-20T12:00:00Z",
+          "rating": 4.7,
+          "likes": 180,
+          "likeButton": true,
+          "mealRequestButton": true,
+          "reviews": [
+            {
+              "username": "healthygirl",
+              "review": "Perfect lunch option!",
+              "rating": 5
+            },
+            {
+              "username": "fitnessfreak",
+              "review": "Loved the fresh veggies.",
+              "rating": 4.5
+            }
+          ]
+        },
+        {
+          "category": "Lunch",
+          "mealName": "Beef Stir Fry",
+          "image": "https://i.ibb.co.com/5kz8RQn/beef.jpg",
+          "distributor": "Asian Fusion",
+          "description": "Tender beef strips stir-fried with vegetables and soy sauce.",
+          "ingredients": ["Beef", "Broccoli", "Carrots", "Soy Sauce", "Garlic"],
+          "postTime": "2025-01-20T12:30:00Z",
+          "rating": 4.6,
+          "likes": 230,
+          "likeButton": true,
+          "mealRequestButton": true,
+          "reviews": [
+            {
+              "username": "foodexplorer",
+              "review": "Authentic taste and perfectly cooked.",
+              "rating": 5
+            },
+            {
+              "username": "meatlover",
+              "review": "Beef was tender and flavorful.",
+              "rating": 4
+            }
+          ]
+        },
+        {
+          "category": "Dinner",
+          "mealName": "Spaghetti Bolognese",
+          "image": "https://i.ibb.co.com/qpZcrH1/bolognes.jpg",
+          "distributor": "Italian Kitchen",
+          "description": "Classic Italian pasta dish with rich meat sauce.",
+          "ingredients": ["Spaghetti", "Ground Beef", "Tomato Sauce", "Onion", "Garlic"],
+          "postTime": "2025-01-20T19:00:00Z",
+          "rating": 4.9,
+          "likes": 300,
+          "likeButton": true,
+          "mealRequestButton": true,
+          "reviews": [
+            {
+              "username": "pastaqueen",
+              "review": "This dish never disappoints!",
+              "rating": 5
+            },
+            {
+              "username": "italianlover",
+              "review": "Loved the authentic flavors.",
+              "rating": 4.5
+            }
+          ]
+        },
+        {
+          "category": "Dinner",
+          "mealName": "Grilled Salmon",
+          "image": "https://i.ibb.co.com/KKc38sF/salmon.jpg",
+          "distributor": "Seafood Paradise",
+          "description": "Fresh salmon grilled to perfection with a side of asparagus.",
+          "ingredients": ["Salmon", "Asparagus", "Lemon", "Olive Oil", "Salt"],
+          "postTime": "2025-01-20T19:30:00Z",
+          "rating": 4.8,
+          "likes": 280,
+          "likeButton": true,
+          "mealRequestButton": true,
+          "reviews": [
+            {
+              "username": "seafoodfan",
+              "review": "Loved the freshness of the salmon.",
+              "rating": 5
+            },
+            {
+              "username": "healthychoice",
+              "review": "Perfectly grilled and seasoned.",
+              "rating": 4.5
+            }
+          ]
+        },
+        {
+          "category": "All Meals",
+          "mealName": "Veggie Wrap",
+          "image": "https://i.ibb.co.com/MBL1ds8/vaggie.jpg",
+          "distributor": "Wrap & Roll",
+          "description": "A mix of fresh veggies and hummus in a whole wheat wrap.",
+          "ingredients": ["Tortilla", "Lettuce", "Carrot", "Cucumber", "Hummus"],
+          "postTime": "2025-01-20T10:00:00Z",
+          "rating": 4.4,
+          "likes": 120,
+          "likeButton": true,
+          "mealRequestButton": true,
+          "reviews": [
+            {
+              "username": "veggielover",
+              "review": "Light and delicious.",
+              "rating": 4
+            },
+            {
+              "username": "hummusfan",
+              "review": "Perfect wrap for anytime.",
+              "rating": 4.5
+            }
+          ]
+        },
+        {
+          "category": "All Meals",
+          "mealName": "Fruit Salad",
+          "image": "https://i.ibb.co.com/5Wn8jpX/fruit.jpg",
+          "distributor": "Fresh Bowls",
+          "description": "A mix of fresh seasonal fruits served with honey drizzle.",
+          "ingredients": ["Apple", "Banana", "Grapes", "Orange", "Honey"],
+          "postTime": "2025-01-20T15:00:00Z",
+          "rating": 4.3,
+          "likes": 100,
+          "likeButton": true,
+          "mealRequestButton": true,
+          "reviews": [
+            {
+              "username": "fruitfan",
+              "review": "Refreshing and healthy.",
+              "rating": 4.5
+            },
+            {
+              "username": "healthylife",
+              "review": "Fruits were fresh and juicy.",
+              "rating": 4
+            }
+          ]
+        }
+      ]
+      

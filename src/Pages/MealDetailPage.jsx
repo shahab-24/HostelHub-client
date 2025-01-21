@@ -7,9 +7,14 @@ import useAxiosSecure from "../hooks/useAxiosSecure";
 import toast from "react-hot-toast";
 import useAuth from "../hooks/useAuth";
 import { useState } from "react";
+import { Helmet } from "react-helmet-async";
 
 const MealDetailPage = () => {
         const [reviewText, setReviewText] = useState("")
+        const [editingReview, setEditingReview] = useState(null); // Holds the review being edited
+const [editText, setEditText] = useState(""); // Holds the updated review text
+const [editRating, setEditRating] = useState(5); // Holds the updated rating
+
   const axiosPublic = useAxiosPublic();
   const axiosSecure = useAxiosSecure();
   const queryClient = useQueryClient()
@@ -69,6 +74,36 @@ const handleAddReview = useMutation(
         }
 }
 )
+
+
+const editReview = useMutation({
+        mutationFn: async (updatedReview) => {
+          await axiosSecure.patch(`/api/reviews/${updatedReview.id}`, updatedReview);
+        },
+        onSuccess: () => {
+          toast.success("Review updated!");
+          queryClient.invalidateQueries(["reviews", id]); // Refresh reviews
+          setEditingReview(null); // Exit edit mode
+        },
+        onError: (error) => {
+          toast.error(error.response?.data?.message || "Failed to update review.");
+        },
+      });
+      
+
+const deleteReview = useMutation({
+        mutationFn: async (reviewId) => {
+          await axiosSecure.delete(`/api/reviews/${reviewId}`);
+        },
+        onSuccess: () => {
+          toast.success("Review deleted!");
+          queryClient.invalidateQueries(["reviews", id]); // Refresh reviews
+        },
+        onError: (error) => {
+          toast.error(error.response?.data?.message || "Failed to delete review.");
+        },
+      });
+      
       
 
   if (isLoading) {
@@ -81,6 +116,9 @@ const handleAddReview = useMutation(
 
   return (
     <section className="py-10 px-4 md:px-10 bg-gradient-to-r from-gray-50 to-gray-100">
+             <Helmet>
+                        <title>Meal Details | HostelHub</title>
+                 </Helmet>
       <div className="max-w-6xl mx-auto bg-white rounded-lg shadow-lg overflow-hidden">
         {/* Meal Image */}
         <motion.div
@@ -148,10 +186,91 @@ const handleAddReview = useMutation(
 
           {/* Review Section */}
           <div className="border-t pt-6">
-            <h3 className="text-2xl font-semibold mb-4">Reviews</h3>
+           
 
             {/* Review Form */}
             <div className="mb-6">
+            <div className="border-t pt-6">
+  <h3 className="text-2xl font-semibold mb-4">Reviews</h3>
+
+  {isLoading ? (
+    <p>Loading reviews...</p>
+  ) : reviews?.length > 0 ? (
+    reviews.map((review) => (
+      <div key={review._id} className="bg-gray-100 p-4 rounded-md shadow-sm mb-4">
+        {editingReview === review._id ? (
+          // Edit Mode
+          <div>
+            <textarea
+              value={editText}
+              onChange={(e) => setEditText(e.target.value)}
+              className="w-full p-2 border rounded mb-2"
+            />
+            <input
+              type="number"
+              value={editRating}
+              onChange={(e) => setEditRating(e.target.value)}
+              min={1}
+              max={5}
+              className="w-20 p-2 border rounded mb-2"
+            />
+            <div className="flex space-x-2">
+              <button
+                onClick={() =>
+                  editReview.mutate({ id: review._id, comment: editText, rating: editRating })
+                }
+                className="bg-green-500 text-white px-3 py-1 rounded hover:bg-green-600"
+              >
+                Save
+              </button>
+              <button
+                onClick={() => setEditingReview(null)}
+                className="bg-gray-500 text-white px-3 py-1 rounded hover:bg-gray-600"
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        ) : (
+          // View Mode
+          <div>
+            <p>
+              <strong>{review.email}:</strong> {review.comment}
+            </p>
+            <p>Rating: {review.rating}</p>
+            {review.email === user?.email && (
+              <div className="flex space-x-2 mt-2">
+                <button
+                  onClick={() => {
+                    setEditingReview(review._id);
+                    setEditText(review.comment);
+                    setEditRating(review.rating);
+                  }}
+                  className="bg-yellow-500 text-white px-3 py-1 rounded hover:bg-yellow-600"
+                >
+                  Edit
+                </button>
+                <button
+                  onClick={() => deleteReview.mutate(review._id)}
+                  className="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600"
+                >
+                  Delete
+                </button>
+              </div>
+            )}
+          </div>
+        )}
+      </div>
+    ))
+  ) : (
+    <p className="text-gray-500">No reviews yet. Be the first to review this meal!</p>
+  )}
+</div>
+
+
+
+
+
               <textarea 
               value={reviewText}
               onChange={(e) => {setReviewText(e.target.value)}}

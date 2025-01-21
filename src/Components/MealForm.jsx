@@ -1,4 +1,3 @@
-
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
@@ -10,16 +9,16 @@ import { useState } from "react";
 import { Helmet } from "react-helmet-async";
 
 const MealForm = () => {
-        const {user} = useAuth()
-        const axiosSecure = useAxiosSecure()
-        const [loading, setLoading] = useState(false)
-        const [uploadImagePreview, setUploadImagePreview] = useState()
+  const { user } = useAuth();
+  const axiosSecure = useAxiosSecure();
+  const [loading, setLoading] = useState(false);
+  const [uploadImagePreview, setUploadImagePreview] = useState();
   // Validation Schema
   const schema = yup.object().shape({
     title: yup.string().required("Meal title is required"),
     category: yup
       .string()
-      .oneOf(["Breakfast", "Lunch", "Dinner", "Snack"], "Invalid category")
+      .oneOf(["Breakfast", "Lunch", "Dinner", "All-meals", "Snack"], "Invalid category")
       .required("Category is required"),
     image: yup.mixed().required("Image is required"),
     ingredients: yup.string().required("Ingredients are required"),
@@ -49,14 +48,16 @@ const MealForm = () => {
 
   // Handle form submission
   const onSubmit = async (data) => {
-        setLoading(true)
+    setLoading(true);
     try {
       // Upload image to ImageBB
       const formData = new FormData();
       formData.append("image", data.image[0]);
 
       const imageResponse = await axios.post(
-        `https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_IMGBB_API_KEY}`,
+        `https://api.imgbb.com/1/upload?key=${
+          import.meta.env.VITE_IMGBB_API_KEY
+        }`,
         formData
       );
 
@@ -69,24 +70,21 @@ const MealForm = () => {
         post_time: new Date().toISOString(),
       };
 
-       await axiosSecure.post('/api/meals', mealData)
-        console.log("Meal Data:", data);
+      await axiosSecure.post("/api/meals", mealData);
+      console.log("Meal Data:", data);
       toast.success("Meal added successfully!");
-      reset()
-
+      reset();
     } catch (error) {
       console.error("Error adding meal:", error);
       toast.error("Failed to add meal. Please try again.");
-    }
-    finally{
-        setLoading(false)
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
-        
     <div className="min-h-screen flex items-center justify-center bg-gray-50">
-     <Helmet>
+      <Helmet>
         <title>Add Meals | Dashboard</title>
       </Helmet>
       <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-2xl">
@@ -123,6 +121,7 @@ const MealForm = () => {
               <option value="Breakfast">Breakfast</option>
               <option value="Lunch">Lunch</option>
               <option value="Dinner">Dinner</option>
+              <option value="All-meals">All Meals</option>
               <option value="Snack">Snack</option>
             </select>
             {errors.category && (
