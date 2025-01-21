@@ -32,12 +32,14 @@ const DashboardLayout = () => {
                 <li><NavLink to='/dashboard/admin/manage-users' className="block py-2 px-4 hover:bg-gray-700 rounded">Manage Users</NavLink></li>
 
                 <li><NavLink to='/dashboard/admin/add-meals' className="block py-2 px-4 hover:bg-gray-700 rounded">Add Meals</NavLink></li>
+
+                <li><NavLink to='/dashboard/admin/upcoming-meals' className="block py-2 px-4 hover:bg-gray-700 rounded">Add Upcoming Meals</NavLink></li>
                 
                 <li><NavLink to='/dashboard/admin/all-meals' className="block py-2 px-4 hover:bg-gray-700 rounded">All Meals</NavLink></li>
 
                 <li><NavLink to='/dashboard/admin/all-reviews' className="block py-2 px-4 hover:bg-gray-700 rounded">All Reviews</NavLink></li>
 
-                <li><NavLink to='/dashboard/admin/upcoming-meals' className="block py-2 px-4 hover:bg-gray-700 rounded">Upcoming Meals</NavLink></li>
+                
 
                 <li><NavLink to='/dashboard/admin/serve-meals' className="block py-2 px-4 hover:bg-gray-700 rounded">Serve Meals</NavLink></li>
 

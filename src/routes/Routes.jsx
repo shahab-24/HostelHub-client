@@ -4,7 +4,7 @@ import Home from "../Pages/Home/Home";
 import SignUp from "../Pages/Signup/SignUp";
 import Login from "../Pages/Login/Login";
 import MealsPage from "../Pages/MealsPage";
-import UpcomingMeals from "../Pages/UpcomingMeals";
+import UpcomingMeals from "../Pages/UpcomingMealsPage";
 import DashboardLayout from "../Layouts/DashboardLayout";
 
 import AdminDashboard from "../Pages/Dashboard/AdminDashboard";
@@ -14,6 +14,8 @@ import MealDetailPage from "../Pages/MealDetailPage";
 import UserProfile from "../Components/UserProfile";
 import ManageUsers from "../Pages/ManageUsers";
 import PrivateRoute from "./PrivateRoute";
+import Checkout from "../Pages/CheckOut";
+import UpcomingMealsPage from "../Pages/UpcomingMealsPage";
 
 export const router = createBrowserRouter([
   {
@@ -32,6 +34,10 @@ export const router = createBrowserRouter([
       {
         path: "api/meals/:id",
         element: <MealDetailPage></MealDetailPage>,
+      },
+      {
+        path: "checkout/:pkgName",
+        element: <Checkout></Checkout>,
       },
       {
         path: "upcoming-meals",
@@ -71,6 +77,10 @@ export const router = createBrowserRouter([
       {
         path: "admin/add-meals",
         element: <MealForm></MealForm>,
+      },
+      {
+        path: "admin/upcoming-meals",
+        element: <UpcomingMealsPage></UpcomingMealsPage>,
       },
     ],
   },
