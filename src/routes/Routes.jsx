@@ -16,6 +16,7 @@ import PrivateRoute from "./PrivateRoute";
 import Checkout from "../Pages/CheckOut";
 import UpcomingMealsPage from "../Pages/UpcomingMealsPage";
 import AdminProfile from "../Pages/AdminProfile";
+import AllMealsPage from "../Pages/AllMealPage";
 
 export const router = createBrowserRouter([
   {
@@ -75,6 +76,10 @@ export const router = createBrowserRouter([
       {
         path: "admin/add-meals",
         element: <MealForm></MealForm>,
+      },
+      {
+        path: "admin/all-meals",
+        element: <AllMealsPage></AllMealsPage>,
       },
       {
         path: "admin/upcoming-meals",
