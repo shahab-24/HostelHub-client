@@ -27,7 +27,7 @@ const DashboardLayout = () => {
                 <li><NavLink to='/' className="block py-2 px-4 hover:bg-gray-700 rounded">Home</NavLink></li>
                 <ul className="space-y-2">
 
-                <li><NavLink to='/dashboard/admin/user-profile' className="block py-2 px-4 hover:bg-gray-700 rounded">Admin Profile</NavLink></li>
+                <li><NavLink to='/dashboard/admin/profile' className="block py-2 px-4 hover:bg-gray-700 rounded">Admin Profile</NavLink></li>
 
                 <li><NavLink to='/dashboard/admin/manage-users' className="block py-2 px-4 hover:bg-gray-700 rounded">Manage Users</NavLink></li>
 

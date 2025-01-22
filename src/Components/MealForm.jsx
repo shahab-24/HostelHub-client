@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import axios, { AxiosHeaders } from "axios";
+import axios from "axios";
 import useAuth from "../hooks/useAuth";
 import toast from "react-hot-toast";
 import useAxiosSecure from "../hooks/useAxiosSecure";
@@ -12,7 +12,9 @@ const MealForm = () => {
   const { user } = useAuth();
   const axiosSecure = useAxiosSecure();
   const [loading, setLoading] = useState(false);
-  const [uploadImagePreview, setUploadImagePreview] = useState();
+  const [uploadImagePreview, setUploadImagePreview] = useState(null);
+
+
   // Validation Schema
   const schema = yup.object().shape({
     title: yup.string().required("Meal title is required"),
@@ -43,6 +45,7 @@ const MealForm = () => {
       rating: 0,
       likes: 0,
       reviews_count: 0,
+      status: "upcoming"
     },
   });
 
@@ -73,7 +76,9 @@ const MealForm = () => {
       await axiosSecure.post("/api/meals", mealData);
       console.log("Meal Data:", data);
       toast.success("Meal added successfully!");
+
       reset();
+      setUploadImagePreview(null);
     } catch (error) {
       console.error("Error adding meal:", error);
       toast.error("Failed to add meal. Please try again.");
@@ -81,6 +86,16 @@ const MealForm = () => {
       setLoading(false);
     }
   };
+
+  // Handle image upload preview
+  const handleImagePreview = (event) => {
+        const file = event.target.files[0];
+        if (file) {
+          const reader = new FileReader();
+          reader.onload = () => setUploadImagePreview(reader.result);
+          reader.readAsDataURL(file);
+        }
+      };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50">
@@ -129,8 +144,8 @@ const MealForm = () => {
             )}
           </div>
 
-          {/* Image */}
-          <div>
+         {/* Image */}
+         <div>
             <label className="block text-sm font-medium text-gray-700">
               Upload Image
             </label>
@@ -139,11 +154,27 @@ const MealForm = () => {
               {...register("image")}
               className="mt-1 block w-full text-gray-600 rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
               accept="image/*"
+              onChange={(e) => {
+                register("image").onChange(e); // Register the image input
+                handleImagePreview(e);
+              }}
             />
             {errors.image && (
               <p className="text-red-500 text-sm">{errors.image.message}</p>
             )}
           </div>
+
+          {/* Image Preview */}
+          {uploadImagePreview && (
+            <div className="mt-4">
+              <p className="text-sm font-medium text-gray-700">Image Preview:</p>
+              <img
+                src={uploadImagePreview}
+                alt="Preview"
+                className="mt-2 w-40 h-40 object-cover rounded-md"
+              />
+            </div>
+          )}
 
           {/* Ingredients */}
           <div>

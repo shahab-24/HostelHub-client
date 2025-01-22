@@ -13,6 +13,7 @@ import { useQuery } from "@tanstack/react-query";
 const UpcomingMealsPage = () => {
     const [isModalOpen, setModalOpen] = useState(false);
     const axiosSecure = useAxiosSecure()
+    
     const { data: meals = [], isLoading, error, refetch } = useQuery(
         {
          queryKey: ['meals'],

@@ -7,8 +7,7 @@ import MealsPage from "../Pages/MealsPage";
 import UpcomingMeals from "../Pages/UpcomingMealsPage";
 import DashboardLayout from "../Layouts/DashboardLayout";
 
-import AdminDashboard from "../Pages/Dashboard/AdminDashboard";
-import UserDashboard from "../Pages/Dashboard/UserDashboard";
+
 import MealForm from "../Components/MealForm";
 import MealDetailPage from "../Pages/MealDetailPage";
 import UserProfile from "../Components/UserProfile";
@@ -16,6 +15,7 @@ import ManageUsers from "../Pages/ManageUsers";
 import PrivateRoute from "./PrivateRoute";
 import Checkout from "../Pages/CheckOut";
 import UpcomingMealsPage from "../Pages/UpcomingMealsPage";
+import AdminProfile from "../Pages/AdminProfile";
 
 export const router = createBrowserRouter([
   {
@@ -57,10 +57,7 @@ export const router = createBrowserRouter([
     path: "/dashboard",
     element: <PrivateRoute><DashboardLayout></DashboardLayout></PrivateRoute>,
     children: [
-      {
-        path: "user",
-        element: <UserDashboard></UserDashboard>,
-      },
+     
       {
         path: "user-profile",
         element: <UserProfile></UserProfile>,
@@ -69,9 +66,10 @@ export const router = createBrowserRouter([
         path: "admin/manage-users",
         element: <ManageUsers></ManageUsers>,
       },
+     
       {
-        path: "admin",
-        element: <AdminDashboard></AdminDashboard>,
+        path: "admin/profile",
+        element: <AdminProfile></AdminProfile>,
       },
      
       {
