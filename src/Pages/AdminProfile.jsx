@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../hooks/useAxiosSecure";
 import Loader from "../Components/Shared/Loader";
+import { Helmet } from "react-helmet-async";
 
 const AdminProfile = () => {
         const axiosSecure = useAxiosSecure()
@@ -24,6 +25,9 @@ const AdminProfile = () => {
 
   return (
     <div className="max-w-xl mx-auto bg-white shadow-lg rounded-lg p-6">
+    <Helmet>
+        <title>Admin profile | dashboard</title>
+    </Helmet>
       <div className="flex items-center mb-4">
         <img
           src={profile.image}

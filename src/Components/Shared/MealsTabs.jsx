@@ -4,17 +4,19 @@ import useMeal from "../../hooks/useMeal";
 import MealsCategoryTab from "../MealsCategoryTab";
 
 const MealsTabs = () => {
-  const [meal] = useMeal();
-  console.log(meal);
+  const [meals] = useMeal();
+  console.log(meals.meals);
 
   // Group meals by category
-  const groupedMeals = meal.reduce((acc, item) => {
+  const groupedMeals = meals?.meals?.reduce((acc, item) => {
     acc[item.category] = acc[item.category] || [];
     acc[item.category].push(item);
     return acc;
   }, {});
 
-  const categories = Object.keys(groupedMeals);
+  const categories = groupedMeals ? Object.keys(groupedMeals) : [];
+
+//   const categories = Object.keys(groupedMeals);
 
   return (
     <div className="px-4 md:px-10 py-10 bg-gray-50">

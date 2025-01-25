@@ -17,6 +17,7 @@ import Checkout from "../Pages/CheckOut";
 import UpcomingMealsPage from "../Pages/UpcomingMealsPage";
 import AdminProfile from "../Pages/AdminProfile";
 import AllMealsPage from "../Pages/AllMealPage";
+import AllReviews from "../Pages/AllReviews";
 
 export const router = createBrowserRouter([
   {
@@ -44,6 +45,7 @@ export const router = createBrowserRouter([
         path: "upcoming-meals",
         element: <UpcomingMeals></UpcomingMeals>,
       },
+     
     ],
   },
   {
@@ -80,6 +82,10 @@ export const router = createBrowserRouter([
       {
         path: "admin/all-meals",
         element: <AllMealsPage></AllMealsPage>,
+      },
+      {
+        path: "admin/all-reviews",
+        element: <AllReviews></AllReviews>,
       },
       {
         path: "admin/upcoming-meals",
