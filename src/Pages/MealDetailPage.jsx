@@ -8,13 +8,14 @@ import toast from "react-hot-toast";
 import useAuth from "../hooks/useAuth";
 import { useState } from "react";
 import { Helmet } from "react-helmet-async";
+import Swal from "sweetalert2";  // Import SweetAlert2
 
 const MealDetailPage = () => {
   const [reviewText, setReviewText] = useState("");
-  const [rating, setRating] = useState(0); // New state for rating
-  const [editingReview, setEditingReview] = useState(null); // Holds the review being edited
-  const [editText, setEditText] = useState(""); // Holds the updated review text
-  const [editRating, setEditRating] = useState(0); // Holds the updated rating
+  const [rating, setRating] = useState(0);
+  const [editingReview, setEditingReview] = useState(null);
+  const [editText, setEditText] = useState("");
+  const [editRating, setEditRating] = useState(0);
 
   const axiosPublic = useAxiosPublic();
   const axiosSecure = useAxiosSecure();
@@ -22,7 +23,13 @@ const MealDetailPage = () => {
   const { id } = useParams();
   const { user } = useAuth();
 
-  const { data: meal = {}, isLoading, isError, error, refetch } = useQuery({
+  const {
+    data: meal = {},
+    isLoading,
+    isError,
+    error,
+    refetch,
+  } = useQuery({
     queryKey: ["meal", id],
     queryFn: async () => {
       const { data } = await axiosPublic(`/api/meals/${id}`);
@@ -51,7 +58,11 @@ const MealDetailPage = () => {
       refetch();
     },
     onError: (error) => {
-      toast.error(error.response?.data?.message || error.message || "Failed to like the meal.");
+      toast.error(
+        error.response?.data?.message ||
+          error.message ||
+          "Failed to like the meal."
+      );
     },
   });
 
@@ -60,7 +71,7 @@ const MealDetailPage = () => {
       const payload = {
         mealId: id,
         comment: reviewText,
-        rating, // Dynamic rating
+        rating,
         title: meal.title,
       };
       await axiosSecure.post("/api/reviews", payload);
@@ -69,17 +80,20 @@ const MealDetailPage = () => {
       toast.success("Review added successfully!");
       queryClient.invalidateQueries(["reviews", id]);
       queryClient.invalidateQueries(["meal", id]);
-      setReviewText(""); // Clear text
-      setRating(0); // Reset rating
+      setReviewText("");
+      setRating(0);
     },
     onError: (error) => {
       toast.error(error.response?.data?.message || "Failed to add review.");
     },
   });
 
-  const editReview = useMutation({
+  const handleEditReview = useMutation({
     mutationFn: async (updatedReview) => {
-      await axiosSecure.patch(`/api/reviews/${updatedReview.id}`, updatedReview);
+      await axiosSecure.patch(
+        `/api/reviews/${updatedReview.id}`,
+        updatedReview
+      );
     },
     onSuccess: () => {
       toast.success("Review updated!");
@@ -104,6 +118,18 @@ const MealDetailPage = () => {
     },
   });
 
+  const handleMealRequest = useMutation({
+    mutationFn: async () => {
+      await axiosSecure.post(`/api/meals/${id}/request`);
+    },
+    onSuccess: () => {
+      toast.success("Meal request submitted!");
+    },
+    onError: (error) => {
+      toast.error(error.response?.data?.message || "Failed to request meal.");
+    },
+  });
+
   if (isLoading) {
     return <Loader />;
   }
@@ -112,14 +138,12 @@ const MealDetailPage = () => {
     return <p className="text-center text-red-500">{error.message}</p>;
   }
 
-  const renderStars = (rating, setRatingHandler) => (
+  const renderStars = (currentRating, setRatingHandler) => (
     <div className="flex space-x-2">
       {[1, 2, 3, 4, 5].map((star) => (
         <button
           key={star}
-          className={`text-2xl ${
-            rating >= star ? "text-yellow-500" : "text-gray-400"
-          }`}
+          className={`text-2xl ${currentRating >= star ? "text-yellow-500" : "text-gray-400"}`}
           onClick={() => setRatingHandler(star)}
         >
           ★
@@ -127,6 +151,20 @@ const MealDetailPage = () => {
       ))}
     </div>
   );
+
+  const confirmAction = (action, message) => {
+    Swal.fire({
+      title: message,
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Yes, proceed!",
+      cancelButtonText: "Cancel",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        action();
+      }
+    });
+  };
 
   return (
     <section className="py-10 px-4 md:px-10 bg-gradient-to-r from-gray-50 to-gray-100">
@@ -149,12 +187,20 @@ const MealDetailPage = () => {
 
         <div className="p-6 md:p-10">
           <h2 className="text-3xl font-bold text-blue-600 mb-2">
-            {meal?.title} - Average Rating: {" "}
-            <span className="text-yellow-500">{meal?.averageRating || 0}</span>
+            {meal?.title}
           </h2>
+          <p className="text-gray-600 mb-4">{meal?.description}</p>
+          <h3 className="text-lg font-semibold mb-2">Ingredients:</h3>
+          <ul className="list-disc pl-5 mb-6">
+            {meal?.ingredients?.split(",").map((ingredient, idx) => (
+              <li key={idx}>{ingredient}</li>
+            ))}
+          </ul>
           <button
             className={`bg-blue-500 text-white px-4 py-2 rounded-lg ${
-              meal?.likedBy?.includes(user?.email) ? "opacity-50 cursor-not-allowed" : ""
+              meal?.likedBy?.includes(user?.email)
+                ? "opacity-50 cursor-not-allowed"
+                : ""
             }`}
             onClick={() => handleLike.mutate()}
             disabled={meal?.likedBy?.includes(user?.email)}
@@ -163,7 +209,7 @@ const MealDetailPage = () => {
           </button>
           <button
             className="bg-green-500 text-white px-4 py-2 ml-4 rounded-lg"
-            onClick={() => toast.success("Meal request submitted!")}
+            onClick={() => handleMealRequest.mutate()}
           >
             Request Meal
           </button>
@@ -171,30 +217,92 @@ const MealDetailPage = () => {
           <div className="border-t pt-6">
             <h3 className="text-2xl font-semibold mb-4">Reviews</h3>
             {reviews?.map((review) => (
-              <div key={review._id} className="mb-4">
+              <div key={review._id} className="mb-4 border-b pb-4">
                 <p>
                   <strong>{review.email}:</strong> {review.comment}
                 </p>
-                <p>Rating: {review.rating} ★</p>
+                <p>
+                  Rating:{" "}
+                  {[...Array(review.rating)].map((_, index) => (
+                    <span key={index} className="text-yellow-500">★</span>
+                  ))}
+                </p>
+
+                {/* Only show edit and delete for the logged-in user */}
+                {review.email === user?.email && (
+                  <div className="flex space-x-2 mt-2">
+                    <button
+                      className="text-blue-500"
+                      onClick={() => {
+                        setEditingReview(review._id);
+                        setEditText(review.comment);
+                        setEditRating(review.rating);
+                      }}
+                    >
+                      Edit
+                    </button>
+                    <button
+                      className="text-red-500"
+                      onClick={() =>
+                        confirmAction(() => deleteReview.mutate(review._id), "Are you sure you want to delete this review?")
+                      }
+                    >
+                      Delete
+                    </button>
+                  </div>
+                )}
               </div>
             ))}
-          </div>
 
-          <div className="mt-6">
-            <h3 className="text-xl font-semibold mb-4">Add a Review</h3>
-            {renderStars(rating, setRating)}
-            <textarea
-              value={reviewText}
-              onChange={(e) => setReviewText(e.target.value)}
-              className="w-full mt-3 p-3 border rounded-md focus:outline-none focus:ring focus:ring-blue-300"
-              placeholder="Write your review..."
-            />
-            <button
-              className="bg-blue-500 text-white px-4 py-2 mt-4 rounded-lg"
-              onClick={() => handleAddReview.mutate()}
-            >
-              Submit
-            </button>
+            {/* Edit review */}
+            {editingReview && (
+              <div className="mt-4">
+                <h3 className="text-xl font-semibold mb-4">Edit Review</h3>
+                {renderStars(editRating, setEditRating)}{" "}
+                {/* Display star rating */}
+                <textarea
+                  value={editText}
+                  onChange={(e) => setEditText(e.target.value)}
+                  className="w-full mt-3 p-3 border rounded-md focus:outline-none focus:ring focus:ring-blue-300"
+                  placeholder="Edit your review..."
+                />
+                <button
+                  className="bg-blue-500 text-white px-4 py-2 mt-4 rounded-lg"
+                  onClick={() => {
+                    confirmAction(
+                      () => handleEditReview.mutate({ id: editingReview, comment: editText, rating: editRating }),
+                      "Are you sure you want to save changes?"
+                    );
+                  }}
+                >
+                  Save Changes
+                </button>
+                <button
+                  className="bg-gray-500 text-white px-4 py-2 mt-4 ml-2 rounded-lg"
+                  onClick={() => setEditingReview(null)}
+                >
+                  Cancel
+                </button>
+              </div>
+            )}
+
+            {/* Add a new review */}
+            <div className="mt-6">
+              <h3 className="text-xl font-semibold mb-4">Add a Review</h3>
+              {renderStars(rating, setRating)}
+              <textarea
+                value={reviewText}
+                onChange={(e) => setReviewText(e.target.value)}
+                className="w-full mt-3 p-3 border rounded-md focus:outline-none focus:ring focus:ring-blue-300"
+                placeholder="Write your review..."
+              />
+              <button
+                className="bg-blue-500 text-white px-4 py-2 mt-4 rounded-lg"
+                onClick={() => handleAddReview.mutate()}
+              >
+                Submit
+              </button>
+            </div>
           </div>
         </div>
       </div>

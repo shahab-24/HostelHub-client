@@ -9,7 +9,7 @@ import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 const Login = () => {
         const [showPassword, setShowPassword] = useState(false);
-  const { signIn, signInWithGoogle, loading, user } = useAuth();
+  const { signIn, signInWithGoogle, setLoading, user } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
   const from = location?.state?.from?.pathname || '/';
@@ -37,9 +37,16 @@ const Login = () => {
       await signInWithGoogle();
       navigate(from, { replace: true });
       toast.success('Login Successful');
+      setLoading(false)
     } catch (err) {
       console.log(err);
       toast.error(err?.message);
+      if (err.code === "auth/popup-closed-by-user") {
+        toast.error("Popup closed before completing the login process.");
+      } else {
+        toast.error(err?.message || "An error occurred during Google sign-in.");
+      }
+      setLoading(false);
     }
   };
   const handleShowPassword = () => {

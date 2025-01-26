@@ -26,10 +26,15 @@ const MealsCategoryTab = ({ items }) => {
           </div>
 
           {/* Content Section */}
-          <h2 className="text-lg font-bold mb-2 text-gray-800 font-poppins">{item.title}</h2>
+         <div className="flex justify-between">
+         <h2 className="text-lg font-bold text-blue-600 mb-2">{item.title}
+         </h2>
+         <h2 className="text-lg font-bold text-blue-600 mb-2">Rating: {" "}
+          <span className="text-yellow-500">{item?.rating || 0}</span></h2>
+         </div>
           <h3 className="text-lg font-bold mb-2 text-gray-800 font-roboto">{item.name}</h3>
           <p className="text-gray-600 mb-4 font-roboto">{item.description}</p>
-          <p className="text-blue-500 font-semibold text-lg font-roboto">${item.price}</p>
+          <p className="text-blue-500 font-semibold text-lg font-roboto">$ {item.price}</p>
 
           {/* Button */}
           <Link to={`/api/meals/${item._id}`}>

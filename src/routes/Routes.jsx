@@ -91,6 +91,11 @@ export const router = createBrowserRouter([
         path: "admin/upcoming-meals",
         element: <UpcomingMealsPage></UpcomingMealsPage>,
       },
+//       user related routes==================
+      {
+        path: 'user-profile',
+        element: <UserProfile></UserProfile>
+      }
     ],
   },
 ]);

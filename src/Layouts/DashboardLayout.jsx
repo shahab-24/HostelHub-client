@@ -8,9 +8,11 @@ import Loader from "../Components/Shared/Loader";
 const DashboardLayout = () => {
         const {user} = useAuth()
         const [role, isLoading] = useRole()
+        console.log(user.role)
         
 
         if(isLoading) return <Loader></Loader>
+
         return (
           <div className="flex min-h-screen">
             {/* Sidebar */}

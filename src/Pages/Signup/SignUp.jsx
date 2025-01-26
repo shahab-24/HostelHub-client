@@ -11,7 +11,7 @@ import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 const SignUp = () => {
   const [showPassword, setShowPassword] = useState(false);
-  const { createUser, updateUserProfile, signInWithGoogle } = useAuth();
+  const { createUser, updateUserProfile, signInWithGoogle, setLoading } = useAuth();
   const navigate = useNavigate();
 
   const handleSubmit = async (event) => {
@@ -53,9 +53,16 @@ const SignUp = () => {
       await signInWithGoogle();
       navigate("/");
       toast.success("Signup Successful");
+      setLoading(false)
     } catch (err) {
       console.log(err);
       toast.error(err?.message);
+      if (err.code === "auth/popup-closed-by-user") {
+        toast.error("Popup closed before completing the login process.");
+      } else {
+        toast.error(err?.message || "An error occurred during Google sign-in.");
+      }
+      setLoading(false);
     }
   };
 
