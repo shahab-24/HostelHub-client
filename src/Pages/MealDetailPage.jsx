@@ -89,21 +89,28 @@ const MealDetailPage = () => {
   });
 
   const handleEditReview = useMutation({
-    mutationFn: async (updatedReview) => {
-      await axiosSecure.patch(
-        `/api/reviews/${updatedReview.id}`,
-        updatedReview
-      );
-    },
-    onSuccess: () => {
-      toast.success("Review updated!");
-      queryClient.invalidateQueries(["reviews", id]);
-      setEditingReview(null);
-    },
-    onError: (error) => {
-      toast.error(error.response?.data?.message || "Failed to update review.");
-    },
-  });
+        mutationFn: async (updatedReview) => {
+          try {
+            const response = await axiosSecure.patch(
+              `/api/reviews/${updatedReview.id}`,
+              updatedReview
+            );
+            return response.data;  // Ensure the response is captured for success
+          } catch (error) {
+            throw new Error(error.response?.data?.message || "Failed to update review.");
+          }
+        },
+        onSuccess: () => {
+          toast.success("Review updated!");
+          queryClient.invalidateQueries(["reviews", id]);
+          setEditingReview(null);
+        },
+        onError: (error) => {
+          console.error("Error updating review:", error);  // Log error for debugging
+          toast.error(error.message || "Failed to update review.");
+        },
+      });
+      
 
   const deleteReview = useMutation({
     mutationFn: async (reviewId) => {
