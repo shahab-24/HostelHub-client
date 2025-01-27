@@ -18,6 +18,7 @@ import UpcomingMealsPage from "../Pages/UpcomingMealsPage";
 import AdminProfile from "../Pages/AdminProfile";
 import AllMealsPage from "../Pages/AllMealPage";
 import AllReviews from "../Pages/AllReviews";
+import MyReviews from "../MyReviews";
 
 export const router = createBrowserRouter([
   {
@@ -95,6 +96,10 @@ export const router = createBrowserRouter([
       {
         path: 'user-profile',
         element: <UserProfile></UserProfile>
+      },
+      {
+        path: 'my-reviews',
+        element: <MyReviews></MyReviews>
       }
     ],
   },

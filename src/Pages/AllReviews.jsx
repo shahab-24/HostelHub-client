@@ -12,7 +12,7 @@ const AllReviews = () => {
     },
   });
 
-  console.log(reviews)
+//   console.log(reviews)
 
   const handleDelete = (id) => {
     console.log("Delete review with ID:", id);
