@@ -1,45 +1,27 @@
-// import { useState } from 'react';
+import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
-// import axios from 'axios';
 import useAxiosSecure from '../hooks/useAxiosSecure';
 import { toast } from 'react-toastify';
 
-// Fetch users with search functionality
-// const fetchUsers = async (search) => {
-//   const { data } = await axios.get(`/api/users?search=${search}`);
-//   return data;
-// };
-
 const UserManagement = () => {
   const axiosSecure = useAxiosSecure();
-//   const [search, setSearch] = useState('');
+  const [search, setSearch] = useState(''); // Track search input
 
-//   const { data: users, isLoading, error } = useQuery({
-//         queryKey: ['users', search],
-//         queryFn: () => fetchUsers(search),
-//         keepPreviousData: true,
-//       });
-      
-
-  const { data: users, isLoading, error, refetch } = useQuery({
-        queryKey: ['users'],
-        queryFn: async () => {
-                const {data} = await axiosSecure('/users')
-                return data
-        }
-      });
-      console.log(users)
-      
-      if (!Array.isArray(users)) {
-        console.error("Invalid response data:", users);
-        return <p className="text-red-500">Invalid user data</p>;  // Error message when data is invalid
-      }
+  // Fetch users based on the search query
+  const { data: users = [], isLoading, error, refetch } = useQuery({
+    queryKey: ['users', search], // Include search in the query key
+    queryFn: async () => {
+      const { data } = await axiosSecure.get(`/users?search=${search}`); // Send search query to the server
+      return data;
+    },
+    keepPreviousData: true, // Keep old data while fetching new data
+  });
 
   const handleMakeAdmin = async (userId) => {
     try {
-      await axiosSecure.patch(`/api/users/${userId}`);
+      await axiosSecure.patch(`/users/${userId}`); // Update user role
       toast.success('User role updated to admin');
-      refetch()
+      refetch(); // Refresh data after updating
     } catch (err) {
       toast.error('Error updating user role');
     }
@@ -47,19 +29,22 @@ const UserManagement = () => {
 
   return (
     <div className="container mx-auto p-4">
-      {/* <div className="mb-4 flex justify-between items-center">
+      <div className="mb-4 flex justify-between items-center">
+        {/* Search Input */}
         <input
           type="text"
           value={search}
-          onChange={(e) => setSearch(e.target.value)}
+          onChange={(e) => setSearch(e.target.value)} // Update search state
           className="input input-bordered w-full max-w-xs"
           placeholder="Search by username or email"
         />
         {isLoading && <span className="text-sm text-gray-500">Loading...</span>}
-      </div> */}
+      </div>
 
+      {/* Error Handling */}
       {error && <p className="text-red-500">Error loading users</p>}
 
+      {/* User Table */}
       <div className="overflow-x-auto bg-white shadow-md rounded-lg">
         <table className="table w-full">
           <thead>
@@ -71,7 +56,7 @@ const UserManagement = () => {
             </tr>
           </thead>
           <tbody>
-            {users?.map((user) => (
+            {users.map((user) => (
               <tr key={user._id} className="border-t">
                 <td className="px-4 py-2">{user.name || 'Unknown'}</td>
                 <td className="px-4 py-2">{user.email}</td>
