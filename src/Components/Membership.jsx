@@ -2,6 +2,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../hooks/useAxiosSecure";
+import Loader from "./Shared/Loader";
 
 const Membership = () => {
   const axiosSecure = useAxiosSecure();
@@ -16,12 +17,13 @@ const Membership = () => {
     },
   });
 
-  const handleRedirect = (packageName) => {
-    navigate(`/checkout/${packageName.toLowerCase()}`);
+  // Handle redirect to checkout page with package data
+  const handleRedirect = (pkg) => {
+    navigate("/checkout", { state: { packageDetails: pkg } });
   };
 
   if (isLoading) {
-    return <div>Loading packages...</div>;
+    return <Loader></Loader>;
   }
 
   if (isError) {
@@ -54,16 +56,13 @@ const Membership = () => {
                 ))}
               </ul>
             </div>
-            <Link to={`/checkout/${pkg.name}`}>
-                
+
             <button
               className="mt-4 py-2 px-6 bg-blue-500 text-white text-lg font-semibold rounded-md hover:bg-blue-600 transition"
-              onClick={() => handleRedirect(pkg.name)}
+              onClick={() => handleRedirect(pkg)} // Pass the entire package data
             >
               Subscribe Now
             </button>
-            </Link>
-
           </motion.div>
         ))}
       </div>

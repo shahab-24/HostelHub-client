@@ -40,7 +40,7 @@ export const router = createBrowserRouter([
         element: <MealDetailPage></MealDetailPage>,
       },
       {
-        path: "checkout/:pkgName",
+        path: "checkout",
         element: <Checkout></Checkout>,
       },
       {
