@@ -14,19 +14,19 @@ const AllReviews = () => {
 
 //   console.log(reviews)
 
-  const handleDelete = (id) => {
-    console.log("Delete review with ID:", id);
-    // Add delete logic here
-  };
+//   const handleDelete = (id) => {
+//     console.log("Delete review with ID:", id);
+//     // Add delete logic here
+//   };
 
-  const handleViewMeal = (mealId) => {
-    console.log("View meal with ID:", mealId);
-    // Add navigation logic here
-  };
+//   const handleViewMeal = (mealId) => {
+//     console.log("View meal with ID:", mealId);
+//     // Add navigation logic here
+//   };
 
   return (
     <div className="p-5">
-      <h3 className="text-2xl font-semibold mb-4">Reviews: {reviews.length}</h3>
+      <h3 className="text-2xl font-semibold mb-4">Reviews: {reviews?.length}</h3>
       <div className="overflow-x-auto">
         <motion.table 
           className="table w-full"
@@ -61,14 +61,14 @@ const AllReviews = () => {
                   <motion.button
                     className="btn btn-sm btn-error"
                     whileHover={{ scale: 1.1 }}
-                    onClick={() => handleDelete(review.id)}
+                //     onClick={() => handleDelete(review.id)}
                   >
                     Delete
                   </motion.button>
                   <motion.button
                     className="btn btn-sm btn-primary"
                     whileHover={{ scale: 1.1 }}
-                    onClick={() => handleViewMeal(review.mealId)}
+                //     onClick={() => handleViewMeal(review.mealId)}
                   >
                     View Meal
                   </motion.button>

@@ -22,35 +22,35 @@ const AllMealsPage = () => {
     },
   });
 
-  console.log(meals)
+//   console.log(meals)
 
   // View Meal Handler
-  const handleViewMeal = (id) => {
-    console.log(`View meal with ID: ${id}`);
-    // Navigate to meal details page (e.g., `/meals/:id`)
-  };
+//   const handleViewMeal = (id) => {
+//     console.log(`View meal with ID: ${id}`);
+//     // Navigate to meal details page (e.g., `/meals/:id`)
+//   };
 
   // Update Meal Handler
-  const handleUpdateMeal = (id) => {
-    console.log(`Update meal with ID: ${id}`);
-    // Open update form or navigate to update page
-  };
+//   const handleUpdateMeal = (id) => {
+//     console.log(`Update meal with ID: ${id}`);
+//     // Open update form or navigate to update page
+//   };
 
   // Delete Meal Handler
-  const handleDeleteMeal = async (id) => {
-    const confirmDelete = window.confirm(
-      "Are you sure you want to delete this meal?"
-    );
-    if (confirmDelete) {
-      try {
-        await axiosSecure.delete(`/api/meals/${id}`);
-        console.log(`Deleted meal with ID: ${id}`);
-        window.location.reload(); // Refresh the page or refetch meals
-      } catch (error) {
-        console.error("Failed to delete meal:", error);
-      }
-    }
-  };
+//   const handleDeleteMeal = async (id) => {
+//     const confirmDelete = window.confirm(
+//       "Are you sure you want to delete this meal?"
+//     );
+//     if (confirmDelete) {
+//       try {
+//         await axiosSecure.delete(`/api/meals/${id}`);
+//         console.log(`Deleted meal with ID: ${id}`);
+//         window.location.reload(); // Refresh the page or refetch meals
+//       } catch (error) {
+//         console.error("Failed to delete meal:", error);
+//       }
+//     }
+//   };
 
   if (isLoading) return <Loader />;
   if (isError) return <p className="text-red-500">Failed to fetch meals.</p>;
@@ -109,21 +109,21 @@ const AllMealsPage = () => {
                 <td className="border p-2 flex justify-center space-x-2">
                   <button
                     className="text-blue-500 hover:text-blue-700"
-                    onClick={() => handleViewMeal(meal._id)}
+                //     onClick={() => handleViewMeal(meal._id)}
                     title="View Meal"
                   >
                     <FaEye />
                   </button>
                   <button
                     className="text-yellow-500 hover:text-yellow-700"
-                    onClick={() => handleUpdateMeal(meal._id)}
+                //     onClick={() => handleUpdateMeal(meal._id)}
                     title="Update Meal"
                   >
                     <FaEdit />
                   </button>
                   <button
                     className="text-red-500 hover:text-red-700"
-                    onClick={() => handleDeleteMeal(meal._id)}
+                //     onClick={() => handleDeleteMeal(meal._id)}
                     title="Delete Meal"
                   >
                     <FaTrash />

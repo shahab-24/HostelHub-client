@@ -23,7 +23,7 @@ const MealDetailPage = () => {
   const { id } = useParams();
   const { user } = useAuth();
 
-//   console.log(id, user)
+//   console.log(id, user.email)
 
   const {
     data: meal = {},
@@ -152,7 +152,7 @@ const MealDetailPage = () => {
           if (result.isConfirmed) {
             // Proceed with the meal request
             
-            await axiosSecure.post(`/api/request-meals/${id}`, { userId: user?.id });
+            await axiosSecure.post(`/api/request-meals/${id}`, { email: user?.email });
             toast.success("Meal request submitted successfully!");
           }
         },

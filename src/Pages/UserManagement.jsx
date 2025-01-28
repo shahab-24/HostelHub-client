@@ -22,6 +22,7 @@ const UserManagement = () => {
       toast.success("User role updated to admin");
       refetch();
     } catch (err) {
+        console.log(err)
       toast.error("Error updating user role");
     }
   };
@@ -75,7 +76,7 @@ const UserManagement = () => {
             </tr>
           </thead>
           <tbody>
-            {users.map((user) => (
+            {users?.map((user) => (
               <tr
                 key={user._id}
                 className="hover:bg-gray-100 border-t text-sm text-gray-800"
@@ -84,7 +85,7 @@ const UserManagement = () => {
                 <td className="px-6 py-3">{user.email}</td>
                 <td className="px-6 py-3">{user.role}</td>
                 <td className="px-6 py-3 text-center">
-                  {user.role !== "admin" && (
+                  {user?.role !== "admin" && (
                     <button
                       className="btn btn-primary btn-sm"
                       onClick={() => handleMakeAdmin(user._id)}
@@ -98,7 +99,7 @@ const UserManagement = () => {
           </tbody>
         </table>
 
-        {users.length === 0 && (
+        {users?.length === 0 && (
           <div className="text-center py-6 text-gray-500">
             No users found.
           </div>

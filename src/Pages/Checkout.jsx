@@ -22,7 +22,7 @@ const Checkout = () => {
         >
           <Typewriter
             options={{
-              strings: [`${packageDetails.name} Package`],
+              strings: [`${packageDetails?.name} Package`],
               autoStart: true,
               loop: false,
               delay: 100, // Controls typing speed
@@ -33,14 +33,14 @@ const Checkout = () => {
         {/* Price and benefits section */}
         <div className="text-center">
           <p className="text-xl font-semibold text-gray-700">
-            Price: <span className="text-2xl text-blue-600">${packageDetails.price}</span>/month
+            Price: <span className="text-2xl text-blue-600">${packageDetails?.price}</span>/month
           </p>
         </div>
 
         <div className="space-y-4">
           <h3 className="text-2xl font-medium text-gray-800">Benefits:</h3>
           <ul className="list-disc list-inside text-gray-600">
-            {packageDetails.benefits.map((benefit, index) => (
+            {packageDetails?.benefits?.map((benefit, index) => (
               <li key={index} className="text-lg">{benefit}</li>
             ))}
           </ul>

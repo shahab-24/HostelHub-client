@@ -4,6 +4,7 @@ import useAxiosPublic from "../hooks/useAxiosPublic";
 import Loader from "../Components/Shared/Loader";
 import { Link } from "react-router-dom";
 
+
 const MealsPage = () => {
   const axiosPublic = useAxiosPublic();
 
@@ -35,7 +36,7 @@ const MealsPage = () => {
       });
 
       // Stop fetching if fewer meals are returned
-      if (data.meals.length < 10) setHasMore(false);
+      if (data?.meals?.length < 10) setHasMore(false);
 
       // Prevent duplicate meals
       setMeals((prev) => [
@@ -47,7 +48,7 @@ const MealsPage = () => {
     } catch (error) {
       console.error("Error fetching meals:", error);
     }
-  }, [search, category, minPrice, maxPrice, sortBy, order]);
+  }, [search, category, minPrice, maxPrice, sortBy, order, axiosPublic]);
 
   // Reset meals and fetch with new filters or sorting
   const handleFilterChange = () => {
@@ -129,17 +130,17 @@ const MealsPage = () => {
         loader={<Loader key={0} />}
       >
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {meals.map((meal) => (
+          {meals?.map((meal) => (
             <div key={meal._id} className="bg-white rounded-lg shadow-md hover:shadow-lg transition duration-300">
-              <img src={meal.image} alt={meal.title} className="w-full h-52 object-cover rounded-t-lg" />
+              <img src={meal?.image} alt={meal.title} className="w-full h-52 object-cover rounded-t-lg" />
               <div className="p-6">
                 <h3 className="text-xl font-bold text-blue-500 mb-2">{meal.title}</h3>
-                <p className="text-gray-400 mb-2">Category: {meal.category}</p>
-                <p className="text-gray-600 text-sm mb-4 line-clamp-3">{meal.description}</p>
+                <p className="text-gray-400 mb-2">Category: {meal?.category}</p>
+                <p className="text-gray-600 text-sm mb-4 line-clamp-3">{meal?.description}</p>
                 <div className="flex items-center justify-between mb-4">
-                  <p className="text-blue-500 font-semibold">${meal.price}</p>
+                  <p className="text-blue-500 font-semibold">${meal?.price}</p>
                   <p className="text-gray-500 text-sm">
-                    Likes: {meal.likes} | Reviews: {meal.reviews_count}
+                    Likes: {meal?.likes} | Reviews: {meal.reviews_count}
                   </p>
                 </div>
                 <Link

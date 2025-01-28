@@ -3,6 +3,7 @@ import { useState } from "react";
 import AddMealModal from "../Components/AddMealModal";
 import useAxiosSecure from "../hooks/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
+import Loader from "../Components/Shared/Loader";
 
 // const fetchUpcomingMeals = async () => {
 //     const response = await fe("/api/upcoming-meals");
@@ -31,7 +32,7 @@ const UpcomingMealsPage = () => {
         refetch();
     };
 
-    if (isLoading) return <p>Loading meals...</p>;
+    if (isLoading) return <Loader></Loader>;
     if (error) return <p>Error: {error.message}</p>;
 
     return (
@@ -52,7 +53,7 @@ const UpcomingMealsPage = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    {meals.map((meal) => (
+                    {meals?.map((meal) => (
                         <tr key={meal._id}>
                             <td>{meal?.title}</td>
                             <td>{meal?.category}</td>

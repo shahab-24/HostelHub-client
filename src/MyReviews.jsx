@@ -105,12 +105,12 @@ const MyReviews = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {reviews.map((review) => (
+                        {reviews?.map((review) => (
                             <tr key={review._id} className="hover:bg-gray-100">
-                                <td className="border border-gray-300 px-4 py-2">{review.mealTitle}</td>
-                                <td className="border border-gray-300 px-4 py-2">{review.likes}</td>
-                                <td className="border border-gray-300 px-4 py-2">{review.reviewsCount}</td>
-                                <td className="border border-gray-300 px-4 py-2">{review.comment}</td>
+                                <td className="border border-gray-300 px-4 py-2">{review?.mealTitle}</td>
+                                <td className="border border-gray-300 px-4 py-2">{review?.likes}</td>
+                                <td className="border border-gray-300 px-4 py-2">{review?.reviewsCount}</td>
+                                <td className="border border-gray-300 px-4 py-2">{review?.comment}</td>
                                 <td className="border border-gray-300 px-4 py-2 flex gap-2 justify-center">
                                     <button
                                         className="btn btn-sm btn-primary"
