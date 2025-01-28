@@ -11,7 +11,7 @@ import DashboardLayout from "../Layouts/DashboardLayout";
 import MealForm from "../Components/MealForm";
 import MealDetailPage from "../Pages/MealDetailPage";
 import UserProfile from "../Components/UserProfile";
-import ManageUsers from "../Pages/ManageUsers";
+
 import PrivateRoute from "./PrivateRoute";
 import Checkout from "../Pages/CheckOut";
 import UpcomingMealsPage from "../Pages/UpcomingMealsPage";
@@ -19,6 +19,7 @@ import AdminProfile from "../Pages/AdminProfile";
 import AllMealsPage from "../Pages/AllMealPage";
 import AllReviews from "../Pages/AllReviews";
 import MyReviews from "../MyReviews";
+import UserManagement from "../Pages/UserManagement";
 
 export const router = createBrowserRouter([
   {
@@ -68,7 +69,7 @@ export const router = createBrowserRouter([
       },
       {
         path: "admin/manage-users",
-        element: <ManageUsers></ManageUsers>,
+        element: <UserManagement></UserManagement>,
       },
      
       {
