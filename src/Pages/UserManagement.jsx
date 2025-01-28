@@ -18,7 +18,7 @@ const UserManagement = () => {
 
   const handleMakeAdmin = async (userId) => {
     try {
-      await axiosSecure.patch(`/users/${userId}`);
+      await axiosSecure.patch(`/api/users/${userId}`);
       toast.success("User role updated to admin");
       refetch();
     } catch (err) {

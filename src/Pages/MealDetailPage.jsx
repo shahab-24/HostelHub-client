@@ -23,6 +23,8 @@ const MealDetailPage = () => {
   const { id } = useParams();
   const { user } = useAuth();
 
+//   console.log(id, user)
+
   const {
     data: meal = {},
     isLoading,
@@ -45,6 +47,8 @@ const MealDetailPage = () => {
     },
   });
 
+
+//   like button=================================
   const handleLike = useMutation({
     mutationFn: async () => {
       if (meal?.likedBy?.includes(user?.email)) {
@@ -66,6 +70,8 @@ const MealDetailPage = () => {
     },
   });
 
+
+//   add review button======================
   const handleAddReview = useMutation({
     mutationFn: async () => {
       const payload = {
@@ -88,6 +94,8 @@ const MealDetailPage = () => {
     },
   });
 
+
+//   edit review button ==========================
   const handleEditReview = useMutation({
         mutationFn: async (updatedReview) => {
           try {
@@ -112,6 +120,8 @@ const MealDetailPage = () => {
       });
       
 
+
+//       delete review button=======================
   const deleteReview = useMutation({
     mutationFn: async (reviewId) => {
       await axiosSecure.delete(`/api/reviews/${reviewId}`);
@@ -125,17 +135,32 @@ const MealDetailPage = () => {
     },
   });
 
+
+//   request functionlity==========================
   const handleMealRequest = useMutation({
-    mutationFn: async () => {
-      await axiosSecure.post(`/api/meals/${id}/request`);
-    },
-    onSuccess: () => {
-      toast.success("Meal request submitted!");
-    },
-    onError: (error) => {
-      toast.error(error.response?.data?.message || "Failed to request meal.");
-    },
-  });
+        mutationFn: async () => {
+          // Confirm the user's action before proceeding
+          const result = await Swal.fire({
+            title: "Request Meal?",
+            text: "Do you want to request this meal?",
+            icon: "question",
+            showCancelButton: true,
+            confirmButtonText: "Yes, request it!",
+            cancelButtonText: "Cancel",
+          });
+      
+          if (result.isConfirmed) {
+            // Proceed with the meal request
+            
+            await axiosSecure.post(`/api/request-meals/${id}`, { userId: user?.id });
+            toast.success("Meal request submitted successfully!");
+          }
+        },
+        onError: (error) => {
+          toast.error(error.response?.data?.message || "Failed to request meal.");
+        },
+      });
+      
 
   if (isLoading) {
     return <Loader />;
@@ -215,11 +240,12 @@ const MealDetailPage = () => {
             Like ({meal?.likes || 0})
           </button>
           <button
-            className="bg-green-500 text-white px-4 py-2 ml-4 rounded-lg"
-            onClick={() => handleMealRequest.mutate()}
-          >
-            Request Meal
-          </button>
+  className="bg-green-500 text-white px-4 py-2 ml-4 rounded-lg"
+  onClick={() => handleMealRequest.mutate()}
+>
+  Request Meal
+</button>
+
 
           <div className="border-t pt-6">
             <h3 className="text-2xl font-semibold mb-4">Reviews</h3>
