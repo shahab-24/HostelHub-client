@@ -5,7 +5,7 @@ import MealsCategoryTab from "../MealsCategoryTab";
 
 const MealsTabs = () => {
   const [meals] = useMeal();
-  console.log(meals.meals);
+//   console.log(meals.meals);
 
   // Group meals by category
   const groupedMeals = meals?.meals?.reduce((acc, item) => {

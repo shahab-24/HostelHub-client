@@ -71,7 +71,7 @@ const DashboardLayout = () => {
             {/* Main Content */}
             <main className="flex-1 p-6 bg-gray-100">
               <h2 className="text-xl font-bold">Dashboard Content</h2>
-              <div className="mt-6 bg-white shadow rounded-lg p-6">Main content goes here.</div>
+              {/* <div className="mt-6 bg-white shadow rounded-lg p-6">Main content goes here.</div> */}
               <Outlet></Outlet>
             </main>
           </div>

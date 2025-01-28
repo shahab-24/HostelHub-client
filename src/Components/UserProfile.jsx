@@ -1,7 +1,7 @@
 
 import { motion } from "framer-motion";
 import Typewriter from "typewriter-effect";
-import useAuth from "../hooks/useAuth";
+
 import Loader from "./Shared/Loader";
 import useAxiosSecure from "../hooks/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
