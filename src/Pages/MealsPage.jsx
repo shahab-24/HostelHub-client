@@ -4,7 +4,6 @@ import useAxiosPublic from "../hooks/useAxiosPublic";
 import Loader from "../Components/Shared/Loader";
 import { Link } from "react-router-dom";
 
-
 const MealsPage = () => {
   const axiosPublic = useAxiosPublic();
 
@@ -69,12 +68,12 @@ const MealsPage = () => {
           placeholder="Search meals..."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          className="border border-gray-300 p-2 rounded-md shadow-sm"
+          className="border border-gray-300 p-3 rounded-md shadow-sm w-full sm:w-60"
         />
         <select
           value={category}
           onChange={(e) => setCategory(e.target.value)}
-          className="border border-gray-300 p-2 rounded-md shadow-sm"
+          className="border border-gray-300 p-3 rounded-md shadow-sm w-full sm:w-40"
         >
           <option value="">All Categories</option>
           <option value="Breakfast">Breakfast</option>
@@ -82,26 +81,26 @@ const MealsPage = () => {
           <option value="Dinner">Dinner</option>
           <option value="Snack">Snack</option>
         </select>
-        <div className="flex gap-2">
+        <div className="flex gap-4 w-full sm:w-auto">
           <input
             type="number"
             placeholder="Min Price"
             value={minPrice}
             onChange={(e) => setMinPrice(e.target.value)}
-            className="border border-gray-300 p-2 rounded-md shadow-sm"
+            className="border border-gray-300 p-3 rounded-md shadow-sm w-full sm:w-32"
           />
           <input
             type="number"
             placeholder="Max Price"
             value={maxPrice}
             onChange={(e) => setMaxPrice(e.target.value)}
-            className="border border-gray-300 p-2 rounded-md shadow-sm"
+            className="border border-gray-300 p-3 rounded-md shadow-sm w-full sm:w-32"
           />
         </div>
         <select
           value={sortBy}
           onChange={(e) => setSortBy(e.target.value)}
-          className="border border-gray-300 p-2 rounded-md shadow-sm"
+          className="border border-gray-300 p-3 rounded-md shadow-sm w-full sm:w-40"
         >
           <option value="likes">Sort by Likes</option>
           <option value="reviews">Sort by Reviews</option>
@@ -109,14 +108,14 @@ const MealsPage = () => {
         <select
           value={order}
           onChange={(e) => setOrder(e.target.value)}
-          className="border border-gray-300 p-2 rounded-md shadow-sm"
+          className="border border-gray-300 p-3 rounded-md shadow-sm w-full sm:w-32"
         >
           <option value="desc">Descending</option>
           <option value="asc">Ascending</option>
         </select>
         <button
           onClick={handleFilterChange}
-          className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600"
+          className="bg-blue-500 text-white px-6 py-3 rounded-md hover:bg-blue-600 transition duration-300 w-full sm:w-auto mt-4 sm:mt-0"
         >
           Apply Filters
         </button>
@@ -131,21 +130,25 @@ const MealsPage = () => {
       >
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {meals?.map((meal) => (
-            <div key={meal._id} className="bg-white rounded-lg shadow-md hover:shadow-lg transition duration-300">
-              <img src={meal?.image} alt={meal.title} className="w-full h-52 object-cover rounded-t-lg" />
+            <div key={meal._id} className="bg-white rounded-lg shadow-lg hover:shadow-xl transition duration-300">
+              <img
+                src={meal?.image}
+                alt={meal.title}
+                className="w-full h-52 object-cover rounded-t-lg"
+              />
               <div className="p-6">
-                <h3 className="text-xl font-bold text-blue-500 mb-2">{meal.title}</h3>
-                <p className="text-gray-400 mb-2">Category: {meal?.category}</p>
+                <h3 className="text-xl font-semibold text-blue-600 mb-2">{meal.title}</h3>
+                <p className="text-gray-500 mb-2">Category: {meal?.category}</p>
                 <p className="text-gray-600 text-sm mb-4 line-clamp-3">{meal?.description}</p>
                 <div className="flex items-center justify-between mb-4">
-                  <p className="text-blue-500 font-semibold">${meal?.price}</p>
+                  <p className="text-blue-600 font-semibold text-lg">${meal?.price}</p>
                   <p className="text-gray-500 text-sm">
                     Likes: {meal?.likes} | Reviews: {meal.reviews_count}
                   </p>
                 </div>
                 <Link
                   to={`/api/meals/${meal._id}`}
-                  className="block w-full bg-blue-500 text-white text-center py-2 rounded-md hover:bg-blue-600 transition"
+                  className="block w-full bg-blue-500 text-white text-center py-3 rounded-md hover:bg-blue-600 transition"
                 >
                   View Details
                 </Link>

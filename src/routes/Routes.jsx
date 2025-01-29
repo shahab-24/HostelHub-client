@@ -20,6 +20,7 @@ import AllMealsPage from "../Pages/AllMealPage";
 import AllReviews from "../Pages/AllReviews";
 import MyReviews from "../MyReviews";
 import UserManagement from "../Pages/UserManagement";
+import RequestedMeals from "../Pages/RequestedMeals";
 
 export const router = createBrowserRouter([
   {
@@ -101,6 +102,10 @@ export const router = createBrowserRouter([
       {
         path: 'my-reviews',
         element: <MyReviews></MyReviews>
+      },
+      {
+        path: 'requested-meals',
+        element: <RequestedMeals></RequestedMeals>
       }
     ],
   },
