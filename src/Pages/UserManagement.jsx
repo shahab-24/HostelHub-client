@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../hooks/useAxiosSecure";
 import { toast } from "react-toastify";
+import { Helmet } from "react-helmet-async";
 
 const UserManagement = () => {
   const axiosSecure = useAxiosSecure();
@@ -29,6 +30,9 @@ const UserManagement = () => {
 
   return (
     <div className="container mx-auto p-6 space-y-6">
+    <Helmet>
+        <title>User Mangament | HotelHub-Dashboard</title>
+    </Helmet>
       {/* Header */}
       <div className="flex justify-between items-center">
         <h1 className="text-2xl font-bold text-gray-800">User Management</h1>

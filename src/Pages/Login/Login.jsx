@@ -6,6 +6,7 @@ import Lottie from 'lottie-react';
 import lottieLoginData from '../../assets/login.json';
 import { useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { Helmet } from 'react-helmet-async';
 
 const Login = () => {
         const [showPassword, setShowPassword] = useState(false);
@@ -55,6 +56,9 @@ const Login = () => {
 
   return (
     <div className="flex justify-center items-center min-h-screen bg-white px-4 sm:px-6 lg:px-8">
+    <Helmet>
+        <title> Login | HostelHub </title>
+      </Helmet>
       <div className="flex flex-col gap-10 md:flex-row items-center max-w-5xl w-full bg-gray-100 p-6 sm:p-10 rounded-lg shadow-md">
         {/* Lottie Animation */}
         <div className="w-full md:w-1/2 flex justify-center">

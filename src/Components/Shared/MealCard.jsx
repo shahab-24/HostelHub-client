@@ -12,7 +12,7 @@ const MealCard = ({ meals }) => {
 
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 p-6">
-      {meals.map((meal) => (
+      {meals?.map((meal) => (
         <Card key={meal._id} className="border rounded-lg shadow-lg">
           <Card.Img
             variant="top"

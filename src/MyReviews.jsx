@@ -4,6 +4,7 @@ import useAxiosSecure from './hooks/useAxiosSecure';
 import { useState } from 'react';
 import { toast } from 'react-toastify'; // For user feedback
 import Swal from 'sweetalert2'; // For confirmation modals
+import { Helmet } from 'react-helmet-async';
 
 const MyReviews = () => {
     const axiosSecure = useAxiosSecure();
@@ -92,6 +93,9 @@ const MyReviews = () => {
 
     return (
         <div className="p-4 max-w-7xl mx-auto">
+        <Helmet>
+        <title>My Reviews | HotelHub-Dashboard</title>
+    </Helmet>
             <h1 className="text-2xl font-semibold mb-4 text-center">My Reviews</h1>
             <div className="overflow-x-auto">
                 <table className="table-auto w-full border-collapse border border-gray-300">

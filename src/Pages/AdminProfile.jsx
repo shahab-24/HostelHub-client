@@ -26,7 +26,7 @@ const AdminProfile = () => {
   return (
     <div className="max-w-xl mx-auto bg-white shadow-lg rounded-lg p-6">
     <Helmet>
-        <title>Admin profile | dashboard</title>
+        <title>Admin profile | HotelHub-Dashboard</title>
     </Helmet>
       <div className="flex items-center mb-4">
         <img

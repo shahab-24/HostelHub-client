@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import useAxiosSecure from '../hooks/useAxiosSecure';
 import useAuth from '../hooks/useAuth';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { Helmet } from 'react-helmet-async';
 
 const ServeMeals = () => {
   const axiosSecure = useAxiosSecure();
@@ -38,6 +39,9 @@ const ServeMeals = () => {
 
   return (
     <div className="p-6">
+    <Helmet>
+        <title>Serve Meals | HotelHub-Dashboard</title>
+    </Helmet>
       <h1 className="text-2xl font-bold text-center mb-6">Requested Meals</h1>
 
       <div className="overflow-x-auto">

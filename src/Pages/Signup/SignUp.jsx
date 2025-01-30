@@ -6,6 +6,7 @@ import useAuth from "../../hooks/useAuth";
 import { FcGoogle } from "react-icons/fc";
 import { useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { Helmet } from "react-helmet-async";
 
 // import axios from "axios";
 
@@ -72,6 +73,9 @@ const SignUp = () => {
 
   return (
     <div className="flex flex-col lg:flex-row-reverse items-center justify-center min-h-screen bg-base-200 px-4 sm:px-6 lg:px-8">
+    <Helmet>
+        <title> Sign Up | HostelHub </title>
+      </Helmet>
       {/* Lottie Animation */}
       <div className="w-full lg:w-1/3 flex justify-center lg:justify-end mb-6 lg:mb-0 lg:pr-16">
         <Lottie animationData={lottieLoginData} className="w-3/4 lg:w-4/5" />

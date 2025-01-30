@@ -137,7 +137,7 @@ const MealForm = () => {
               <option value="Lunch">Lunch</option>
               <option value="Dinner">Dinner</option>
               <option value="All-meals">All Meals</option>
-              <option value="Snack">Snack</option>
+             
             </select>
             {errors.category && (
               <p className="text-red-500 text-sm">{errors.category.message}</p>

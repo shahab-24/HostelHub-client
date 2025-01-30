@@ -47,7 +47,7 @@ const AddMealModal = ({ isOpen, onClose, refetch }) => {
       rating: 0,
       likes: 0,
       reviews_count: 0,
-      status: "upcoming",
+      status: "published",
     },
   });
 
@@ -104,7 +104,7 @@ const AddMealModal = ({ isOpen, onClose, refetch }) => {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
       <Helmet>
-        <title>Add Upcoming Meals | Dashboard</title>
+        <title>Add Upcoming Meals | HostelHub-Dashboard</title>
       </Helmet>
       <div className="bg-white rounded-lg shadow-lg p-6 w-96">
         <h2 className="text-xl font-bold mb-4">Add Upcoming Meal</h2>
@@ -138,8 +138,8 @@ const AddMealModal = ({ isOpen, onClose, refetch }) => {
               <option value="Breakfast">Breakfast</option>
               <option value="Lunch">Lunch</option>
               <option value="Dinner">Dinner</option>
-              <option value="All-meals">All Meals</option>
-              <option value="Snack">Snack</option>
+              
+              <option value="dessert">Dessert</option>
             </select>
             {errors.category && (
               <p className="text-red-500 text-sm">{errors.category.message}</p>

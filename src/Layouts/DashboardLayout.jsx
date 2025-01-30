@@ -1,80 +1,267 @@
 import { NavLink, Outlet } from "react-router-dom";
-
-import useAuth from "../hooks/useAuth";
 import { Helmet } from "react-helmet-async";
+import { motion } from "framer-motion";
+import { useEffect, useRef, useState } from "react";
+import useAuth from "../hooks/useAuth";
 import useRole from "../hooks/useRole";
 import Loader from "../Components/Shared/Loader";
+import { Menu, X } from "lucide-react"; // Icons for mobile menu
 
 const DashboardLayout = () => {
-        const {user} = useAuth()
-        const [role, isLoading] = useRole()
-        // console.log(user.role)
-        
+  const { user } = useAuth();
+  const [role, isLoading] = useRole();
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [text, setText] = useState("");
+  const fullText = "Welcome to your Dashboard";
 
-        if(isLoading) return <Loader></Loader>
+  // Ref for dropdown and event listener to detect clicks outside
+  const dropdownRef = useRef(null);
 
-        return (
-          <div className="flex min-h-screen">
-            {/* Sidebar */}
-            <aside className="bg-gray-800 text-white w-64 p-4">
-              <h2 className="text-2xl font-bold mb-4">Dashboard</h2>
-             
+  useEffect(() => {
+    let i = 0;
+    const interval = setInterval(() => {
+      setText((prev) => fullText.slice(0, i));
+      i++;
+      if (i > fullText.length) clearInterval(interval);
+    }, 100);
+    return () => clearInterval(interval);
+  }, []);
 
-              {role === 'admin' ? 
-              (
-                 <nav>
-                 <Helmet>
-                        <title>Admin | HostelHub</title>
-                 </Helmet>
-                <li><NavLink to='/' className="block py-2 px-4 hover:bg-gray-700 rounded">Home</NavLink></li>
-                <ul className="space-y-2">
+  // Close menu when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setMenuOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
-                <li><NavLink to='/dashboard/admin/profile' className="block py-2 px-4 hover:bg-gray-700 rounded">Admin Profile</NavLink></li>
+  if (isLoading) return <Loader />;
 
-                <li><NavLink to='/dashboard/admin/manage-users' className="block py-2 px-4 hover:bg-gray-700 rounded">Manage Users</NavLink></li>
+  return (
+    <div className="flex flex-col md:flex-row min-h-screen">
+      <Helmet>
+        <title>Dashboard | HostelHub</title>
+      </Helmet>
 
-                <li><NavLink to='/dashboard/admin/add-meals' className="block py-2 px-4 hover:bg-gray-700 rounded">Add Meals</NavLink></li>
+      {/* Mobile Menu Button */}
+      <button
+        className="md:hidden p-4 text-white bg-gray-800"
+        onClick={() => setMenuOpen(!menuOpen)}
+      >
+        {menuOpen ? <X size={28} /> : <Menu size={28} />}
+      </button>
 
-                <li><NavLink to='/dashboard/admin/upcoming-meals' className="block py-2 px-4 hover:bg-gray-700 rounded">Add Upcoming Meals</NavLink></li>
-                
-                <li><NavLink to='/dashboard/admin/all-meals' className="block py-2 px-4 hover:bg-gray-700 rounded">All Meals</NavLink></li>
+      {/* Sidebar */}
+      <aside
+        ref={dropdownRef}
+        className={`${
+          menuOpen ? "translate-x-0" : "-translate-x-full"
+        } md:translate-x-0 fixed md:static bg-gradient-to-r from-gray-700 to-gray-800 text-white w-64 md:w-72 p-4 transition-transform duration-300`}
+      >
+        <h2 className="text-2xl font-bold mb-4">Dashboard</h2>
 
-                <li><NavLink to='/dashboard/admin/all-reviews' className="block py-2 px-4 hover:bg-gray-700 rounded">All Reviews</NavLink></li>
+        {role === "admin" ? (
+          <nav>
+            <ul className="space-y-2">
+              <li>
+                <NavLink
+                  to="/"
+                  className={({ isActive }) =>
+                    `block py-2 px-4 rounded transition ${
+                      isActive ? "bg-gray-700" : "hover:bg-gray-700"
+                    }`
+                  }
+                >
+                  Home
+                </NavLink>
+              </li>
+              <li>
+                <NavLink
+                  to="/dashboard/admin/profile"
+                  className={({ isActive }) =>
+                    `block py-2 px-4 rounded transition ${
+                      isActive ? "bg-gray-700" : "hover:bg-gray-700"
+                    }`
+                  }
+                >
+                  Admin Profile
+                </NavLink>
+              </li>
+              <li>
+                <NavLink
+                  to="/dashboard/admin/manage-users"
+                  className={({ isActive }) =>
+                    `block py-2 px-4 rounded transition ${
+                      isActive ? "bg-gray-700" : "hover:bg-gray-700"
+                    }`
+                  }
+                >
+                  Manage Users
+                </NavLink>
+              </li>
+              <li>
+                <NavLink
+                  to="/dashboard/admin/add-meals"
+                  className={({ isActive }) =>
+                    `block py-2 px-4 rounded transition ${
+                      isActive ? "bg-gray-700" : "hover:bg-gray-700"
+                    }`
+                  }
+                >
+                  Add Meals
+                </NavLink>
+              </li>
+              <li>
+                <NavLink
+                  to="/dashboard/admin/upcoming-meals-form"
+                  className={({ isActive }) =>
+                    `block py-2 px-4 rounded transition ${
+                      isActive ? "bg-gray-700" : "hover:bg-gray-700"
+                    }`
+                  }
+                >
+                  Add Upcoming Meals
+                </NavLink>
+              </li>
+              <li>
+                <NavLink
+                  to="/dashboard/admin/all-meals"
+                  className={({ isActive }) =>
+                    `block py-2 px-4 rounded transition ${
+                      isActive ? "bg-gray-700" : "hover:bg-gray-700"
+                    }`
+                  }
+                >
+                  All Meals
+                </NavLink>
+              </li>
+              <li>
+                <NavLink
+                  to="/dashboard/admin/all-reviews"
+                  className={({ isActive }) =>
+                    `block py-2 px-4 rounded transition ${
+                      isActive ? "bg-gray-700" : "hover:bg-gray-700"
+                    }`
+                  }
+                >
+                  All Reviews
+                </NavLink>
+              </li>
+              <li>
+                <NavLink
+                  to="/dashboard/admin/serve-meals"
+                  className={({ isActive }) =>
+                    `block py-2 px-4 rounded transition ${
+                      isActive ? "bg-gray-700" : "hover:bg-gray-700"
+                    }`
+                  }
+                >
+                  Serve Meals
+                </NavLink>
+              </li>
+              <li>
+                <NavLink
+                  to="/dashboard/admin/publish-meals"
+                  className={({ isActive }) =>
+                    `block py-2 px-4 rounded transition ${
+                      isActive ? "bg-gray-700" : "hover:bg-gray-700"
+                    }`
+                  }
+                >
+                  Publish Meals
+                </NavLink>
+              </li>
+            </ul>
+          </nav>
+        ) : (
+          <nav>
+            <ul className="space-y-2">
+              <li>
+                <NavLink
+                  to="/"
+                  className={({ isActive }) =>
+                    `block py-2 px-4 rounded transition ${
+                      isActive ? "bg-gray-700" : "hover:bg-gray-700"
+                    }`
+                  }
+                >
+                  Home
+                </NavLink>
+              </li>
+              <li>
+                <NavLink
+                  to="/dashboard/user-profile"
+                  className={({ isActive }) =>
+                    `block py-2 px-4 rounded transition ${
+                      isActive ? "bg-gray-700" : "hover:bg-gray-700"
+                    }`
+                  }
+                >
+                  Profile
+                </NavLink>
+              </li>
+              <li>
+                <NavLink
+                  to="/dashboard/requested-meals"
+                  className={({ isActive }) =>
+                    `block py-2 px-4 rounded transition ${
+                      isActive ? "bg-gray-700" : "hover:bg-gray-700"
+                    }`
+                  }
+                >
+                  Requested Meals
+                </NavLink>
+              </li>
+              <li>
+                <NavLink
+                  to="/dashboard/my-reviews"
+                  className={({ isActive }) =>
+                    `block py-2 px-4 rounded transition ${
+                      isActive ? "bg-gray-700" : "hover:bg-gray-700"
+                    }`
+                  }
+                >
+                  My Reviews
+                </NavLink>
+              </li>
+              <li>
+                <NavLink
+                  to="/dashboard/payment-history"
+                  className={({ isActive }) =>
+                    `block py-2 px-4 rounded transition ${
+                      isActive ? "bg-gray-700" : "hover:bg-gray-700"
+                    }`
+                  }
+                >
+                  Payment History
+                </NavLink>
+              </li>
+            </ul>
+          </nav>
+        )}
+      </aside>
 
-                
+      {/* Main Content */}
+      <main className="flex-1 p-6 bg-gray-100">
+        <motion.h2
+          className="text-2xl font-bold text-gray-800 mb-6"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 1 }}
+        >
+          {text}
+          <span className="animate-pulse">|</span>
+        </motion.h2>
 
-                <li><NavLink to='/dashboard/admin/serve-meals' className="block py-2 px-4 hover:bg-gray-700 rounded">Serve Meals</NavLink></li>
+        <div className="bg-white shadow-md rounded-lg p-6">
+          <Outlet />
+        </div>
+      </main>
+    </div>
+  );
+};
 
-                
-                </ul>
-              </nav> )
-               :
-              ( <nav>
-                <Helmet>
-                        <title>User | HostelHub</title>
-                 </Helmet>
-                <ul className="space-y-2">
-                <li><NavLink to='/' className="block py-2 px-4 hover:bg-gray-700 rounded">Home</NavLink></li>
-                <li><NavLink to='/dashboard/user-profile' className="block py-2 px-4 hover:bg-gray-700 rounded">Profile</NavLink></li>
-                
-                <li><NavLink to='/dashboard/requested-meals' className="block py-2 px-4 hover:bg-gray-700 rounded">Requested Meals</NavLink></li> 
-
-                <li><NavLink to='/dashboard/my-reviews' className="block py-2 px-4 hover:bg-gray-700 rounded">My Reviews</NavLink></li>   
-
-                <li><NavLink to='/dashboard/payment-history' className="block py-2 px-4 hover:bg-gray-700 rounded">Payment History</NavLink></li>        
-                </ul>
-                </nav>) }
-              
-             
-            </aside>
-      
-            {/* Main Content */}
-            <main className="flex-1 p-6 bg-gray-100">
-              <h2 className="text-xl font-bold">Dashboard Content</h2>
-              {/* <div className="mt-6 bg-white shadow rounded-lg p-6">Main content goes here.</div> */}
-              <Outlet></Outlet>
-            </main>
-          </div>
-        );
-      };
-export default DashboardLayout;      
+export default DashboardLayout;

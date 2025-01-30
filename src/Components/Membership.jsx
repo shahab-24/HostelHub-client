@@ -13,10 +13,7 @@ const Membership = () => {
     queryKey: ["packages"],
     queryFn: async () => {
       const response = await axiosSecure.get("/api/packages");
-      console.log("Packages data:", response.data); //
       return Array.isArray(response.data) ? response.data : [];
-      
-      
     },
   });
 
@@ -35,42 +32,48 @@ const Membership = () => {
 
   return (
     <section className="py-10 bg-gray-50">
-      <h2 className="text-3xl font-bold text-center mb-8">
+      <h2 className="text-3xl font-extrabold text-center text-blue-700 mb-8">
         Upgrade to Premium Membership
       </h2>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 px-4 md:px-10">
-  {(Array.isArray(packages) ? packages : []).map((pkg, index) => (
-    <motion.div
-      key={pkg._id}
-      initial={{ opacity: 0, y: 50 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5, delay: index * 0.2 }}
-      className="rounded-lg shadow-lg p-6 flex flex-col justify-between bg-white hover:bg-gray-100 transition duration-300 border border-gray-200"
-    >
-      <div className="text-center">
-        <h3 className="text-xl font-bold text-blue-600 mb-4">
-          {pkg?.name || "Unknown Package"}
-        </h3>
-        <p className="text-2xl font-semibold text-gray-700 mb-6">
-          ${pkg?.price?.toFixed(2) || "0.00"}/month
-        </p>
-        <ul className="text-gray-600 mb-6 list-disc list-inside">
-          {pkg?.benefits?.map((benefit, idx) => (
-            <li key={idx}>{benefit}</li>
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 px-4 md:px-10">
+        {Array.isArray(packages) &&
+          packages.map((pkg, index) => (
+            <motion.div
+              key={pkg._id}
+              initial={{ opacity: 0, y: 50 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: index * 0.2 }}
+              className="rounded-lg shadow-xl p-6 flex flex-col justify-between bg-white hover:bg-blue-50 transition duration-300 transform hover:scale-105"
+            >
+              <div className="text-center">
+                {/* Image Section */}
+                <img
+                  src={pkg?.image || "/images/default-package.jpg"} // Default image if no image is provided
+                  alt={pkg?.name || "Package Image"}
+                  className="w-full h-48 object-cover rounded-lg mb-4"
+                />
+                <h3 className="text-2xl font-bold text-blue-600 mb-4">
+                  {pkg?.name || "Unknown Package"}
+                </h3>
+                <p className="text-3xl font-semibold text-gray-800 mb-6">
+                  ${pkg?.price?.toFixed(2) || "0.00"}/month
+                </p>
+                <ul className="text-gray-600 mb-6 list-disc list-inside">
+                  {pkg?.benefits?.map((benefit, idx) => (
+                    <li key={idx}>{benefit}</li>
+                  ))}
+                </ul>
+              </div>
+              <button
+                className="mt-4 py-2 px-8 bg-blue-500 text-white text-lg font-semibold rounded-md hover:bg-blue-600 transition ease-in-out duration-300 transform hover:scale-105"
+                onClick={() => handleRedirect(pkg)}
+              >
+                Subscribe Now
+              </button>
+            </motion.div>
           ))}
-        </ul>
       </div>
-      <button
-        className="mt-4 py-2 px-6 bg-blue-500 text-white text-lg font-semibold rounded-md hover:bg-blue-600 transition"
-        onClick={() => handleRedirect(pkg)}
-      >
-        Subscribe Now
-      </button>
-    </motion.div>
-  ))}
-</div>
-
     </section>
   );
 };

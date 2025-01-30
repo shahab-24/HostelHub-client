@@ -5,6 +5,7 @@ import Typewriter from "typewriter-effect";
 import Loader from "./Shared/Loader";
 import useAxiosSecure from "../hooks/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
+import { Helmet } from "react-helmet-async";
 
 const UserProfile = () => {
         // const {user} = useAuth()
@@ -36,6 +37,9 @@ console.log(userProfile)
       transition={{ duration: 0.8 }}
       className="max-w-md mx-auto bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 text-white rounded-xl p-6 shadow-lg my-20"
     >
+    <Helmet>
+        <title>User profile | HotelHub-Dashboard</title>
+    </Helmet>
       {/* Animated Title */}
       <h2 className="text-3xl font-bold mb-4 text-center">
         <Typewriter

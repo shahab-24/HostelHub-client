@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import Loader from "../Components/Shared/Loader";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { useParams } from "react-router-dom";
+import { useOutletContext, useParams } from "react-router-dom";
 import useAxiosPublic from "../hooks/useAxiosPublic";
 import useAxiosSecure from "../hooks/useAxiosSecure";
 import toast from "react-hot-toast";
@@ -11,6 +11,7 @@ import { Helmet } from "react-helmet-async";
 import Swal from "sweetalert2";  // Import SweetAlert2
 
 const MealDetailPage = () => {
+        const { setLikedMeals } = useOutletContext();
   const [reviewText, setReviewText] = useState("");
   const [rating, setRating] = useState(0);
   const [editingReview, setEditingReview] = useState(null);
@@ -57,6 +58,7 @@ const MealDetailPage = () => {
       await axiosSecure.patch(`/api/meals/${id}/like`);
     },
     onSuccess: () => {
+        setLikedMeals((prev) => prev + 1);
       toast.success("Liked the meal successfully!");
       queryClient.invalidateQueries(["meal", id]);
       refetch();

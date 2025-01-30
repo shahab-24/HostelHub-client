@@ -2,155 +2,80 @@ import { Link, NavLink } from "react-router-dom";
 import img from "../../assets/logo2.webp";
 import useAuth from "../../hooks/useAuth";
 
-const Navbar = () => {
+
+const Navbar = ({likedMeals}) => {
   const { user, logOut } = useAuth();
+ 
+
+ 
+
   const links = (
     <>
-      <li>
-        <NavLink to="/">Home</NavLink>
-      </li>
-      <li>
-        <NavLink to="/meals">Meals</NavLink>
-      </li>
-      <li>
-        <NavLink to="/upcoming-meals">Upcoming Meals</NavLink>
-      </li>
-      <li>
-        <NavLink to="/signup">Join Us</NavLink>
-      </li>
-      <li>
-        <NavLink to="/dashboard">Dashboard</NavLink>
-      </li>
+      <li><NavLink to="/">Home</NavLink></li>
+      <li><NavLink to="/meals">Meals</NavLink></li>
+      <li><NavLink to="/upcoming-meals">Upcoming Meals</NavLink></li>
+      <li><NavLink to="/signup">Join Us</NavLink></li>
+      <li><NavLink to="/about-me">About Me</NavLink></li>
+      <li><NavLink to="/dashboard">Dashboard</NavLink></li>
     </>
   );
 
   return (
-    <div className="bg-base-200">
-      <div className="navbar px-4 py-3 lg:px-16 font-roboto">
+    <div className="bg-base-200 fixed w-full z-50 shadow-md">
+      <div className="navbar px-4 py-3 lg:px-16 font-roboto flex justify-between items-center">
+        
         {/* Navbar Start */}
-        <div className="navbar-start">
+        <div className="flex items-center gap-2">
           <div className="dropdown">
-            <div
-              tabIndex={0}
-              role="button"
-              className="btn btn-ghost lg:hidden"
-              aria-label="Open Menu"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-6 w-6"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M4 6h16M4 12h8m-8 6h16"
-                />
+            <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden" aria-label="Open Menu">
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h8m-8 6h16" />
               </svg>
             </div>
-            <ul
-              tabIndex={0}
-              className="menu menu-sm dropdown-content mt-3 z-[1] w-52 bg-base-100 rounded-box shadow"
-            >
+            <ul tabIndex={0} className="menu menu-sm dropdown-content mt-3 z-[1] w-52 bg-base-100 rounded-box shadow">
               {links}
             </ul>
           </div>
-
-          <div className="flex">
-            <img
-              alt="User Avatar"
-              src={img}
-              className="w-10 rounded-lg hidden"
-            />
-
-            <a className="btn btn-ghost text-xl font-poppins">HostelHub</a>
-          </div>
+          <img alt="Logo" src={img} className="w-10 rounded-lg hidden lg:block" />
+          <a className="btn btn-ghost text-xl font-poppins">HostelHub</a>
         </div>
 
         {/* Navbar Center */}
-        <div className="navbar-center hidden lg:flex">
+        <div className="hidden lg:flex">
           <ul className="menu menu-horizontal px-1">{links}</ul>
         </div>
 
         {/* Navbar End */}
-        <div className="navbar-end flex items-center gap-2">
-          {/* Cart Dropdown */}
-          <div className="dropdown dropdown-end">
-            <div
-              tabIndex={0}
-              role="button"
-              className="btn btn-ghost btn-circle"
-            >
-              <div className="indicator">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-5 w-5"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
-                  />
-                </svg>
-                <span className="badge badge-sm indicator-item">8</span>
-              </div>
-            </div>
-            <div
-              tabIndex={0}
-              className="card card-compact dropdown-content mt-3 z-[1] w-52 bg-base-100 shadow"
-            >
-              <div className="card-body">
-                <span className="text-lg font-bold">8 Items</span>
-                <span className="text-info">Subtotal: $999</span>
-                <div className="card-actions">
-                  <button className="btn btn-primary btn-block">
-                    View cart
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
+        <div className="flex items-center gap-4">
+          {/* Like Notification Bell */}
+          <div className="relative">
+          <button className="btn btn-ghost btn-circle">
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 15l7-7 7 7" />
+            </svg>
+          </button>
+          {likedMeals > 0 && (
+            <span className="badge badge-sm bg-red-500 text-white absolute top-0 right-0">
+              {likedMeals}
+            </span>
+          )}
+        </div>
 
           {/* User Profile Dropdown */}
           <div className="dropdown dropdown-end">
-            <div
-              tabIndex={0}
-              role="button"
-              className="btn btn-ghost btn-circle avatar"
-            >
+            <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
               <div className="w-10 rounded-full">
                 <img alt="User Avatar" src={user?.photoURL || "user Photo"} />
               </div>
             </div>
-            <ul
-              tabIndex={0}
-              className="menu menu-sm dropdown-content mt-3 z-[1] w-32 bg-base-100 rounded-box shadow"
-            >
-              <li>
-                <a className="justify-between">
-                  {user?.displayName || "user name"}
-                  {/* <span className="badge">New</span> */}
-                </a>
-              </li>
-              <li>
-                <NavLink to="/dashboard">Dashboard</NavLink>
-              </li>
+            <ul tabIndex={0} className="menu menu-sm dropdown-content mt-3 z-[1] w-32 bg-base-100 rounded-box shadow">
+              <li><a>{user?.displayName || "User Name"}</a></li>
+              <li><NavLink to="/dashboard">Dashboard</NavLink></li>
               <li>
                 {user?.email ? (
-                  <button onClick={logOut} className="btn btn-sm">
-                    Logout
-                  </button>
+                  <button onClick={logOut} className="btn btn-sm">Logout</button>
                 ) : (
-                  <Link to="/login">
-                    <button className="btn btn-sm">Login</button>
-                  </Link>
+                  <Link to="/login"><button className="btn btn-sm">Login</button></Link>
                 )}
               </li>
             </ul>

@@ -1,19 +1,27 @@
 import { useState } from "react";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import useAxiosSecure from "../hooks/useAxiosSecure";
 import Loader from "../Components/Shared/Loader";
-import { FaEye, FaEdit, FaTrash } from "react-icons/fa"; // Import icons
+import { FaEye, FaEdit, FaTrash } from "react-icons/fa";
 import { Helmet } from "react-helmet-async";
+import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2"; // Import SweetAlert
 
 const AllMealsPage = () => {
-  const [sortBy, setSortBy] = useState("likes"); // Default sort field
-  const [order, setOrder] = useState("desc"); // Default sort order
+  const [sortBy, setSortBy] = useState("likes");
+  const [order, setOrder] = useState("desc");
   const axiosSecure = useAxiosSecure();
+  const navigate = useNavigate();
+  const queryClient = useQueryClient(); // For UI update after delete
+
+  // State for update modal
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedMeal, setSelectedMeal] = useState(null);
+  const [formData, setFormData] = useState({});
 
   // Fetch meals with sorting
   const { data: meals = [], isLoading, isError } = useQuery({
     queryKey: ["meals", sortBy, order],
-
     queryFn: async () => {
       const response = await axiosSecure.get(
         `/api/meals?sortBy=${sortBy}&order=${order}`
@@ -22,48 +30,92 @@ const AllMealsPage = () => {
     },
   });
 
-//   console.log(meals)
+  // Mutation for updating a meal
+  const updateMealMutation = useMutation({
+    mutationFn: async (updatedMeal) => {
+      await axiosSecure.put(`/api/meals/${updatedMeal._id}`, updatedMeal);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries(["meals"]); // Refresh meals after update
+      Swal.fire("Updated!", "The meal has been updated.", "success");
+      setIsModalOpen(false);
+    },
+    onError: () => {
+      Swal.fire("Error", "Failed to update meal.", "error");
+    },
+  });
+
+  // Mutation for deleting a meal
+  const deleteMealMutation = useMutation({
+    mutationFn: async (id) => {
+      await axiosSecure.delete(`/api/meals/${id}`);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries(["meals"]); // Refresh meals after delete
+    },
+  });
 
   // View Meal Handler
-//   const handleViewMeal = (id) => {
-//     console.log(`View meal with ID: ${id}`);
-//     // Navigate to meal details page (e.g., `/meals/:id`)
-//   };
+  const handleViewMeal = (id) => {
+    navigate(`/api/meals/${id}`);
+  };
 
-  // Update Meal Handler
-//   const handleUpdateMeal = (id) => {
-//     console.log(`Update meal with ID: ${id}`);
-//     // Open update form or navigate to update page
-//   };
+  // Open Modal for Updating Meal
+  const handleOpenUpdateModal = (meal) => {
+    setSelectedMeal(meal);
+    setFormData(meal); // Pre-fill form with meal data
+    setIsModalOpen(true);
+  };
 
-  // Delete Meal Handler
-//   const handleDeleteMeal = async (id) => {
-//     const confirmDelete = window.confirm(
-//       "Are you sure you want to delete this meal?"
-//     );
-//     if (confirmDelete) {
-//       try {
-//         await axiosSecure.delete(`/api/meals/${id}`);
-//         console.log(`Deleted meal with ID: ${id}`);
-//         window.location.reload(); // Refresh the page or refetch meals
-//       } catch (error) {
-//         console.error("Failed to delete meal:", error);
-//       }
-//     }
-//   };
+  // Handle input change in modal
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
+
+  // Handle meal update in modal
+  const handleUpdateMeal = (e) => {
+    e.preventDefault();
+    updateMealMutation.mutate(formData);
+  };
+
+  // Delete Meal Handler with SweetAlert
+  const handleDeleteMeal = (id) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#3085d6",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        deleteMealMutation.mutate(id, {
+          onSuccess: () => {
+            Swal.fire("Deleted!", "The meal has been deleted.", "success");
+          },
+          onError: () => {
+            Swal.fire("Error", "Failed to delete meal.", "error");
+          },
+        });
+      }
+    });
+  };
 
   if (isLoading) return <Loader />;
   if (isError) return <p className="text-red-500">Failed to fetch meals.</p>;
 
   return (
     <div className="p-6">
-     <Helmet>
-        <title>All Meals | Dashboard</title>
-    </Helmet>
+      <Helmet>
+        <title>All Meals | HotelHub-Dashboard</title>
+      </Helmet>
+
       {/* Sorting Options */}
-      <div className="flex justify-between items-center mb-4">
+      <div className="flex flex-col md:flex-row justify-between items-center mb-4">
         <h2 className="text-2xl font-bold text-blue-600">All Meals</h2>
-        <div>
+        <div className="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-2">
           <select
             value={sortBy}
             onChange={(e) => setSortBy(e.target.value)}
@@ -75,7 +127,7 @@ const AllMealsPage = () => {
           <select
             value={order}
             onChange={(e) => setOrder(e.target.value)}
-            className="ml-2 border p-2 rounded"
+            className="border p-2 rounded"
           >
             <option value="desc">Descending</option>
             <option value="asc">Ascending</option>
@@ -90,9 +142,6 @@ const AllMealsPage = () => {
             <tr className="bg-gray-100">
               <th className="border p-2">Title</th>
               <th className="border p-2">Likes</th>
-              <th className="border p-2">Reviews</th>
-              <th className="border p-2">Rating</th>
-              <th className="border p-2">Distributor</th>
               <th className="border p-2">Actions</th>
             </tr>
           </thead>
@@ -101,31 +150,14 @@ const AllMealsPage = () => {
               <tr key={meal._id} className="text-center hover:bg-gray-50">
                 <td className="border p-2">{meal.title}</td>
                 <td className="border p-2">{meal.likes}</td>
-                <td className="border p-2">{meal.reviews_count}</td>
-                <td className="border p-2">{meal.rating}</td>
-                <td className="border p-2">
-                  {meal.distributorName || "N/A"}
-                </td>
                 <td className="border p-2 flex justify-center space-x-2">
-                  <button
-                    className="text-blue-500 hover:text-blue-700"
-                //     onClick={() => handleViewMeal(meal._id)}
-                    title="View Meal"
-                  >
+                  <button className="text-blue-500 hover:text-blue-700" onClick={() => handleViewMeal(meal._id)}>
                     <FaEye />
                   </button>
-                  <button
-                    className="text-yellow-500 hover:text-yellow-700"
-                //     onClick={() => handleUpdateMeal(meal._id)}
-                    title="Update Meal"
-                  >
+                  <button className="text-yellow-500 hover:text-yellow-700" onClick={() => handleOpenUpdateModal(meal)}>
                     <FaEdit />
                   </button>
-                  <button
-                    className="text-red-500 hover:text-red-700"
-                //     onClick={() => handleDeleteMeal(meal._id)}
-                    title="Delete Meal"
-                  >
+                  <button className="text-red-500 hover:text-red-700" onClick={() => handleDeleteMeal(meal._id)}>
                     <FaTrash />
                   </button>
                 </td>
@@ -134,6 +166,21 @@ const AllMealsPage = () => {
           </tbody>
         </table>
       </div>
+
+      {/* Update Meal Modal */}
+      {isModalOpen && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+          <div className="bg-white p-6 rounded-lg w-96">
+            <h3 className="text-lg font-bold mb-4">Update Meal</h3>
+            <form onSubmit={handleUpdateMeal} className="space-y-3">
+              <input type="text" name="title" value={formData.title} onChange={handleChange} className="w-full p-2 border rounded" required />
+              <input type="number" name="likes" value={formData.likes} onChange={handleChange} className="w-full p-2 border rounded" required />
+              <button type="submit" className="w-full bg-blue-500 text-white p-2 rounded">Update</button>
+            </form>
+            <button onClick={() => setIsModalOpen(false)} className="mt-3 text-red-500">Cancel</button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

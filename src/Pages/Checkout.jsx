@@ -1,6 +1,7 @@
 import { useLocation } from "react-router-dom";
 import { motion } from "framer-motion";
 import Typewriter from "typewriter-effect";
+import { Helmet } from "react-helmet-async";
 
 const Checkout = () => {
   const { state } = useLocation(); // Get the state passed from the Membership page
@@ -12,6 +13,9 @@ const Checkout = () => {
 
   return (
     <div className="flex justify-center items-center min-h-screen bg-gray-50 py-10 px-4 sm:px-6 md:px-8">
+    <Helmet>
+        <title>Check out | HotelHub</title>
+    </Helmet>
       <div className="max-w-lg w-full bg-white rounded-lg shadow-lg p-8 space-y-6">
         {/* Title with Framer Motion and Typewriter.js */}
         <motion.h2

@@ -20,6 +20,7 @@ const MealsTabs = () => {
 
   return (
     <div className="px-4 md:px-10 py-10 bg-gray-50">
+    <h2 className="font-poppins text-2xl lg:text-3xl font-bold text-blue-600 text-center">Meals By Category</h2>
       <section className="my-10 max-w-6xl mx-auto">
         <Tabs>
           {/* Tab List */}
@@ -36,11 +37,14 @@ const MealsTabs = () => {
           </TabList>
 
           {/* Tab Panels */}
+         
+         
           {categories.map((cat, index) => (
             <TabPanel key={index}>
               <MealsCategoryTab key={cat._id} items={groupedMeals[cat]} />
             </TabPanel>
           ))}
+         
         </Tabs>
       </section>
     </div>
