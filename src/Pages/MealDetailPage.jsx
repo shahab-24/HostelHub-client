@@ -52,6 +52,11 @@ const MealDetailPage = () => {
 //   like button=================================
   const handleLike = useMutation({
     mutationFn: async () => {
+        if (!user) {
+                toast.error("You must be logged in to like this meal.");
+                return;
+              }
+
       if (meal?.likedBy?.includes(user?.email)) {
         throw new Error("You have already liked this meal.");
       }
@@ -76,6 +81,10 @@ const MealDetailPage = () => {
 //   add review button======================
   const handleAddReview = useMutation({
     mutationFn: async () => {
+        if (!user) {
+                toast.error("You must be logged in to add a review.");
+                return;
+              }
       const payload = {
         mealId: id,
         comment: reviewText,
@@ -101,6 +110,10 @@ const MealDetailPage = () => {
   const handleEditReview = useMutation({
         mutationFn: async (updatedReview) => {
           try {
+                if (!user) {
+                        toast.error("You must be logged in to edit this review.");
+                        return;
+                      }
             const response = await axiosSecure.patch(
               `/api/reviews/${updatedReview.id}`,
               updatedReview
@@ -126,6 +139,10 @@ const MealDetailPage = () => {
 //       delete review button=======================
   const deleteReview = useMutation({
     mutationFn: async (reviewId) => {
+        if (!user) {
+                toast.error("You must be logged in to delete this meal.");
+                return;
+              }
       await axiosSecure.delete(`/api/reviews/${reviewId}`);
     },
     onSuccess: () => {
@@ -142,6 +159,10 @@ const MealDetailPage = () => {
   const handleMealRequest = useMutation({
         mutationFn: async () => {
           // Confirm the user's action before proceeding
+          if (!user) {
+                toast.error("You must be logged in to request this meal.");
+                return;
+              }
           const result = await Swal.fire({
             title: "Request Meal?",
             text: "Do you want to request this meal?",
