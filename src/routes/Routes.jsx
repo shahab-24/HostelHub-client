@@ -28,6 +28,7 @@ import PaymentHistory from "../Pages/PaymentHistory";
 import UpcomingMealForm from "../Components/UpcomingMealForm";
 import PublishMeals from "../Components/PublishMeals";
 import MealsUpcomingPage from "../Pages/MealsUpcomingPage";
+import AdminRoute from "./AdminRoute";
 
 export const router = createBrowserRouter([
   {
@@ -77,41 +78,41 @@ export const router = createBrowserRouter([
      
       {
         path: "user-profile",
-        element: <UserProfile></UserProfile>,
+        element: <AdminRoute><UserProfile></UserProfile></AdminRoute>,
       },
       {
         path: "admin/manage-users",
-        element: <UserManagement></UserManagement>,
+        element: <AdminRoute><UserManagement></UserManagement></AdminRoute>,
       },
      
       {
         path: "admin/profile",
-        element: <AdminProfile></AdminProfile>,
+        element: <AdminRoute><AdminProfile></AdminProfile></AdminRoute>,
       },
      
       {
         path: "admin/add-meals",
-        element: <MealForm></MealForm>,
+        element: <AdminRoute><MealForm></MealForm></AdminRoute>,
       },
       {
         path: "admin/all-meals",
-        element: <AllMealsPage></AllMealsPage>,
+        element: <AdminRoute><AllMealsPage></AllMealsPage></AdminRoute>,
       },
       {
         path: "admin/all-reviews",
-        element: <AllReviews></AllReviews>,
+        element: <AdminRoute><AllReviews></AllReviews></AdminRoute>,
       },
       {
         path: "admin/serve-meals",
-        element: <ServeMeals></ServeMeals>,
+        element:<AdminRoute> <ServeMeals></ServeMeals></AdminRoute>,
       },
       {
         path: 'admin/upcoming-meals-form',
-        element: <UpcomingMealForm></UpcomingMealForm>
+        element: <AdminRoute><UpcomingMealForm></UpcomingMealForm></AdminRoute>
       },
       {
         path: 'admin/publish-meals',
-        element: <PublishMeals></PublishMeals>
+        element: <AdminRoute><PublishMeals></PublishMeals></AdminRoute>
       },
 //       {
 //         path: "admin/upcoming-meals",
