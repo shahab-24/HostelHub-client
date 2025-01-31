@@ -124,7 +124,7 @@ export const router = createBrowserRouter([
 //       },
 //       user related routes==================
       {
-        path: 'user-profile',
+        path: 'Meal-user-profile',
         element: <UserProfile></UserProfile>
       },
       {

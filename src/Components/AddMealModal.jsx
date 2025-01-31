@@ -138,8 +138,10 @@ const AddMealModal = ({ isOpen, onClose, refetch }) => {
               <option value="Breakfast">Breakfast</option>
               <option value="Lunch">Lunch</option>
               <option value="Dinner">Dinner</option>
+              <option value="Dessert">Dessert</option>
               
-              <option value="dessert">Dessert</option>
+           
+              
             </select>
             {errors.category && (
               <p className="text-red-500 text-sm">{errors.category.message}</p>

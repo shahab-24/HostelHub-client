@@ -136,7 +136,7 @@ const MealForm = () => {
               <option value="Breakfast">Breakfast</option>
               <option value="Lunch">Lunch</option>
               <option value="Dinner">Dinner</option>
-              <option value="All-meals">All Meals</option>
+              <option value="Dessert">Dessert</option>
              
             </select>
             {errors.category && (
