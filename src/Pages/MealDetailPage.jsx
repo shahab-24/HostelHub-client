@@ -18,7 +18,7 @@ const MealDetailPage = () => {
   const [editText, setEditText] = useState("");
   const [editRating, setEditRating] = useState(0);
 
-  const axiosPublic = useAxiosPublic();
+//   const axiosPublic = useAxiosPublic();
   const axiosSecure = useAxiosSecure();
   const queryClient = useQueryClient();
   const { id } = useParams();
@@ -35,7 +35,7 @@ const MealDetailPage = () => {
   } = useQuery({
     queryKey: ["meal", id],
     queryFn: async () => {
-      const { data } = await axiosPublic(`/api/meals/${id}`);
+      const { data } = await axiosSecure(`/api/meals/${id}`);
       return data;
     },
   });
@@ -43,7 +43,7 @@ const MealDetailPage = () => {
   const { data: reviews } = useQuery({
     queryKey: ["reviews", id],
     queryFn: async () => {
-      const response = await axiosPublic(`/api/reviews/${id}`);
+      const response = await axiosSecure(`/api/reviews/${id}`);
       return response.data;
     },
   });
