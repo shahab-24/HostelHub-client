@@ -53,7 +53,7 @@ const Testimonials = () => {
               alt={testimonial.name}
               className="w-20 h-20 mx-auto rounded-full border-4 border-blue-400 shadow-md"
             />
-            <p className="text-gray-600 italic my-4">"{testimonial.text}"</p>
+            <p className="text-gray-600 italic my-4">{testimonial.text}</p>
             <h3 className="text-lg font-semibold text-gray-800">{testimonial.name}</h3>
             <p className="text-blue-500 font-medium">{testimonial.room}</p>
           </motion.div>
