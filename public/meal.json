@@ -150,7 +150,7 @@
           ]
         },
         {
-          "category": "All Meals",
+          "category": "Breakfast",
           "mealName": "Veggie Wrap",
           "image": "https://i.ibb.co.com/MBL1ds8/vaggie.jpg",
           "distributor": "Wrap & Roll",
@@ -175,7 +175,7 @@
           ]
         },
         {
-          "category": "All Meals",
+          "category": "Desset",
           "mealName": "Fruit Salad",
           "image": "https://i.ibb.co.com/5Wn8jpX/fruit.jpg",
           "distributor": "Fresh Bowls",

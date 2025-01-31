@@ -20,7 +20,7 @@ const MealForm = () => {
     title: yup.string().required("Meal title is required"),
     category: yup
       .string()
-      .oneOf(["Breakfast", "Lunch", "Dinner", "All-meals", "Snack"], "Invalid category")
+      .oneOf(["Breakfast", "Lunch", "Dinner", "Dessert"], "Invalid category")
       .required("Category is required"),
     image: yup.mixed().required("Image is required"),
     ingredients: yup.string().required("Ingredients are required"),
@@ -74,7 +74,7 @@ const MealForm = () => {
       };
 
       await axiosSecure.post("/api/meals", mealData);
-      console.log("Meal Data:", data);
+//       console.log("Meal Data:", data);
       toast.success("Meal added successfully!");
 
       reset();

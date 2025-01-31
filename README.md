@@ -6,15 +6,15 @@ _A MERN Stack project for efficient hostel meal management_
 ---
 
 ## 🚀 Live Demo
-🔗 [Live Site URL](#) *([](https://hostelhub-f7524.web.app))*  
+🔗 [Live Site URL](#) https://hostelhub-f7524.web.app  
 
 ## 🔑 Admin Credentials
 - **Email:** `tahmid@gmail.com`
 - **Password:** `Asdf@123` 
 
 ## 📂 Project Repositories
-- **Frontend Repo:** [GitHub Link](#) [*()](https://github.com/Programming-Hero-Web-Course4/b10a12-client-side-shahab-24)*
-- **Backend Repo:** [GitHub Link](#) *[()](https://github.com/Programming-Hero-Web-Course4/b10a12-server-side-shahab-24)*
+- **Frontend Repo:** [GitHub Link](#)https://github.com/Programming-Hero-Web-Course4/b10a12-client-side-shahab-24
+- **Backend Repo:** [GitHub Link](#)https://github.com/Programming-Hero-Web-Course4/b10a12-server-side-shahab-24
 
 ---
 

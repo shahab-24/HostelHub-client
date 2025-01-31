@@ -88,6 +88,7 @@ const MealsPage = () => {
           <option value="Breakfast">Breakfast</option>
           <option value="Lunch">Lunch</option>
           <option value="Dinner">Dinner</option>
+          <option value="Dessert">Dessert</option>
         </select>
         <input
           type="number"
