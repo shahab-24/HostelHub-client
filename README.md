@@ -1,8 +1,9 @@
 # 📌 **HostelHub** - Hostel Management System  
 _A MERN Stack project for efficient hostel meal management_
+_HostelHub is a MERN stack-based hostel meal management system that helps students and admins efficiently manage daily meals. It features user authentication, meal reviews, upcoming meal previews, dynamic meal requests, Stripe payment integration, and an admin dashboard for managing users and meals. The platform ensures a seamless experience with a responsive UI, real-time notifications, and secure authentication using Firebase and JWT. 🚀_
 
-![HostelHub Banner](https://ibb.co.com/vv3qV6HB)  
-*(Replace with your actual banner image URL)*
+![HostelHub Banner](https://i.ibb.co.com/Kz2hbpXG/screencapture-hostelhub-f7524-web-app-2025-02-05-06-46-21.png)  
+
 
 ---
 
@@ -11,7 +12,7 @@ _A MERN Stack project for efficient hostel meal management_
 
 ## 🔑 **Admin Credentials**
 - **Email:** `tahmid@gmail.com`
-- **Password:** `Asdf@123` 
+- **Password:** `Asdf@123`
 
 ## 📂 **Project Repositories**
 - **Frontend Repo:** [GitHub Link](https://github.com/shahab-24/HostelHub-client)
@@ -29,7 +30,7 @@ _A MERN Stack project for efficient hostel meal management_
 ✔ **Persistent Login** – Users remain logged in even after page refresh.  
 ✔ **Mobile Responsive UI** – Optimized for **desktop, tablet, and mobile**.  
 ✔ **Real-time Notifications** – Sweet alerts & toast notifications for user interactions.  
-✔ **Advanced Data Fetching** – Implemented with **TanStack Query** for efficient API calls.  
+✔ **Advanced Data Fetching** – Implemented with **TanStack Query** for efficient API calls.
 
 ---
 
@@ -38,7 +39,7 @@ _A MERN Stack project for efficient hostel meal management_
 🔹 **Backend:** Node.js 🟢 | Express.js 🚀 | MongoDB 🍃 | JWT 🔐  
 🔹 **Authentication:** Firebase 🔥 | JWT Token 📛  
 🔹 **Payments:** Stripe 💳  
-🔹 **Deployment:** Netlify 🌍 (Frontend) | Vercel ⚡ (Backend)  
+🔹 **Deployment:** Netlify 🌍 (Frontend) | Vercel ⚡ (Backend)
 
 ---
 
@@ -47,6 +48,7 @@ _A MERN Stack project for efficient hostel meal management_
 ```sh
 git clone https://github.com/shahab-24/HostelHub-client
 git clone https://github.com/shahab-24/HostelHub-server
+
 
 2️⃣ Install dependencies:
 
@@ -57,6 +59,17 @@ cd frontend && npm install
 cd ../backend && npm install
 3️⃣ Set up .env files for Firebase, MongoDB, and JWT keys.
 
+env
+Copy
+Edit
+VITE_apiKey=import.meta.env.VITE_apiKey
+VITE_authDomain=import.meta.env.VITE_authDomain
+VITE_projectId=import.meta.env.VITE_projectId
+VITE_storageBucket=import.meta.env.VITE_storageBucket
+VITE_messagingSenderId=import.meta.env.VITE_messagingSenderId
+VITE_appId=import.meta.env.VITE_appId
+VITE_IMGBB_API_KEY=import.meta.env.VITE_IMGBB_API_KEY
+VITE_API_URL=import.meta.env.VITE_API_URL
 4️⃣ Run the project:
 
 sh
@@ -67,20 +80,18 @@ npm run dev
 
 # Start backend
 npm run server
-📸 Screenshot
 
-(Replace with your actual screenshot)
 
 🧑‍💻 Technologies & Dependencies Used
-Frontend Dependencies:
+🎨 Frontend Dependencies:
+📌 React.js, React Router, Axios, TanStack Query, Tailwind CSS, DaisyUI, React Icons, React Toastify, React Hook Form, Swiper.js, React Select, and more.
 
-react, react-dom, react-router-dom, axios, react-toastify, react-icons, react-hook-form, react-modal, react-stripe-checkout, swiper, react-select, and more.
-Backend Dependencies:
+🛠️ Backend Dependencies:
+🟢 Express.js, MongoDB, Mongoose, Firebase Admin, JWT, Cors, Dotenv, Helmet, Stripe, and more.
 
-express, mongodb, jsonwebtoken, firebase-admin, helmet, and more.
-Dev Dependencies:
+🛠️ Dev Dependencies:
+⚙ Vite, ESLint, Prettier, Nodemon, Tailwind CSS, DaisyUI, React Scripts, and more.
 
-eslint, vite, tailwindcss, daisyui, eslint-plugin-react, react-scripts, and more.
 🌍 Live Project & Resources
 🔗 Live Demo
 
