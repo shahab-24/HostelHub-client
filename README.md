@@ -1,55 +1,90 @@
-# 📌 HostelHub - Hostel Management System  
+# 📌 **HostelHub** - Hostel Management System  
+_A MERN Stack project for efficient hostel meal management_
 
-🚀 **A MERN Stack project for efficient hostel meal management.**  
-A user-friendly platform that simplifies **meal planning**, **student meal management**, and **secure payments** for hostels.
-
----
-
-## 🖼️ Project Banner  
-![HostelHub Banner](screencapture-hostelhub-f7524-web-app-2025-02-05-06_46_21.png)
+![HostelHub Banner](https://ibb.co.com/vv3qV6HB)  
+*(Replace with your actual banner image URL)*
 
 ---
 
-## 🌐 Live Demo  
-🔗 **[HostelHub - Live Site](https://hostelhub-f7524.web.app/)**  
+## 🚀 **Live Demo**  
+🔗 [Live Site URL](https://hostelhub-f7524.web.app)
 
-🔑 **Admin Credentials:**  
-- **Email:** `tahmid@gmail.com`  
-- **Password:** `Asdf@123`  
+## 🔑 **Admin Credentials**
+- **Email:** `tahmid@gmail.com`
+- **Password:** `Asdf@123` 
 
----
-
-## 📌 Key Features  
-
-✅ **Student Meal Management** – View, select, and review meals  
-✅ **Admin Dashboard** – Manage users, meals, reviews, and payments  
-✅ **Upcoming Meals Section** – Preview & like upcoming meal plans  
-✅ **Secure Authentication** – Firebase login, JWT authentication  
-✅ **Payment Integration** – Stripe for secure transactions  
-✅ **Real-time Notifications** – Alerts & toasts for user interactions  
-✅ **Mobile Responsive UI** – Fully optimized for all devices  
+## 📂 **Project Repositories**
+- **Frontend Repo:** [GitHub Link](https://github.com/shahab-24/HostelHub-client)
+- **Backend Repo:** [GitHub Link](https://github.com/shahab-24/HostelHub-server)
 
 ---
 
-## ⚙️ Tech Stack  
-
-| Frontend | Backend | Database | Authentication | Payments |
-|----------|---------|----------|---------------|----------|
-| React.js ⚛ | Node.js 🟢 | MongoDB 🍃 | Firebase 🔥 | Stripe 💳 |
-| Tailwind CSS 🎨 | Express.js 🚀 | Mongoose 📄 | JWT 🔐 | - |
-
----
-
-## 📂 Project Repositories  
-
-🔹 **Frontend Repo:** [GitHub Link](https://github.com/shahab-24/HostelHub-client)  
-🔹 **Backend Repo:** [GitHub Link](https://github.com/shahab-24/HostelHub-server)  
+## 📌 **Key Features**
+✔ **User Authentication** – Secure login, registration, and social authentication (Firebase).  
+✔ **Admin Dashboard** – Manage users, meals, reviews, and subscriptions.  
+✔ **Student Meal Reviews** – Students can review and like meals.  
+✔ **Dynamic Meal Management** – Filter, sort, and request meals.  
+✔ **Upcoming Meals** – Preview and like upcoming meal plans.  
+✔ **Payment Integration** – Secure payments using **Stripe**.  
+✔ **Persistent Login** – Users remain logged in even after page refresh.  
+✔ **Mobile Responsive UI** – Optimized for **desktop, tablet, and mobile**.  
+✔ **Real-time Notifications** – Sweet alerts & toast notifications for user interactions.  
+✔ **Advanced Data Fetching** – Implemented with **TanStack Query** for efficient API calls.  
 
 ---
 
-## 🛠 Installation & Setup  
+## ⚙ **Tech Stack & Tools**  
+🔹 **Frontend:** React.js ⚛ | Tailwind CSS 🎨 | DaisyUI 🌼 | TanStack Query 📦  
+🔹 **Backend:** Node.js 🟢 | Express.js 🚀 | MongoDB 🍃 | JWT 🔐  
+🔹 **Authentication:** Firebase 🔥 | JWT Token 📛  
+🔹 **Payments:** Stripe 💳  
+🔹 **Deployment:** Netlify 🌍 (Frontend) | Vercel ⚡ (Backend)  
 
+---
+
+## 🛠️ **Installation & Setup**
+1️⃣ Clone the repositories:  
 ```sh
-# Clone the repositories
 git clone https://github.com/shahab-24/HostelHub-client
 git clone https://github.com/shahab-24/HostelHub-server
+
+2️⃣ Install dependencies:
+
+sh
+Copy
+Edit
+cd frontend && npm install
+cd ../backend && npm install
+3️⃣ Set up .env files for Firebase, MongoDB, and JWT keys.
+
+4️⃣ Run the project:
+
+sh
+Copy
+Edit
+# Start frontend
+npm run dev
+
+# Start backend
+npm run server
+📸 Screenshot
+
+(Replace with your actual screenshot)
+
+🧑‍💻 Technologies & Dependencies Used
+Frontend Dependencies:
+
+react, react-dom, react-router-dom, axios, react-toastify, react-icons, react-hook-form, react-modal, react-stripe-checkout, swiper, react-select, and more.
+Backend Dependencies:
+
+express, mongodb, jsonwebtoken, firebase-admin, helmet, and more.
+Dev Dependencies:
+
+eslint, vite, tailwindcss, daisyui, eslint-plugin-react, react-scripts, and more.
+🌍 Live Project & Resources
+🔗 Live Demo
+
+📧 Contact & Support
+💌 For any issues or inquiries, feel free to reach out via GitHub or email.
+
+💡 If you find this project useful, please consider giving it a ⭐!
