@@ -29,12 +29,23 @@
             color: #e74c3c;
             font-weight: bold;
         }
+        img {
+            width: 100%;
+            max-width: 900px;
+            display: block;
+            margin: 20px auto;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
     </style>
 </head>
 <body>
 
 <h1>📌 HostelHub - Hostel Management System</h1>
 <p><em>A MERN Stack project for efficient hostel meal management</em></p>
+
+<!-- Banner Image -->
+<img src="screencapture-hostelhub-f7524-web-app-2025-02-05-06_46_21.png" alt="HostelHub Banner">
 
 <hr>
 
