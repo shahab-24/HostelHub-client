@@ -37,87 +37,107 @@
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
+        .container {
+            max-width: 1000px;
+            margin: auto;
+            padding: 20px;
+        }
+        .features, .tech-stack {
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
     </style>
 </head>
 <body>
 
-<h1>📌 HostelHub - Hostel Management System</h1>
-<p><em>A MERN Stack project for efficient hostel meal management</em></p>
+<div class="container">
+    <h1>📌 HostelHub - Hostel Management System</h1>
+    <p><strong>A MERN Stack project for efficient hostel meal management.</strong></p>
 
-<!-- Banner Image -->
-<img src="screencapture-hostelhub-f7524-web-app-2025-02-05-06_46_21.png" alt="HostelHub Banner">
+    <img src="screencapture-hostelhub-f7524-web-app-2025-02-05-06_46_21.png" alt="HostelHub Banner">
 
-<hr>
+    <h2>🚀 Live Demo</h2>
+    <p>🔗 <a href="https://hostelhub-f7524.web.app/">HostelHub - Live Site</a></p>
 
-<h2>🚀 Live Demo</h2>
-<p>🔗 <a href="https://hostelhub-f7524.web.app" target="_blank">Live Site</a></p>
+    <h2>🔑 Admin Credentials</h2>
+    <ul>
+        <li><strong>Email:</strong> tahmid@gmail.com</li>
+        <li><strong>Password:</strong> Asdf@123</li>
+    </ul>
 
-<h2>🔑 Admin Credentials</h2>
-<ul>
-    <li><strong>Email:</strong> <code>tahmid@gmail.com</code></li>
-    <li><strong>Password:</strong> <code>Asdf@123</code></li>
-</ul>
+    <div class="features">
+        <h2>📌 Features</h2>
+        <ul>
+            <li>✅ <strong>Student Meal Management</strong> – View, select, and review meals</li>
+            <li>✅ <strong>Admin Dashboard</strong> – Manage users, meals, reviews, and payments</li>
+            <li>✅ <strong>Upcoming Meals Section</strong> – Preview & like upcoming meal plans</li>
+            <li>✅ <strong>Secure Authentication</strong> – Firebase login, JWT authentication</li>
+            <li>✅ <strong>Payment Integration</strong> – Stripe for secure transactions</li>
+            <li>✅ <strong>Real-time Notifications</strong> – Alerts & toasts for user interactions</li>
+            <li>✅ <strong>Mobile Responsive UI</strong> – Fully optimized for all devices</li>
+        </ul>
+    </div>
 
-<h2>📂 Project Repositories</h2>
-<ul>
-    <li>Frontend Repo: <a href="https://github.com/shahab-24/HostelHub-client" target="_blank">GitHub Link</a></li>
-    <li>Backend Repo: <a href="https://github.com/shahab-24/HostelHub-server" target="_blank">GitHub Link</a></li>
-</ul>
+    <div class="tech-stack">
+        <h2>⚙ Tech Stack</h2>
+        <table border="1" cellpadding="8" cellspacing="0">
+            <tr>
+                <th>Frontend</th>
+                <th>Backend</th>
+                <th>Database</th>
+                <th>Auth</th>
+                <th>Payments</th>
+            </tr>
+            <tr>
+                <td>React.js ⚛</td>
+                <td>Node.js 🟢</td>
+                <td>MongoDB 🍃</td>
+                <td>Firebase 🔥</td>
+                <td>Stripe 💳</td>
+            </tr>
+            <tr>
+                <td>Tailwind CSS 🎨</td>
+                <td>Express.js 🚀</td>
+                <td>Mongoose 📄</td>
+                <td>JWT 🔐</td>
+                <td>-</td>
+            </tr>
+        </table>
+    </div>
 
-<hr>
+    <h2>📂 Project Repositories</h2>
+    <ul>
+        <li>🔹 <a href="https://github.com/shahab-24/HostelHub-client">Frontend Repo</a></li>
+        <li>🔹 <a href="https://github.com/shahab-24/HostelHub-server">Backend Repo</a></li>
+    </ul>
 
-<h2>📌 Key Features</h2>
-<ul>
-    <li>✔ <span class="highlight">User Authentication</span> – Secure login, registration, and social authentication (Firebase).</li>
-    <li>✔ <span class="highlight">Admin Dashboard</span> – Manage users, meals, reviews, and subscriptions.</li>
-    <li>✔ <span class="highlight">Student Meal Reviews</span> – Students can review and like meals.</li>
-    <li>✔ <span class="highlight">Dynamic Meal Management</span> – Filter, sort, and request meals.</li>
-    <li>✔ <span class="highlight">Upcoming Meals</span> – Preview and like upcoming meal plans.</li>
-    <li>✔ <span class="highlight">Payment Integration</span> – Secure payments using Stripe.</li>
-    <li>✔ <span class="highlight">Persistent Login</span> – Users remain logged in even after page refresh.</li>
-    <li>✔ <span class="highlight">Mobile Responsive UI</span> – Optimized for desktop, tablet, and mobile.</li>
-    <li>✔ <span class="highlight">Real-time Notifications</span> – Sweet alerts & toast notifications for user interactions.</li>
-    <li>✔ <span class="highlight">Advanced Data Fetching</span> – Implemented with TanStack Query for efficient API calls.</li>
-</ul>
-
-<hr>
-
-<h2>⚙ Tech Stack & Tools</h2>
-<ul>
-    <li>🔹 <strong>Frontend:</strong> React.js ⚛ | Tailwind CSS 🎨 | DaisyUI 🌼 | TanStack Query 📦</li>
-    <li>🔹 <strong>Backend:</strong> Node.js 🟢 | Express.js 🚀 | MongoDB 🍃 | JWT 🔐</li>
-    <li>🔹 <strong>Authentication:</strong> Firebase 🔥 | JWT Token 📛</li>
-    <li>🔹 <strong>Payments:</strong> Stripe 💳</li>
-    <li>🔹 <strong>Deployment:</strong> Netlify 🌍 (Frontend) | Vercel ⚡ (Backend)</li>
-</ul>
-
-<hr>
-
-<h2>🛠️ Installation & Setup</h2>
-<ol>
-    <li><strong>Clone the repositories:</strong></li>
-    <pre><code>git clone https://github.com/shahab-24/HostelHub-client
+    <h2>🛠 Installation & Setup</h2>
+    <ol>
+        <li><strong>Clone the repositories:</strong>
+            <pre><code>git clone https://github.com/shahab-24/HostelHub-client
 git clone https://github.com/shahab-24/HostelHub-server</code></pre>
-
-    <li><strong>Install dependencies:</strong></li>
-    <pre><code>cd frontend && npm install
+        </li>
+        <li><strong>Install dependencies:</strong>
+            <pre><code>cd frontend && npm install
 cd ../backend && npm install</code></pre>
-
-    <li><strong>Set up <code>.env</code> files for Firebase, MongoDB, and JWT keys.</strong></li>
-
-    <li><strong>Run the project:</strong></li>
-    <pre><code># Start frontend
+        </li>
+        <li><strong>Set up environment variables (.env files) for Firebase, MongoDB, and JWT keys.</strong></li>
+        <li><strong>Run the project:</strong>
+            <pre><code># Start frontend
 npm run dev
 
 # Start backend
 npm run server</code></pre>
-</ol>
+        </li>
+    </ol>
 
-<hr>
+    <h2>📧 Contact & Support</h2>
+    <p>If you have any issues, feel free to reach out!</p>
+    <p>💡 <strong>Like this project? Give it a ⭐ on GitHub!</strong> 🚀</p>
 
-<h2>📧 Contact & Support</h2>
-<p>💌 If you have any issues, feel free to reach out!</p>
-<p>💡 <em>Give this project a ⭐ if you find it useful!</em> 🚀</p>
+</div>
 
 </body>
 </html>
