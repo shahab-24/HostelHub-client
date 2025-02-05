@@ -3,52 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>📌 HostelHub - Hostel Management System</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 40px;
-            background-color: #f9f9f9;
-            color: #333;
-        }
-        h1, h2 {
-            color: #2c3e50;
-        }
-        code {
-            background-color: #eaeaea;
-            padding: 3px 6px;
-            border-radius: 5px;
-        }
-        pre {
-            background-color: #eaeaea;
-            padding: 10px;
-            border-radius: 5px;
-            overflow-x: auto;
-        }
-        .highlight {
-            color: #e74c3c;
-            font-weight: bold;
-        }
-        img {
-            width: 100%;
-            max-width: 900px;
-            display: block;
-            margin: 20px auto;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-        }
-        .container {
-            max-width: 1000px;
-            margin: auto;
-            padding: 20px;
-        }
-        .features, .tech-stack {
-            background: #fff;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        }
-    </style>
+    
 </head>
 <body>
 
