@@ -7,6 +7,7 @@ const BannerSection = () => {
   const axiosPublic = useAxiosPublic();
   const [banners, setBanners] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [firstLoad, setFirstLoad] = useState(true);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -17,11 +18,14 @@ const BannerSection = () => {
   }, [axiosPublic]);
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentIndex((prev) => (prev + 1) % banners.length);
-    }, 5000); // Change every 5 seconds
+    if (banners.length > 0) {
+      const interval = setInterval(() => {
+        setFirstLoad(false);
+        setCurrentIndex((prev) => (prev + 1) % banners.length);
+      }, 5000); // Change every 5 seconds
 
-    return () => clearInterval(interval);
+      return () => clearInterval(interval);
+    }
   }, [banners.length]);
 
   const handleSearch = (e) => {
@@ -35,12 +39,16 @@ const BannerSection = () => {
       <AnimatePresence mode="wait">
         {banners.length > 0 && (
           <motion.div
-            key={banners[currentIndex]?.id}
+            key={banners[currentIndex]?.id || currentIndex}
             className="absolute inset-0 w-full h-full flex items-center justify-center bg-cover bg-center"
             style={{ backgroundImage: `url(${banners[currentIndex]?.image})` }}
-            initial={{ opacity: 0, scale: 1.3 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.8 }}
+            initial={
+              firstLoad
+                ? { opacity: 0, rotateX: -90, scaleY: 0 }
+                : { opacity: 0, rotateY: 90, scale: 0.8 }
+            }
+            animate={{ opacity: 1, rotateX: 0, rotateY: 0, scale: 1 }}
+            exit={{ opacity: 0, rotateY: -90, scale: 0.8 }}
             transition={{ duration: 1.5, ease: "easeInOut" }}
           >
             {/* Dark Overlay */}
@@ -51,7 +59,7 @@ const BannerSection = () => {
               {/* Title */}
               <motion.h1
                 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-6"
-                initial={{ opacity: 0, y: -40, scale: 0.8 }}
+                initial={{ opacity: 0, y: -50, scale: 0.8 }}
                 animate={{ opacity: 1, y: 0, scale: 1 }}
                 transition={{ duration: 1, delay: 0.3, type: "spring", stiffness: 100 }}
               >
