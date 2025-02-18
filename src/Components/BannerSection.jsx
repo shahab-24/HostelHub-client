@@ -1,27 +1,29 @@
-import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { motion } from 'framer-motion';
-import 'animate.css';
-
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { Autoplay, Pagination, Navigation } from 'swiper/modules';
-import 'swiper/css';
-import 'swiper/css/pagination';
-import 'swiper/css/navigation';
-import useAxiosPublic from '../hooks/useAxiosPublic';
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { motion, AnimatePresence } from "framer-motion";
+import useAxiosPublic from "../hooks/useAxiosPublic";
 
 const BannerSection = () => {
-        const axiosPublic = useAxiosPublic()
+  const axiosPublic = useAxiosPublic();
   const [banners, setBanners] = useState([]);
+  const [currentIndex, setCurrentIndex] = useState(0);
   const navigate = useNavigate();
 
   useEffect(() => {
-    axiosPublic.get('/api/meals')
-      .then(response => setBanners(response.data))
-      .catch(error => console.error('Error fetching banner data:', error));
+    axiosPublic
+      .get("/api/meals")
+      .then((response) => setBanners(response.data.meals || []))
+      .catch((error) => console.error("Error fetching banner data:", error));
   }, [axiosPublic]);
 
-//   console.log(banners.meals)
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentIndex((prev) => (prev + 1) % banners.length);
+    }, 5000); // Change every 5 seconds
+
+    return () => clearInterval(interval);
+  }, [banners.length]);
+
   const handleSearch = (e) => {
     e.preventDefault();
     const query = e.target.search.value;
@@ -29,59 +31,70 @@ const BannerSection = () => {
   };
 
   return (
-    <div className="relative w-full h-screen text-white pt-20">
-      {banners?.meals?.length > 0 && (
-        <Swiper
-          modules={[Autoplay, Pagination, Navigation]}
-          autoplay={{ delay: 5000, disableOnInteraction: false }}
-          pagination={{ clickable: true }}
-          navigation
-          className="w-full h-full"
-        >
-          {banners?.meals?.map((banner, index) => (
-            <SwiperSlide key={index}>
-              <div
-                className="relative flex items-center justify-center h-screen bg-cover bg-center"
-                style={{ backgroundImage: `url(${banner.image})` }}
+    <div className="relative w-full h-screen text-white overflow-hidden">
+      <AnimatePresence mode="wait">
+        {banners.length > 0 && (
+          <motion.div
+            key={banners[currentIndex]?.id}
+            className="absolute inset-0 w-full h-full flex items-center justify-center bg-cover bg-center"
+            style={{ backgroundImage: `url(${banners[currentIndex]?.image})` }}
+            initial={{ opacity: 0, scale: 1.3 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.8 }}
+            transition={{ duration: 1.5, ease: "easeInOut" }}
+          >
+            {/* Dark Overlay */}
+            <div className="absolute inset-0 bg-gradient-to-b from-black/70 to-black/30"></div>
+
+            {/* Content */}
+            <div className="relative z-10 text-center px-6 max-w-3xl">
+              {/* Title */}
+              <motion.h1
+                className="text-4xl sm:text-5xl md:text-6xl font-bold mb-6"
+                initial={{ opacity: 0, y: -40, scale: 0.8 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                transition={{ duration: 1, delay: 0.3, type: "spring", stiffness: 100 }}
               >
-                <div className="absolute inset-0 bg-black bg-opacity-50"></div>
-                <div className="relative z-10 text-center px-4 max-w-3xl">
-                  <motion.h1
-                    className="text-4xl sm:text-5xl md:text-6xl font-bold mb-6 animate__animated animate__fadeIn"
-                    initial={{ opacity: 0, y: -50 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.5, duration: 1 }}
-                  >
-                    {banner.title}
-                  </motion.h1>
-                  <motion.p
-                    className="text-lg sm:text-xl md:text-2xl mb-8 animate__animated animate__fadeIn animate__delay-1s"
-                    initial={{ opacity: 0, y: -50 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 1, duration: 1 }}
-                  >
-                    {banner.description}
-                  </motion.p>
-                  <form onSubmit={handleSearch} className="flex justify-center items-center">
-                    <input
-                      type="text"
-                      name="search"
-                      placeholder="Search for meals, categories, or more..."
-                      className="input input-bordered w-2/3 sm:w-3/4 md:w-1/2 max-w-lg py-2 px-4 rounded-l-lg focus:outline-none text-black"
-                    />
-                    <button
-                      type="submit"
-                      className="btn btn-primary py-2 px-6 rounded-r-lg transition-all duration-300 ease-in-out hover:bg-blue-700"
-                    >
-                      Search
-                    </button>
-                  </form>
-                </div>
-              </div>
-            </SwiperSlide>
-          ))}
-        </Swiper>
-      )}
+                {banners[currentIndex]?.title}
+              </motion.h1>
+
+              {/* Description */}
+              <motion.p
+                className="text-lg sm:text-xl md:text-2xl mb-8"
+                initial={{ opacity: 0, x: -50 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 1, delay: 0.5 }}
+              >
+                {banners[currentIndex]?.description}
+              </motion.p>
+
+              {/* Search Bar */}
+              <motion.form
+                onSubmit={handleSearch}
+                className="flex justify-center items-center w-full max-w-lg mx-auto gap-2"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 1, delay: 0.7 }}
+              >
+                <input
+                  type="text"
+                  name="search"
+                  placeholder="Search for meals, categories..."
+                  className="w-3/4 py-2 px-4 rounded-l-lg focus:outline-none text-gray-800"
+                />
+                <motion.button
+                  type="submit"
+                  className="py-2 px-6 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-r-lg transition-all duration-300 hover:opacity-90"
+                  whileHover={{ scale: 1.1 }}
+                  whileTap={{ scale: 0.9 }}
+                >
+                  Search
+                </motion.button>
+              </motion.form>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 };

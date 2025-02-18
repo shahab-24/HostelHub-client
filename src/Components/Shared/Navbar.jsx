@@ -1,81 +1,112 @@
 import { Link, NavLink } from "react-router-dom";
+import { useState } from "react";
 import img from "../../assets/logo2.webp";
 import useAuth from "../../hooks/useAuth";
 
-
-const Navbar = ({likedMeals}) => {
+const Navbar = ({ likedMeals }) => {
   const { user, logOut } = useAuth();
- 
-
- 
+  const [isOpen, setIsOpen] = useState(false); // State for dropdown
 
   const links = (
     <>
-      <li><NavLink to="/">Home</NavLink></li>
-      <li><NavLink to="/meals">Meals</NavLink></li>
-      <li><NavLink to="/upcoming-meals">Upcoming Meals</NavLink></li>
-      <li><NavLink to="/signup">Join Us</NavLink></li>
-      <li><NavLink to="/about-me">About Me</NavLink></li>
-      <li><NavLink to="/dashboard">Dashboard</NavLink></li>
+      {[
+        { to: "/", label: "Home" },
+        { to: "/meals", label: "Meals" },
+        { to: "/upcoming-meals", label: "Upcoming" },
+        { to: "/signup", label: "Join" },
+        { to: "/about-me", label: "About" },
+        { to: "/dashboard", label: "Dashboard" },
+      ].map(({ to, label }) => (
+        <li key={to}>
+          <NavLink
+            to={to}
+            className={({ isActive }) =>
+              `block w-full px-3 py-2 text-sm font-medium transition-all duration-300 rounded-md text-center ${
+                isActive
+                  ? "bg-gradient-to-r from-blue-500 to-purple-500 text-white shadow-md scale-100"
+                  : "text-gray-300 hover:text-white hover:bg-gray-700"
+              }`
+            }
+          >
+            {label}
+          </NavLink>
+        </li>
+      ))}
     </>
   );
 
   return (
-    <div className="bg-base-200 fixed w-full z-50 shadow-md">
-      <div className="navbar px-4 py-3 lg:px-16 font-roboto flex justify-between items-center">
-        
+    <div className="fixed w-full z-50 shadow-lg bg-[#1E1E2F] font-['Poppins']">
+      <div className="navbar px-4 py-2 lg:px-12 flex justify-between items-center text-white">
         {/* Navbar Start */}
         <div className="flex items-center gap-2">
-          <div className="dropdown">
-            <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden" aria-label="Open Menu">
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h8m-8 6h16" />
-              </svg>
-            </div>
-            <ul tabIndex={0} className="menu menu-sm dropdown-content mt-3 z-[1] w-52 bg-base-100 rounded-box shadow">
-              {links}
-            </ul>
-          </div>
+          {/* Mobile Dropdown Button */}
+          <button
+            onClick={() => setIsOpen(!isOpen)}
+            className="lg:hidden text-white focus:outline-none"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d={isOpen ? "M6 18L18 6M6 6l12 12" : "M4 6h16M4 12h8m-8 6h16"} />
+            </svg>
+          </button>
+
+          {/* Logo */}
           <img alt="Logo" src={img} className="w-10 rounded-lg hidden lg:block" />
-          <a className="btn btn-ghost text-xl font-poppins">HostelHub</a>
+          <Link
+            to="/"
+            className="text-xl font-bold tracking-wide bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-500 animate-pulse"
+          >
+            HostelHub
+          </Link>
+        </div>
+
+        {/* Mobile Dropdown Menu */}
+        <div
+          className={`fixed top-16 left-4 bg-gray-800/95 backdrop-blur-md transition-transform duration-500 ease-in-out ${
+            isOpen ? "translate-y-0 opacity-100" : "-translate-y-10 opacity-0 pointer-events-none"
+          } lg:hidden flex flex-col justify-start items-start px-5 py-3 w-[50%] h-auto rounded-lg shadow-lg`}
+        >
+          <ul className="space-y-1">{links}</ul>
         </div>
 
         {/* Navbar Center */}
         <div className="hidden lg:flex">
-          <ul className="menu menu-horizontal px-1">{links}</ul>
+          <ul className="menu menu-horizontal space-x-3 text-sm">{links}</ul>
         </div>
 
         {/* Navbar End */}
-        <div className="flex items-center gap-4">
-          {/* Like Notification Bell */}
+        <div className="flex items-center gap-3">
+          {/* Notification Bell */}
           <div className="relative">
-          <button className="btn btn-ghost btn-circle">
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 15l7-7 7 7" />
-            </svg>
-          </button>
-          {likedMeals > 0 && (
-            <span className="badge badge-sm bg-red-500 text-white absolute top-0 right-0">
-              {likedMeals}
-            </span>
-          )}
-        </div>
+            <button className="btn btn-ghost btn-circle hover:bg-white hover:text-[#3498DB] transition-all duration-300">
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 15l7-7 7 7" />
+              </svg>
+            </button>
+            {likedMeals > 0 && (
+              <span className="badge badge-sm bg-green-500 text-white absolute top-0 right-0">
+                {likedMeals}
+              </span>
+            )}
+          </div>
 
           {/* User Profile Dropdown */}
           <div className="dropdown dropdown-end">
             <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
-              <div className="w-10 rounded-full">
+              <div className="w-9 rounded-full border border-white">
                 <img alt="User Avatar" src={user?.photoURL || "user Photo"} />
               </div>
             </div>
-            <ul tabIndex={0} className="menu menu-sm dropdown-content mt-3 z-[1] w-32 bg-base-100 rounded-box shadow">
-              <li><a>{user?.displayName || "User Name"}</a></li>
+            <ul tabIndex={0} className="menu menu-sm dropdown-content mt-2 w-36 bg-white text-gray-900 rounded-md shadow">
+              <li><span className="font-semibold">{user?.displayName || "User"}</span></li>
               <li><NavLink to="/dashboard">Dashboard</NavLink></li>
               <li>
                 {user?.email ? (
-                  <button onClick={logOut} className="btn btn-sm">Logout</button>
+                  <button onClick={logOut} className="btn btn-sm bg-red-500 hover:bg-red-700 text-white w-full">Logout</button>
                 ) : (
-                  <Link to="/login"><button className="btn btn-sm">Login</button></Link>
+                  <Link to="/login">
+                    <button className="btn btn-sm bg-green-500 hover:bg-green-700 text-white w-full">Login</button>
+                  </Link>
                 )}
               </li>
             </ul>
