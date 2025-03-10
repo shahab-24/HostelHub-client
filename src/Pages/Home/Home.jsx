@@ -6,6 +6,8 @@ import Nutrition from "../../Components/Nutrition";
 import Events from "../../Components/Events";
 import Membership from "../../Components/Membership";
 import ComingMeals from "../ComingMeals";
+import WhyChooseUs from "../../Components/WhyChooseUs";
+import FeaturedHostels from "../../Components/FeaturedHostels";
 
 const Home = () => {
   return (
@@ -20,12 +22,18 @@ const Home = () => {
     <div className="my-20">
         <ComingMeals></ComingMeals>
     </div>
+    <div className="my-20">
+        <FeaturedHostels></FeaturedHostels>
+    </div>
      
       <div className="my-20">
         <Nutrition></Nutrition>
       </div>
       <div className="my-20">
         <Events></Events>
+      </div>
+      <div className="my-20">
+        <WhyChooseUs></WhyChooseUs>
       </div>
       <div className="my-20">
         <Membership></Membership>

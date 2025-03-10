@@ -1,114 +1,56 @@
-import React, { useState } from "react";
-import Modal from "react-modal";
-import Select from "react-select";
-import { motion } from "framer-motion";
-import { AwesomeButton } from "react-awesome-button";
-import "react-awesome-button/dist/styles.css";
-import Typewriter from "typewriter-effect";
-import { Helmet } from "react-helmet-async";
-
-Modal.setAppElement("#root");
-
-const frameworksOptions = [
-  { value: "React", label: "React" },
-  { value: "Next.js", label: "Next.js" },
-  { value: "Vue.js", label: "Vue.js" },
-  { value: "Angular", label: "Angular" },
-];
-
-const librariesOptions = [
-  { value: "Redux", label: "Redux" },
-  { value: "Axios", label: "Axios" },
-  { value: "TanStack Query", label: "TanStack Query" },
-  { value: "Framer Motion", label: "Framer Motion" },
-];
+import { FaUtensils, FaChartPie, FaWallet, FaLeaf } from "react-icons/fa";
 
 const AboutMe = () => {
-  const [modalIsOpen, setModalIsOpen] = useState(false);
-  const [name, setName] = useState("Shahab Uddin");
-  const [role, setRole] = useState("Web Developer");
-  const [frameworks, setFrameworks] = useState([]);
-  const [libraries, setLibraries] = useState([]);
-
-  const openModal = () => setModalIsOpen(true);
-  const closeModal = () => setModalIsOpen(false);
-
   return (
-    <div className="container mx-auto p-4 max-w-lg relative">
-    <Helmet>
-        <title> About Me | HostelHub </title>
-      </Helmet>
-      <div className="bg-white p-6 shadow-lg rounded-lg relative z-10">
-        <h2 className="text-2xl font-bold mb-2">About Me</h2>
-        <p className="text-lg font-semibold flex items-center">Name: <span className="ml-2 font-bold text-blue-600"><Typewriter options={{ strings: name, autoStart: true, loop: true }} /></span></p>
-        <p className="text-lg">Role: {role}</p>
-        <p className="text-lg">Frameworks: {frameworks.map(f => f.label).join(", ") || "None"}</p>
-        <p className="text-lg">Libraries: {libraries.map(l => l.label).join(", ") || "None"}</p>
-        <AwesomeButton type="primary" onPress={openModal} className="mt-4 relative z-20">
-          Edit
-        </AwesomeButton>
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 p-6 pt-20">
+      <div className="max-w-4xl text-center">
+        <h1 className="text-4xl font-bold text-gray-800 mb-4">About Hostel Hub</h1>
+        <p className="text-gray-600 text-lg">
+          A smart food management platform that makes hostel meal planning and tracking easy for students and hostel admins.
+        </p>
       </div>
 
-      {/* Modal */}
-      {modalIsOpen && (
-        <motion.div 
-          initial={{ opacity: 0 }} 
-          animate={{ opacity: 1 }} 
-          exit={{ opacity: 0 }} 
-          className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-50 z-50"
-        >
-          <motion.div
-            initial={{ opacity: 0, y: -50 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -50 }}
-            className="bg-white p-6 shadow-lg rounded-lg w-full max-w-md relative"
-          >
-            <h2 className="text-xl font-bold mb-4">Edit About Me</h2>
-            <label className="block mb-2">Name:</label>
-            <input
-              type="text"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              className="input input-bordered w-full mb-4"
-            />
-            
-            <label className="block mb-2">Role:</label>
-            <input
-              type="text"
-              value={role}
-              onChange={(e) => setRole(e.target.value)}
-              className="input input-bordered w-full mb-4"
-            />
+      <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mt-8">
+        {/* Meal Management Card */}
+        <div className="bg-white p-6 rounded-2xl shadow-lg hover:shadow-xl transition">
+          <FaUtensils className="text-4xl text-blue-500 mx-auto mb-4" />
+          <h3 className="text-xl font-semibold text-gray-800">Meal Management</h3>
+          <p className="text-gray-600 text-sm mt-2">Plan, schedule, and track meals effortlessly.</p>
+        </div>
 
-            <label className="block mb-2">Frameworks:</label>
-            <Select
-              isMulti
-              options={frameworksOptions}
-              value={frameworks}
-              onChange={setFrameworks}
-              className="mb-4"
-            />
+        {/* Food Preferences Card */}
+        <div className="bg-white p-6 rounded-2xl shadow-lg hover:shadow-xl transition">
+          <FaChartPie className="text-4xl text-green-500 mx-auto mb-4" />
+          <h3 className="text-xl font-semibold text-gray-800">Food Preferences</h3>
+          <p className="text-gray-600 text-sm mt-2">Students can provide feedback to improve meals.</p>
+        </div>
 
-            <label className="block mb-2">Libraries:</label>
-            <Select
-              isMulti
-              options={librariesOptions}
-              value={libraries}
-              onChange={setLibraries}
-              className="mb-4"
-            />
+        {/* Subscription & Billing Card */}
+        <div className="bg-white p-6 rounded-2xl shadow-lg hover:shadow-xl transition">
+          <FaWallet className="text-4xl text-yellow-500 mx-auto mb-4" />
+          <h3 className="text-xl font-semibold text-gray-800">Billing & Payments</h3>
+          <p className="text-gray-600 text-sm mt-2">Manage meal subscriptions and payments easily.</p>
+        </div>
 
-            <div className="flex justify-between">
-              <AwesomeButton type="secondary" onPress={closeModal}>
-                Cancel
-              </AwesomeButton>
-              <AwesomeButton type="primary" onPress={closeModal}>
-                Save
-              </AwesomeButton>
-            </div>
-          </motion.div>
-        </motion.div>
-      )}
+        {/* Waste Reduction Card */}
+        <div className="bg-white p-6 rounded-2xl shadow-lg hover:shadow-xl transition">
+          <FaLeaf className="text-4xl text-red-500 mx-auto mb-4" />
+          <h3 className="text-xl font-semibold text-gray-800">Waste Reduction</h3>
+          <p className="text-gray-600 text-sm mt-2">Optimize food resources and reduce waste.</p>
+        </div>
+      </div>
+
+      {/* Technology Section */}
+      {/* <div className="mt-12 max-w-3xl text-center">
+        <h2 className="text-3xl font-bold text-gray-800">Powered by Modern Technologies</h2>
+        <p className="text-gray-600 mt-2">We use cutting-edge tools to provide a seamless and efficient experience.</p>
+        <div className="flex justify-center gap-6 mt-4 text-lg font-semibold text-white">
+          <span className="bg-blue-500 px-4 py-2 rounded-lg">React</span>
+          <span className="bg-yellow-500 px-4 py-2 rounded-lg">Firebase</span>
+          <span className="bg-green-500 px-4 py-2 rounded-lg">MongoDB</span>
+          <span className="bg-gray-800 px-4 py-2 rounded-lg">Express.js</span>
+        </div>
+      </div> */}
     </div>
   );
 };

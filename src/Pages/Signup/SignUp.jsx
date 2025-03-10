@@ -72,7 +72,7 @@ const SignUp = () => {
   };
 
   return (
-    <div className="flex flex-col lg:flex-row-reverse items-center justify-center min-h-screen bg-base-200 px-4 sm:px-6 lg:px-8">
+    <div className="flex flex-col lg:flex-row-reverse items-center justify-center min-h-screen bg-base-200 px-4 sm:px-6 lg:px-8 pt-20">
     <Helmet>
         <title> Sign Up | HostelHub </title>
       </Helmet>
@@ -148,12 +148,13 @@ const SignUp = () => {
           </div>
           <button
             type="submit"
-            className="btn btn-outline w-full py-3 bg-lime-500 text-white rounded-md font-medium hover:bg-lime-600 transition duration-200"
+            className="relative mt-4 px-6 py-3 font-bold text-lg text-white bg-gradient-to-r from-blue-500 to-purple-500 rounded-lg shadow-lg 
+                         transition-all duration-300 ease-in-out transform hover:scale-105 hover:shadow-xl w-full"
           >
             Sign Up
           </button>
         </form>
-        <p className="text-center my-2">Already Sing up ? please <Link to="/login" className="text-lime-500 hover:underline">Login</Link> </p>
+        <p className="text-center my-2">Already Sing up ? please <Link to="/login" className="text-blue-500 hover:underline text-lg">Login</Link> </p>
         <div className="flex items-center my-4">
         
           <div className="flex-grow border-t border-gray-300"></div>

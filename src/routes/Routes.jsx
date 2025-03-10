@@ -7,7 +7,6 @@ import MealsPage from "../Pages/MealsPage";
 // import UpcomingMeals from "../Pages/UpcomingMealsPage";
 import DashboardLayout from "../Layouts/DashboardLayout";
 
-
 import MealForm from "../Components/MealForm";
 import MealDetailPage from "../Pages/MealDetailPage";
 import UserProfile from "../Components/UserProfile";
@@ -29,13 +28,23 @@ import UpcomingMealForm from "../Components/UpcomingMealForm";
 import PublishMeals from "../Components/PublishMeals";
 import MealsUpcomingPage from "../Pages/MealsUpcomingPage";
 import AdminRoute from "./AdminRoute";
+import AdminDashboard from "../Pages/AdminDashboard/AdminDashboard";
+import UserDashboard from "../Pages/UsersDashboard/UserDashboard";
 
 export const router = createBrowserRouter([
   {
     path: "/",
     element: <MainLayout></MainLayout>,
-    errorElement: <h3>Error, page not found</h3>,//to do error page
+    errorElement: <h3>Error, page not found</h3>, //to do error page
     children: [
+      {
+        path: "signup",
+        element: <SignUp></SignUp>,
+      },
+      {
+        path: "login",
+        element: <Login></Login>,
+      },
       {
         path: "/",
         element: <Home></Home>,
@@ -57,89 +66,136 @@ export const router = createBrowserRouter([
         element: <MealsUpcomingPage></MealsUpcomingPage>,
       },
       {
-        path: 'about-me',
-        element: <AboutMe></AboutMe>
-      }
-     
+        path: "about-me",
+        element: <AboutMe></AboutMe>,
+      },
     ],
   },
-  {
-    path: "/signup",
-    element: <SignUp></SignUp>,
-  },
-  {
-    path: "/login",
-    element: <Login></Login>,
-  },
+
   {
     path: "/dashboard",
-    element: <PrivateRoute><DashboardLayout></DashboardLayout></PrivateRoute>,
+    element: (
+      <PrivateRoute>
+        <DashboardLayout></DashboardLayout>
+      </PrivateRoute>
+    ),
     children: [
-     
       {
         path: "user-profile",
-        element: <AdminRoute><UserProfile></UserProfile></AdminRoute>,
+        element: (
+          <AdminRoute>
+            <UserProfile></UserProfile>
+          </AdminRoute>
+        ),
+      },
+      {
+        path: "admin-dashboard",
+        element: (
+          <AdminRoute>
+            <AdminDashboard></AdminDashboard>
+          </AdminRoute>
+        ),
+      },
+      {
+        path: "user-dashboard",
+        element: (
+          <PrivateRoute>
+            <UserDashboard></UserDashboard>
+          </PrivateRoute>
+        ),
       },
       {
         path: "admin/manage-users",
-        element: <AdminRoute><UserManagement></UserManagement></AdminRoute>,
+        element: (
+          <AdminRoute>
+            <UserManagement></UserManagement>
+          </AdminRoute>
+        ),
       },
-     
+
       {
         path: "admin/profile",
-        element: <AdminRoute><AdminProfile></AdminProfile></AdminRoute>,
+        element: (
+          <AdminRoute>
+            <AdminProfile></AdminProfile>
+          </AdminRoute>
+        ),
       },
-     
+
       {
         path: "admin/add-meals",
-        element: <AdminRoute><MealForm></MealForm></AdminRoute>,
+        element: (
+          <AdminRoute>
+            <MealForm></MealForm>
+          </AdminRoute>
+        ),
       },
       {
         path: "admin/all-meals",
-        element: <AdminRoute><AllMealsPage></AllMealsPage></AdminRoute>,
+        element: (
+          <AdminRoute>
+            <AllMealsPage></AllMealsPage>
+          </AdminRoute>
+        ),
       },
       {
         path: "admin/all-reviews",
-        element: <AdminRoute><AllReviews></AllReviews></AdminRoute>,
+        element: (
+          <AdminRoute>
+            <AllReviews></AllReviews>
+          </AdminRoute>
+        ),
       },
       {
         path: "admin/serve-meals",
-        element:<AdminRoute> <ServeMeals></ServeMeals></AdminRoute>,
+        element: (
+          <AdminRoute>
+            {" "}
+            <ServeMeals></ServeMeals>
+          </AdminRoute>
+        ),
       },
       {
-        path: 'admin/upcoming-meals-form',
-        element: <AdminRoute><UpcomingMealForm></UpcomingMealForm></AdminRoute>
+        path: "admin/upcoming-meals-form",
+        element: (
+          <AdminRoute>
+            <UpcomingMealForm></UpcomingMealForm>
+          </AdminRoute>
+        ),
       },
       {
-        path: 'admin/publish-meals',
-        element: <AdminRoute><PublishMeals></PublishMeals></AdminRoute>
+        path: "admin/publish-meals",
+        element: (
+          <AdminRoute>
+            <PublishMeals></PublishMeals>
+          </AdminRoute>
+        ),
       },
-//       {
-//         path: "admin/upcoming-meals",
-//         element: <UpcomingMealsPage></UpcomingMealsPage>,
-//       },
-//       {
-//         path: "admin/upcoming-meals/table",
-//         element: <MealsUpcoming></MealsUpcoming>,
-//       },
-//       user related routes==================
+      //       {
+      //         path: "admin/upcoming-meals",
+      //         element: <UpcomingMealsPage></UpcomingMealsPage>,
+      //       },
+      //       {
+      //         path: "admin/upcoming-meals/table",
+      //         element: <MealsUpcoming></MealsUpcoming>,
+      //       },
+      //       user related routes==================
       {
-        path: 'Meal-user-profile',
-        element: <UserProfile></UserProfile>
-      },
-      {
-        path: 'my-reviews',
-        element: <MyReviews></MyReviews>
-      },
-      {
-        path: 'requested-meals',
-        element: <RequestedMeals></RequestedMeals>
+        path: "Meal-user-profile",
+        element: <UserProfile></UserProfile>,
       },
       {
-        path: 'payment-history',
-        element: <PaymentHistory></PaymentHistory>
+        path: "my-reviews",
+        element: <MyReviews></MyReviews>,
       },
-     
+      {
+        path: "requested-meals",
+        element: <RequestedMeals></RequestedMeals>,
+      },
+      {
+        path: "payment-history",
+        element: <PaymentHistory></PaymentHistory>,
+      },
     ],
   },
 ]);

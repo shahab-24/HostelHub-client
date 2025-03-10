@@ -55,7 +55,7 @@ const Login = () => {
       };
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-white px-4 sm:px-6 lg:px-8">
+    <div className="flex justify-center items-center min-h-screen bg-white px-4 sm:px-6 lg:px-8 pt-20">
     <Helmet>
         <title> Login | HostelHub </title>
       </Helmet>
@@ -112,7 +112,8 @@ const Login = () => {
             </div>
             <button
               type="submit"
-              className="w-full py-3 bg-lime-500 text-white rounded-md font-medium hover:bg-lime-600 transition duration-200"
+              className="relative mt-4 px-6 py-3 font-bold text-lg text-white bg-gradient-to-r from-blue-500 to-purple-500 rounded-lg shadow-lg 
+                         transition-all duration-300 ease-in-out transform hover:scale-105 hover:shadow-xl w-full"
             >
               Log In
             </button>
@@ -133,7 +134,7 @@ const Login = () => {
             Don&apos;t have an account?{' '}
             <Link
               to="/signup"
-              className="text-lime-500 hover:underline"
+              className="text-blue-500 hover:underline text-lg"
             >
               Sign up
             </Link>

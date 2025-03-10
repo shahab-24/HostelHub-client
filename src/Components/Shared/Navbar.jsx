@@ -1,11 +1,25 @@
-import { Link, NavLink } from "react-router-dom";
+import { Link, Navigate, NavLink, redirect, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import img from "../../assets/logo2.webp";
 import useAuth from "../../hooks/useAuth";
+import useRole from "../../hooks/useRole";
 
 const Navbar = ({ likedMeals }) => {
   const { user, logOut } = useAuth();
   const [isOpen, setIsOpen] = useState(false); // State for dropdown
+  const [role] = useRole()
+//   console.log(role)
+  const navigate = useNavigate()
+
+
+  const handleDashboard = () => {
+        if(role === 'admin'){
+                navigate('/dashboard/admin-dashboard', {replace: true})
+        }else{
+                navigate('/dashboard/user-dashboard', {replace: true})}
+        // console.log("Navigating to:", role === 'admin' ? '/dashboard/admin-dashboard' : '/dashboard/user-dashboard');
+        // navigate(role === 'admin' ? '/dashboard/admin-dashboard' : '/dashboard/user-dashboard');
+    }
 
   const links = (
     <>
@@ -14,8 +28,8 @@ const Navbar = ({ likedMeals }) => {
         { to: "/meals", label: "Meals" },
         { to: "/upcoming-meals", label: "Upcoming" },
         { to: "/signup", label: "Join" },
-        { to: "/about-me", label: "About" },
-        { to: "/dashboard", label: "Dashboard" },
+        { to: "/about-me", label: "About" }
+        
       ].map(({ to, label }) => (
         <li key={to}>
           <NavLink
@@ -32,11 +46,32 @@ const Navbar = ({ likedMeals }) => {
           </NavLink>
         </li>
       ))}
+      {
+        user && (
+                <li>
+
+                
+                <button onClick={handleDashboard} className={({ isActive }) =>
+              `block w-full px-3 py-2 text-sm font-medium transition-all duration-300 rounded-md text-center ${
+                isActive
+                  ? "bg-gradient-to-r from-blue-500 to-purple-500 text-white shadow-md scale-100"
+                  : "text-gray-300 hover:text-white hover:bg-gray-700"
+              }`
+            }>
+                                Dashboard
+                        </button>
+        
+                        
+                </li>
+        )
+      }
     </>
+
+    
   );
 
   return (
-    <div className="fixed w-full z-50 shadow-lg bg-[#1E1E2F] font-['Poppins']">
+    <div className="fixed w-full z-50 shadow-lg bg-[#1E1E2F] font-['Poppins'] bg-transparent">
       <div className="navbar px-4 py-2 lg:px-12 flex justify-between items-center text-white">
         {/* Navbar Start */}
         <div className="flex items-center gap-2">

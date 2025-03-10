@@ -22,7 +22,7 @@ const BannerSection = () => {
       const interval = setInterval(() => {
         setFirstLoad(false);
         setCurrentIndex((prev) => (prev + 1) % banners.length);
-      }, 5000); // Change every 5 seconds
+      }, 4000); // Change every 5 seconds
 
       return () => clearInterval(interval);
     }
@@ -44,11 +44,11 @@ const BannerSection = () => {
             style={{ backgroundImage: `url(${banners[currentIndex]?.image})` }}
             initial={
               firstLoad
-                ? { opacity: 0, rotateX: -90, scaleY: 0 }
+                ? { opacity: 0, rotateX: -30, scaleY: 0 }
                 : { opacity: 0, rotateY: 90, scale: 0.8 }
             }
             animate={{ opacity: 1, rotateX: 0, rotateY: 0, scale: 1 }}
-            exit={{ opacity: 0, rotateY: -90, scale: 0.8 }}
+            exit={{ opacity: 0, rotateY: -30, scale: 0.8 }}
             transition={{ duration: 1.5, ease: "easeInOut" }}
           >
             {/* Dark Overlay */}

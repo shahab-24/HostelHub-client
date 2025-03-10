@@ -6,6 +6,7 @@ import useAuth from "../hooks/useAuth";
 import useRole from "../hooks/useRole";
 import Loader from "../Components/Shared/Loader";
 import { Menu, X } from "lucide-react"; // Icons for mobile menu
+import DashboardNavbar from "../Components/DashboardNavbar";
 
 const DashboardLayout = () => {
   const { user } = useAuth();
@@ -255,6 +256,9 @@ const DashboardLayout = () => {
           {text}
           <span className="animate-pulse">|</span>
         </motion.h2>
+        <div>
+                <DashboardNavbar></DashboardNavbar>
+        </div>
 
         <div className="bg-white shadow-md rounded-lg p-6">
           <Outlet />

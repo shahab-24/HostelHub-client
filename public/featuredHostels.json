@@ -1,0 +1,51 @@
+[
+        {
+          "_id": "1",
+          "name": "Sunrise Student Hostel",
+          "image": "https://i.ibb.co.com/TBdFjYBV/sunrise2.webp",
+          "location": "Dhaka, Bangladesh",
+          "price": 150,
+          "rating": 4.7
+        },
+        {
+          "_id": "2",
+          "name": "Green Valley Dorm",
+          "image": "https://i.ibb.co.com/M55tFrCv/green.jpg",
+          "location": "Chittagong, Bangladesh",
+          "price": 130,
+          "rating": 4.5
+        },
+        {
+          "_id": "3",
+          "name": "Metro City Hostel",
+          "image": "https://i.ibb.co.com/GXt1CZj/metro.jpg",
+          "location": "Sylhet, Bangladesh",
+          "price": 170,
+          "rating": 4.8
+        },
+        {
+          "_id": "4",
+          "name": "Horizon Student Residence",
+          "image": "https://i.ibb.co.com/93Yzc1CQ/horizon.jpg",
+          "location": "Rajshahi, Bangladesh",
+          "price": 140,
+          "rating": 4.6
+        },
+        {
+          "_id": "5",
+          "name": "Elite Comfort Hostel",
+          "image": "https://i.ibb.co.com/zhpB2fQh/Elite-view.jpg",
+          "location": "Khulna, Bangladesh",
+          "price": 160,
+          "rating": 4.7
+        },
+        {
+          "_id": "6",
+          "name": "Ocean View Dormitory",
+          "image": "https://i.ibb.co.com/M5BQJbzL/ocean-view.jpg",
+          "location": "Cox’s Bazar, Bangladesh",
+          "price": 180,
+          "rating": 4.9
+        }
+      ]
+      
