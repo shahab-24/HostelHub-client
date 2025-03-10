@@ -36,7 +36,7 @@ const BannerSection = () => {
 
   return (
     <div className="relative w-full h-screen text-white overflow-hidden">
-      <AnimatePresence mode="wait">
+      <AnimatePresence mode="popLayout">
         {banners.length > 0 && (
           <motion.div
             key={banners[currentIndex]?.id || currentIndex}
