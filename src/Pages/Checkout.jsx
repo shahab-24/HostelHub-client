@@ -1,4 +1,4 @@
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { motion } from "framer-motion";
 import Typewriter from "typewriter-effect";
 import { Helmet } from "react-helmet-async";
@@ -51,13 +51,17 @@ const Checkout = () => {
         </div>
 
         <div className="text-center">
-          <motion.button
+        <Link to='/payment'>
+        <motion.button
             className="w-full py-3 bg-blue-600 text-white text-lg font-semibold rounded-md hover:bg-blue-700 transition duration-300"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
             Proceed to Payment
           </motion.button>
+
+        </Link>
+          
         </div>
       </div>
     </div>

@@ -61,12 +61,14 @@ const AuthProvider = ({ children }) => {
         setUser(currentUser)
 
         // save user
+        // setLoading(false)
         await axios.post(`${import.meta.env.VITE_API_URL}/api/users/${currentUser?.email}`,
             {
             name: currentUser?.displayName,
             image: currentUser?.photoURL,
             email: currentUser?.email
         })
+        setLoading(false)
 
         // Get JWT token
         await axios.post(
@@ -76,6 +78,8 @@ const AuthProvider = ({ children }) => {
           },
           { withCredentials: true }
         )
+        setLoading(false)
+        // setLoading(false)
       } else {
         setUser(currentUser)
         await axios.get(`${import.meta.env.VITE_API_URL}/api/logout`, {

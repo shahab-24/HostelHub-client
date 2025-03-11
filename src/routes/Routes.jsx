@@ -30,6 +30,7 @@ import MealsUpcomingPage from "../Pages/MealsUpcomingPage";
 import AdminRoute from "./AdminRoute";
 import AdminDashboard from "../Pages/AdminDashboard/AdminDashboard";
 import UserDashboard from "../Pages/UsersDashboard/UserDashboard";
+import Payment from "../Pages/Payment/Payment";
 
 export const router = createBrowserRouter([
   {
@@ -62,6 +63,14 @@ export const router = createBrowserRouter([
         element: <Checkout></Checkout>,
       },
       {
+        path: "payment",
+        element: (
+        //   <PrivateRoute>
+            <Payment></Payment>
+        //   </PrivateRoute>
+        ),
+      },
+      {
         path: "upcoming-meals",
         element: <MealsUpcomingPage></MealsUpcomingPage>,
       },
@@ -88,6 +97,7 @@ export const router = createBrowserRouter([
           </AdminRoute>
         ),
       },
+    
       {
         path: "admin-dashboard",
         element: (
