@@ -4,7 +4,7 @@ const CheckoutForm = () => {
   const stripe = useStripe();
   const elements = useElements();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async(e) => {
     e.preventDefault();
 
     if (!stripe || !elements) {
@@ -14,6 +14,16 @@ const CheckoutForm = () => {
     const card = elements.getElement(CardElement);
     if (card == null) {
       return;
+    }
+    const {error, paymentMethod} = await stripe.createPaymentMethod({
+        type: 'card',
+        card
+
+    })
+    if(error){
+        console.log('payment error', error)
+    }else{
+        console.log('payment method', paymentMethod)
     }
   };
   return (
