@@ -20,7 +20,7 @@ const useMeal = () => {
 			
                      // setLoading(false)
  
-		
+		// console.log(meals)
 	
                      return [meals, isLoading]
 

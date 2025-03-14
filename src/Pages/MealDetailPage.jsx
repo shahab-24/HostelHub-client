@@ -2,29 +2,28 @@ import { motion } from "framer-motion";
 import Loader from "../Components/Shared/Loader";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useOutletContext, useParams } from "react-router-dom";
-import useAxiosPublic from "../hooks/useAxiosPublic";
 import useAxiosSecure from "../hooks/useAxiosSecure";
 import toast from "react-hot-toast";
 import useAuth from "../hooks/useAuth";
 import { useState } from "react";
 import { Helmet } from "react-helmet-async";
-import Swal from "sweetalert2";  // Import SweetAlert2
+import Swal from "sweetalert2";
 
 const MealDetailPage = () => {
-        const { setLikedMeals } = useOutletContext();
+  const { setLikedMeals } = useOutletContext();
   const [reviewText, setReviewText] = useState("");
   const [rating, setRating] = useState(0);
   const [editingReview, setEditingReview] = useState(null);
   const [editText, setEditText] = useState("");
   const [editRating, setEditRating] = useState(0);
 
-//   const axiosPublic = useAxiosPublic();
+  //   const axiosPublic = useAxiosPublic();
   const axiosSecure = useAxiosSecure();
   const queryClient = useQueryClient();
   const { id } = useParams();
   const { user } = useAuth();
 
-//   console.log(id, user.email)
+  //   console.log(id, user.email)
 
   const {
     data: meal = {},
@@ -39,6 +38,10 @@ const MealDetailPage = () => {
       return data;
     },
   });
+//   console.log(meal)
+
+//   const totalPrice = meal.reduce((total, item) => total + item.price,0)
+//   console.log(totalPrice)
 
   const { data: reviews } = useQuery({
     queryKey: ["reviews", id],
@@ -48,14 +51,13 @@ const MealDetailPage = () => {
     },
   });
 
-
-//   like button=================================
+  //   like button=================================
   const handleLike = useMutation({
     mutationFn: async () => {
-        if (!user) {
-                toast.error("You must be logged in to like this meal.");
-                return;
-              }
+      if (!user) {
+        toast.error("You must be logged in to like this meal.");
+        return;
+      }
 
       if (meal?.likedBy?.includes(user?.email)) {
         throw new Error("You have already liked this meal.");
@@ -63,7 +65,7 @@ const MealDetailPage = () => {
       await axiosSecure.patch(`/api/meals/${id}/like`);
     },
     onSuccess: () => {
-        setLikedMeals((prev) => prev + 1);
+      setLikedMeals((prev) => prev + 1);
       toast.success("Liked the meal successfully!");
       queryClient.invalidateQueries(["meal", id]);
       refetch();
@@ -77,14 +79,13 @@ const MealDetailPage = () => {
     },
   });
 
-
-//   add review button======================
+  //   add review button======================
   const handleAddReview = useMutation({
     mutationFn: async () => {
-        if (!user) {
-                toast.error("You must be logged in to add a review.");
-                return;
-              }
+      if (!user) {
+        toast.error("You must be logged in to add a review.");
+        return;
+      }
       const payload = {
         mealId: id,
         comment: reviewText,
@@ -105,44 +106,43 @@ const MealDetailPage = () => {
     },
   });
 
-
-//   edit review button ==========================
+  //   edit review button ==========================
   const handleEditReview = useMutation({
-        mutationFn: async (updatedReview) => {
-          try {
-                if (!user) {
-                        toast.error("You must be logged in to edit this review.");
-                        return;
-                      }
-            const response = await axiosSecure.patch(
-              `/api/reviews/${updatedReview.id}`,
-              updatedReview
-            );
-            return response.data;  // Ensure the response is captured for success
-          } catch (error) {
-            throw new Error(error.response?.data?.message || "Failed to update review.");
-          }
-        },
-        onSuccess: () => {
-          toast.success("Review updated!");
-          queryClient.invalidateQueries(["reviews", id]);
-          setEditingReview(null);
-        },
-        onError: (error) => {
-          console.error("Error updating review:", error);  // Log error for debugging
-          toast.error(error.message || "Failed to update review.");
-        },
-      });
-      
+    mutationFn: async (updatedReview) => {
+      try {
+        if (!user) {
+          toast.error("You must be logged in to edit this review.");
+          return;
+        }
+        const response = await axiosSecure.patch(
+          `/api/reviews/${updatedReview.id}`,
+          updatedReview
+        );
+        return response.data; // Ensure the response is captured for success
+      } catch (error) {
+        throw new Error(
+          error.response?.data?.message || "Failed to update review."
+        );
+      }
+    },
+    onSuccess: () => {
+      toast.success("Review updated!");
+      queryClient.invalidateQueries(["reviews", id]);
+      setEditingReview(null);
+    },
+    onError: (error) => {
+      console.error("Error updating review:", error); // Log error for debugging
+      toast.error(error.message || "Failed to update review.");
+    },
+  });
 
-
-//       delete review button=======================
+  //       delete review button=======================
   const deleteReview = useMutation({
     mutationFn: async (reviewId) => {
-        if (!user) {
-                toast.error("You must be logged in to delete this meal.");
-                return;
-              }
+      if (!user) {
+        toast.error("You must be logged in to delete this meal.");
+        return;
+      }
       await axiosSecure.delete(`/api/reviews/${reviewId}`);
     },
     onSuccess: () => {
@@ -154,36 +154,36 @@ const MealDetailPage = () => {
     },
   });
 
-
-//   request functionlity==========================
+  //   request functionlity==========================
   const handleMealRequest = useMutation({
-        mutationFn: async () => {
-          // Confirm the user's action before proceeding
-          if (!user) {
-                toast.error("You must be logged in to request this meal.");
-                return;
-              }
-          const result = await Swal.fire({
-            title: "Request Meal?",
-            text: "Do you want to request this meal?",
-            icon: "question",
-            showCancelButton: true,
-            confirmButtonText: "Yes, request it!",
-            cancelButtonText: "Cancel",
-          });
-      
-          if (result.isConfirmed) {
-            // Proceed with the meal request
-            
-            await axiosSecure.post(`/api/request-meals/${id}`, { email: user?.email });
-            toast.success("Meal request submitted successfully!");
-          }
-        },
-        onError: (error) => {
-          toast.error(error.response?.data?.message || "Failed to request meal.");
-        },
+    mutationFn: async () => {
+      // Confirm the user's action before proceeding
+      if (!user) {
+        toast.error("You must be logged in to request this meal.");
+        return;
+      }
+      const result = await Swal.fire({
+        title: "Request Meal?",
+        text: "Do you want to request this meal?",
+        icon: "question",
+        showCancelButton: true,
+        confirmButtonText: "Yes, request it!",
+        cancelButtonText: "Cancel",
       });
-      
+
+      if (result.isConfirmed) {
+        // Proceed with the meal request
+
+        await axiosSecure.post(`/api/request-meals/${id}`, {
+          email: user?.email,
+        });
+        toast.success("Meal request submitted successfully!");
+      }
+    },
+    onError: (error) => {
+      toast.error(error.response?.data?.message || "Failed to request meal.");
+    },
+  });
 
   if (isLoading) {
     return <Loader />;
@@ -198,7 +198,9 @@ const MealDetailPage = () => {
       {[1, 2, 3, 4, 5].map((star) => (
         <button
           key={star}
-          className={`text-2xl ${currentRating >= star ? "text-yellow-500" : "text-gray-400"}`}
+          className={`text-2xl ${
+            currentRating >= star ? "text-yellow-500" : "text-gray-400"
+          }`}
           onClick={() => setRatingHandler(star)}
         >
           ★
@@ -263,12 +265,11 @@ const MealDetailPage = () => {
             Like ({meal?.likes || 0})
           </button>
           <button
-  className="bg-green-500 text-white px-4 py-2 ml-4 rounded-lg"
-  onClick={() => handleMealRequest.mutate()}
->
-  Request Meal
-</button>
-
+            className="bg-green-500 text-white px-4 py-2 ml-4 rounded-lg"
+            onClick={() => handleMealRequest.mutate()}
+          >
+            Request Meal
+          </button>
 
           <div className="border-t pt-6">
             <h3 className="text-2xl font-semibold mb-4">Reviews</h3>
@@ -280,7 +281,9 @@ const MealDetailPage = () => {
                 <p>
                   Rating:{" "}
                   {[...Array(review.rating)].map((_, index) => (
-                    <span key={index} className="text-yellow-500">★</span>
+                    <span key={index} className="text-yellow-500">
+                      ★
+                    </span>
                   ))}
                 </p>
 
@@ -300,7 +303,10 @@ const MealDetailPage = () => {
                     <button
                       className="text-red-500"
                       onClick={() =>
-                        confirmAction(() => deleteReview.mutate(review._id), "Are you sure you want to delete this review?")
+                        confirmAction(
+                          () => deleteReview.mutate(review._id),
+                          "Are you sure you want to delete this review?"
+                        )
                       }
                     >
                       Delete
@@ -326,7 +332,12 @@ const MealDetailPage = () => {
                   className="bg-blue-500 text-white px-4 py-2 mt-4 rounded-lg"
                   onClick={() => {
                     confirmAction(
-                      () => handleEditReview.mutate({ id: editingReview, comment: editText, rating: editRating }),
+                      () =>
+                        handleEditReview.mutate({
+                          id: editingReview,
+                          comment: editText,
+                          rating: editRating,
+                        }),
                       "Are you sure you want to save changes?"
                     );
                   }}

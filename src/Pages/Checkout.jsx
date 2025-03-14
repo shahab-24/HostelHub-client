@@ -4,7 +4,7 @@ import Typewriter from "typewriter-effect";
 import { Helmet } from "react-helmet-async";
 
 const Checkout = () => {
-  const { state } = useLocation(); // Get the state passed from the Membership page
+  const { state } = useLocation();
   const { packageDetails } = state || {};
 
   if (!packageDetails) {
@@ -51,7 +51,7 @@ const Checkout = () => {
         </div>
 
         <div className="text-center">
-        <Link to='/payment'>
+        <Link to='/checkout/payment' state={{packageDetails}}>
         <motion.button
             className="w-full py-3 bg-blue-600 text-white text-lg font-semibold rounded-md hover:bg-blue-700 transition duration-300"
             whileHover={{ scale: 1.05 }}
