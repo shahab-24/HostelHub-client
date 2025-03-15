@@ -12,6 +12,7 @@ import {
 } from 'firebase/auth'
 import { app } from '../firebase/firebase.config.js'
 import axios from 'axios'
+// import useAxiosSecure from '../hooks/useAxiosSecure.jsx'
 
 
 // eslint-disable-next-line react-refresh/only-export-components
@@ -20,6 +21,7 @@ const auth = getAuth(app)
 const googleProvider = new GoogleAuthProvider()
 
 const AuthProvider = ({ children }) => {
+        // const axiosSecure = useAxiosSecure()
         
   const [user, setUser] = useState(null)
   const [loading, setLoading] = useState(true)
@@ -67,8 +69,9 @@ const AuthProvider = ({ children }) => {
             name: currentUser?.displayName,
             image: currentUser?.photoURL,
             email: currentUser?.email
-        })
-        setLoading(false)
+        },
+        { withCredentials: true })
+        // setLoading(false)
 
         // Get JWT token
         await axios.post(
@@ -78,10 +81,11 @@ const AuthProvider = ({ children }) => {
           },
           { withCredentials: true }
         )
-        setLoading(false)
+        
+        // setLoading(false)
         // setLoading(false)
       } else {
-        setUser(currentUser)
+        setUser(null)
         await axios.get(`${import.meta.env.VITE_API_URL}/api/logout`, {
           withCredentials: true,
         })

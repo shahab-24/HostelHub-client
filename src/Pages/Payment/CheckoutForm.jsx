@@ -16,6 +16,7 @@ const CheckoutForm = () => {
   const {state} = useLocation()
   const { packageDetails } = state || {};
   console.log(packageDetails.price)
+  console.log(packageDetails)
 
   useEffect( () => {
     axiosSecure.post("/api/payment-intent",

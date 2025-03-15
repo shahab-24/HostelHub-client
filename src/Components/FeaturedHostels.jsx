@@ -13,7 +13,7 @@ const FeaturedHostels = () => {
     },
   });
 
-  console.log(hostels)
+//   console.log(hostels)
 
   if (isLoading) return <p className="text-center">Loading hostels...</p>;
 
