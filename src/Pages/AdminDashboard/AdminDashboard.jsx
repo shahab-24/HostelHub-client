@@ -22,7 +22,7 @@ const AdminDashboard = () => {
 
   // Line Chart Data (Meals Over Time)
   const mealData = meals?.map((meal, index) => ({ day: index + 1, count: meal.count }));
-  console.log(mealData)
+//   console.log(mealData)
 
   // Pie Chart Data (User Roles)
   const roleData = [

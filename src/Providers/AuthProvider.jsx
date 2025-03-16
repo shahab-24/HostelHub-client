@@ -70,7 +70,7 @@ const AuthProvider = ({ children }) => {
             image: currentUser?.photoURL,
             email: currentUser?.email
         },
-        { withCredentials: true })
+)
         // setLoading(false)
 
         // Get JWT token
@@ -85,7 +85,7 @@ const AuthProvider = ({ children }) => {
         // setLoading(false)
         // setLoading(false)
       } else {
-        setUser(null)
+        setUser(currentUser)
         await axios.get(`${import.meta.env.VITE_API_URL}/api/logout`, {
           withCredentials: true,
         })
