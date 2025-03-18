@@ -8,7 +8,7 @@ import useAxiosPublic from "../../hooks/useAxiosPublic";
 const AdminDashboard = () => {
   const [users, setUsers] = useState([]);
   const [meals, setMeals] = useState([]);
-//   const [meals] = useMeal()
+
   const axiosSecure = useAxiosSecure()
   const axiosPublic = useAxiosPublic()
 
@@ -26,7 +26,7 @@ const AdminDashboard = () => {
 
   // Pie Chart Data (User Roles)
   const roleData = [
-    { name: "Users", value: users.filter(user => user.role === "user").length },
+    { name: "users", value: users.filter(user => user.role === "user").length },
     { name: "Admins", value: users.filter(user => user.role === "admin").length },
   ];
   const COLORS = ["#0088FE", "#FF8042"];

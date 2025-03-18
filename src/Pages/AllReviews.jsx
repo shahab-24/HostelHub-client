@@ -36,7 +36,7 @@ const AllReviews = () => {
             refetch();
           }
         } catch (error) {
-          Swal.fire("Error!", "Failed to delete review.", "error");
+          Swal.fire("Error!", "Failed to delete review.", error);
         }
       }
     });
@@ -48,7 +48,7 @@ const AllReviews = () => {
       const { data } = await axiosSecure.get(`/api/meals/${mealId}`);
       setSelectedMeal(data);
     } catch (error) {
-      Swal.fire("Error!", "Failed to fetch meal details.", "error");
+      Swal.fire("Error!", "Failed to fetch meal details.", error);
     }
   };
 
@@ -114,16 +114,16 @@ const AllReviews = () => {
       {selectedMeal && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center p-4">
           <div className="bg-white p-6 rounded-lg w-full max-w-md">
-            <h2 className="text-2xl font-bold mb-3">{selectedMeal.title}</h2>
+            <h2 className="text-2xl font-bold mb-3">{selectedMeal?.title}</h2>
             <img
-              src={selectedMeal.image}
-              alt={selectedMeal.title}
+              src={selectedMeal?.image}
+              alt={selectedMeal?.title}
               className="w-full h-48 object-cover rounded-md"
             />
             <p className="mt-3 text-blue-500">{selectedMeal?.description}</p>
             <p className="mt-3">Likes: {selectedMeal?.likes}</p>
             <p className="mt-3">Rating: {selectedMeal?.rating}</p>
-            <p className="font-semibold mt-2">Date: {selectedMeal.post_time}</p>
+            <p className="font-semibold mt-2">Date: {selectedMeal?.post_time}</p>
             <div className="flex justify-end mt-4">
               <button onClick={() => setSelectedMeal(null)} className="btn btn-sm btn-secondary">
                 Close

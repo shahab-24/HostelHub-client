@@ -8,7 +8,7 @@ const MealsUpcomingPage = () => {
   const axiosSecure = useAxiosSecure();
 
   const fetchUpcomingMeals = async () => {
-    const { data } = await axiosSecure.get('/api/upcoming-meals'); // Match with backend route
+    const { data } = await axiosSecure.get('/api/upcoming-meals'); 
     return data;
   };
 

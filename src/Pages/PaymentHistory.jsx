@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 
 const PaymentHistory = () => {
   const [payments, setPayments] = useState([]);
+  const {user} = useAuth()
+  clg
 
   useEffect(() => {
     // Fetch payment history from your backend

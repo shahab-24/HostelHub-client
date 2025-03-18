@@ -132,7 +132,7 @@ const UserProfile = () => {
             <input
               type="text"
               name="name"
-              value={updatedProfile.name}
+              value={updatedProfile?.name}
               onChange={handleChange}
               className="w-full px-4 py-2 text-gray-900 rounded-lg"
               placeholder="Update Name"
@@ -140,7 +140,7 @@ const UserProfile = () => {
             <input
               type="email"
               name="email"
-              value={updatedProfile.email}
+              value={updatedProfile?.email}
               onChange={handleChange}
               className="w-full px-4 py-2 text-gray-900 rounded-lg"
               placeholder="Update Email"
@@ -149,7 +149,7 @@ const UserProfile = () => {
             <input
               type="text"
               name="image"
-              value={updatedProfile.image}
+              value={updatedProfile?.image}
               onChange={handleChange}
               className="w-full px-4 py-2 text-gray-900 rounded-lg"
               placeholder="Update Profile Image URL"
@@ -159,7 +159,7 @@ const UserProfile = () => {
                 onClick={handleUpdateProfile}
                 className="px-4 py-2 bg-green-500 rounded-lg shadow-lg hover:bg-green-600"
                 whileTap={{ scale: 0.9 }}
-                disabled={updateProfileMutation.isLoading}
+                disabled={updateProfileMutation?.isLoading}
               >
                 {updateProfileMutation.isLoading ? "Saving..." : "Save Changes"}
               </motion.button>
