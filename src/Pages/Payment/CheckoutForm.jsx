@@ -15,8 +15,10 @@ const CheckoutForm = () => {
   //   const [packages, setPackages] = useState()
   const { state } = useLocation();
   const { packageDetails } = state || {};
-  console.log(packageDetails.price);
-  console.log(packageDetails);
+//   console.log(packageDetails.name);
+//   console.log(packageDetails.price);
+  
+//   console.log(packageDetails);
 
   useEffect(() => {
     axiosSecure
@@ -69,6 +71,18 @@ const CheckoutForm = () => {
       console.log("paymenht intent", paymentIntent);
       if (paymentIntent.status === "succeeded") {
         setTransactionId(paymentIntent.id);
+        const payment = {
+                email: user?.email,
+                id: packageDetails?._id,
+                transactionId: paymentIntent?.id,
+                price: parseFloat(packageDetails?.price),
+                date: new Date(),
+                badge: packageDetails?.name
+        }
+
+        const res = await axiosSecure.post('/api/save-payment', payment)
+        console.log('payment details',res)
+
       }
     }
   };

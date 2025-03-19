@@ -183,9 +183,10 @@ const AuthProvider = ({ children }) => {
 
     const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
       if (currentUser?.email) {
-        setUser(currentUser);
+        
         const token = await currentUser.getIdToken();
         localStorage.setItem("accessToken", token);
+        setUser(currentUser);
 
         // Save user info
         await axios.post(
