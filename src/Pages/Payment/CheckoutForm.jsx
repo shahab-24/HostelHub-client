@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import { useLocation } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
+import Swal from "sweetalert2";
 
 const CheckoutForm = () => {
   const { user } = useAuth();
@@ -81,7 +82,17 @@ const CheckoutForm = () => {
         }
 
         const res = await axiosSecure.post('/api/save-payment', payment)
-        console.log('payment details',res)
+        console.log('payment details',res.data)
+        if(res.data?.paymentResult?.insertedId){
+                Swal.fire({
+                        position: "top-end",
+                        icon: "success",
+                        title: "Your payment has been saved",
+                        showConfirmButton: false,
+                        timer: 1500
+                      });
+
+        }
 
       }
     }
