@@ -30,7 +30,7 @@ import useAuth from "./useAuth";
 import useAxiosSecure from "./useAxiosSecure";
 
 const useRole = () => {
-  const { user, setLoading } = useAuth();
+  const { user } = useAuth();
   console.log(user)
   const axiosSecure = useAxiosSecure();
 
@@ -40,8 +40,8 @@ const useRole = () => {
     queryFn: async () => {
         // setLoading(true)
         console.log('searching token before getting user role', user)
-      const { data } = await axiosSecure.get(`/api/users/role/${user.email}`);
-      setLoading(false)
+      const { data } = await axiosSecure.get(`/api/users/role/${user?.email}`);
+//       setLoading(false)
       return data.role;
     },
   });

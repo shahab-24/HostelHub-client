@@ -11,6 +11,7 @@ const fetchUpcomingMeals = async () => {
 
 const ComingMeals = () => {
         const {user} = useAuth()
+        console.log(user?._id)
   const queryClient = useQueryClient();
   const { data: meals = [] } = useQuery({ queryKey: ["meals"], queryFn: fetchUpcomingMeals });
 
@@ -24,7 +25,7 @@ const ComingMeals = () => {
   });
 
   const handleLike = (mealId) => {
-    if (!user || !["Silver", "Gold", "Platinum"].includes(user.membership)) {
+    if (!user || !["Silver", "Gold", "Platinum"].includes(user.badge)) {
       alert("Only premium users can like meals.");
       return;
     }

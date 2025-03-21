@@ -194,7 +194,7 @@ const DashboardLayout = () => {
               </li>
               <li>
                 <NavLink
-                  to="/dashboard/Meal-user-profile"
+                  to="/dashboard/user-profile"
                   className={({ isActive }) =>
                     `block py-2 px-4 rounded transition ${
                       isActive ? "bg-gray-700" : "hover:bg-gray-700"

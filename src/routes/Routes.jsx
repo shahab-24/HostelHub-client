@@ -190,10 +190,10 @@ export const router = createBrowserRouter([
       //         element: <MealsUpcoming></MealsUpcoming>,
       //       },
       //       user related routes==================
-      {
-        path: "Meal-user-profile",
-        element: <UserProfile></UserProfile>,
-      },
+//       {
+//         path: "Meal-user-profile",
+//         element: <UserProfile></UserProfile>,
+//       },
       {
         path: "my-reviews",
         element: <MyReviews></MyReviews>,

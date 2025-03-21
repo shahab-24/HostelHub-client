@@ -14,7 +14,7 @@ const useAxiosSecure = () => {
         const navigate = useNavigate()
 
         useEffect(() => {
-                axiosSecure.interceptors.request.use(
+                const requestInterceptor = axiosSecure.interceptors.request.use(
                         
                         function(config){
                                 setLoading(true)
@@ -41,7 +41,7 @@ const useAxiosSecure = () => {
                                 return Promise.reject(error)
                         }
                 )
-                axiosSecure.interceptors.response.use(
+                const responseInterceptor = axiosSecure.interceptors.response.use(
                         function(res){
                                 setLoading(false)
                                 // console.log('response received',res)
@@ -58,9 +58,14 @@ const useAxiosSecure = () => {
                                 }
                                 return Promise.reject(error)
                         }
-                )
+                );
+                return () => {
+                        axiosSecure.interceptors.request.eject(requestInterceptor);
+                        axiosSecure.interceptors.response.eject(responseInterceptor);
+                      };
+                    },
 
-        },[logOut, navigate, setLoading])
+        [logOut, navigate, setLoading])
 
         
         return axiosSecure
