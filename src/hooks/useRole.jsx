@@ -31,7 +31,7 @@ import useAxiosSecure from "./useAxiosSecure";
 
 const useRole = () => {
   const { user } = useAuth();
-  console.log(user)
+//   console.log(user)
   const axiosSecure = useAxiosSecure();
 
   const { data: role, isLoading } = useQuery({

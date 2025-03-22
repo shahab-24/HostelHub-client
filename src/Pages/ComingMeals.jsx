@@ -11,7 +11,7 @@ const fetchUpcomingMeals = async () => {
 
 const ComingMeals = () => {
         const {user} = useAuth()
-        console.log(user?._id)
+        console.log(user)
   const queryClient = useQueryClient();
   const { data: meals = [] } = useQuery({ queryKey: ["meals"], queryFn: fetchUpcomingMeals });
 
