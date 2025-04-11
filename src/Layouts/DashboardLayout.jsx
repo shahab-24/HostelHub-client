@@ -5,11 +5,11 @@ import { useEffect, useRef, useState } from "react";
 import useAuth from "../hooks/useAuth";
 import useRole from "../hooks/useRole";
 import Loader from "../Components/Shared/Loader";
-import { Menu, X } from "lucide-react"; // Icons for mobile menu
+import { Menu, X } from "lucide-react"; 
 import DashboardNavbar from "../Components/DashboardNavbar";
 
 const DashboardLayout = () => {
-  const { user } = useAuth();
+//   const { user } = useAuth();
   const [role, isLoading] = useRole();
   const [menuOpen, setMenuOpen] = useState(false);
   const [text, setText] = useState("");
@@ -27,6 +27,7 @@ const DashboardLayout = () => {
     }, 100);
     return () => clearInterval(interval);
   }, []);
+
 
   // Close menu when clicking outside
   useEffect(() => {

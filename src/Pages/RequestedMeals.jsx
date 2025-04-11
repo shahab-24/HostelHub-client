@@ -20,7 +20,7 @@ const RequestedMeals = () => {
     enabled: !!user?.email, // Only run the query when email is available
   });
 
-  console.log(requestMeals)
+//   console.log(requestMeals)
 
   const mutation = useMutation({
     mutationFn: async (id) => {

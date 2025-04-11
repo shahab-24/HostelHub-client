@@ -178,41 +178,79 @@ const AuthProvider = ({ children }) => {
   };
 
   // Monitor authentication state
-  useEffect(() => {
-        setLoading(true);
+//   useEffect(() => {
+//         setLoading(true);
 
-    const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
-      if (currentUser?.email) {
+//     const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
+//       if (currentUser?.email) {
         
-        const token = await currentUser.getIdToken();
-        localStorage.setItem("accessToken", token);
-        setUser(currentUser);
+//         const token = await currentUser.getIdToken();
+//         localStorage.setItem("accessToken", token);
+//         setUser(currentUser);
 
-        // Save user info
-        await axios.post(
-          `${import.meta.env.VITE_API_URL}/api/users/${currentUser.email}`,
-          {
-            name: currentUser.displayName,
-            image: currentUser.photoURL,
-            email: currentUser.email,
+//         // Save user info
+//         await axios.post(
+//           `${import.meta.env.VITE_API_URL}/api/users/${currentUser.email}`,
+//           {
+//             name: currentUser.displayName,
+//             image: currentUser.photoURL,
+//             email: currentUser.email,
+//           }
+//         );
+
+//         // Get JWT token
+//         await axios.post(
+//           `${import.meta.env.VITE_API_URL}/api/jwt`,
+//           { email: currentUser.email },
+//           { withCredentials: true }
+//         );
+//       } else {
+//         setUser(null);
+//         localStorage.removeItem("accessToken");
+//       }
+//       setLoading(false);
+//     });
+
+//     return () => unsubscribe();
+//   }, []);
+useEffect(() => {
+        const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
+          if (currentUser?.email) {
+            try {
+              const token = await currentUser.getIdToken();
+              localStorage.setItem("accessToken", token);
+              setUser(currentUser);
+    
+              // Save user info only if it changes
+              if (user?.email !== currentUser.email) {
+                await axios.post(
+                  `${import.meta.env.VITE_API_URL}/api/users/${currentUser?.email}`,
+                  {
+                    name: currentUser?.displayName,
+                    image: currentUser?.photoURL,
+                    email: currentUser?.email,
+                  }
+                );
+              }
+    
+              // Get JWT token
+              await axios.post(
+                `${import.meta.env.VITE_API_URL}/api/jwt`,
+                { email: currentUser?.email },
+                { withCredentials: true }
+              );
+            } catch (error) {
+              console.error("Error in Auth State Change:", error);
+            }
+          } else {
+            setUser(null);
+            localStorage.removeItem("accessToken");
           }
-        );
-
-        // Get JWT token
-        await axios.post(
-          `${import.meta.env.VITE_API_URL}/api/jwt`,
-          { email: currentUser.email },
-          { withCredentials: true }
-        );
-      } else {
-        setUser(null);
-        localStorage.removeItem("accessToken");
-      }
-      setLoading(false);
-    });
-
-    return () => unsubscribe();
-  }, []);
+          setLoading(false);
+        });
+    
+        return () => unsubscribe();
+      }, [user?.email]);
 
   const authInfo = {
     user,

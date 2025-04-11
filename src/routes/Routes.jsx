@@ -89,13 +89,34 @@ export const router = createBrowserRouter([
       </PrivateRoute>
     ),
     children: [
+        // normal user related route=========
+        {
+                path: "user-dashboard",
+                element: (
+                 
+                    <UserDashboard></UserDashboard>
+                 
+                ),
+              },
       {
         path: "user-profile",
         element: (
-          <AdminRoute>
+        
             <UserProfile></UserProfile>
-          </AdminRoute>
+           
         ),
+      },
+      {
+        path: "my-reviews",
+        element: <MyReviews></MyReviews>,
+      },
+      {
+        path: "requested-meals",
+        element: <RequestedMeals></RequestedMeals>,
+      },
+      {
+        path: "payment-history",
+        element: <PaymentHistory></PaymentHistory>,
       },
     
       {
@@ -106,14 +127,7 @@ export const router = createBrowserRouter([
           </AdminRoute>
         ),
       },
-      {
-        path: "user-dashboard",
-        element: (
-          <PrivateRoute>
-            <UserDashboard></UserDashboard>
-          </PrivateRoute>
-        ),
-      },
+     
       {
         path: "admin/manage-users",
         element: (
@@ -194,18 +208,7 @@ export const router = createBrowserRouter([
 //         path: "Meal-user-profile",
 //         element: <UserProfile></UserProfile>,
 //       },
-      {
-        path: "my-reviews",
-        element: <MyReviews></MyReviews>,
-      },
-      {
-        path: "requested-meals",
-        element: <RequestedMeals></RequestedMeals>,
-      },
-      {
-        path: "payment-history",
-        element: <PaymentHistory></PaymentHistory>,
-      },
+      
     ],
   },
 ]);

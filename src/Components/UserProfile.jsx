@@ -6,8 +6,10 @@ import useAxiosSecure from "../hooks/useAxiosSecure";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { Helmet } from "react-helmet-async";
 import { toast } from "react-toastify";
+import useAuth from "../hooks/useAuth";
 
 const UserProfile = () => {
+        const {user} = useAuth()
   const axiosSecure = useAxiosSecure();
   const [isEditing, setIsEditing] = useState(false);
   const [updatedProfile, setUpdatedProfile] = useState({
@@ -19,14 +21,19 @@ const UserProfile = () => {
   // ✅ Fetch user profile
   const { data: userProfile, isLoading, isError, error, refetch } = useQuery({
     queryKey: ["userData"],
+    enabled: !!user?.email,
+
     queryFn: async () => {
+        if (!user?.email) return [];
       const { data } = await axiosSecure.get("/api/user/profile");
+//       console.log(data, 'from user profile')
       return data;
     },
   });
 
   // ✅ Update `updatedProfile` when data loads
   useEffect(() => {
+
     if (userProfile) {
       setUpdatedProfile({
         name: userProfile.name || "",
@@ -34,13 +41,14 @@ const UserProfile = () => {
         image: userProfile.image || "",
       });
     }
+    console.log('hello from user',userProfile)
   }, [userProfile]);
 
   // ✅ Update profile mutation
   const updateProfileMutation = useMutation({
     mutationFn: async (updatedData) => {
       const { data } = await axiosSecure.put("/api/user/profile", updatedData);
-      return data; // Ensure only the data is returned
+      return data; 
     },
     onSuccess: () => {
       toast.success("Profile Updated Successfully! ✅");
