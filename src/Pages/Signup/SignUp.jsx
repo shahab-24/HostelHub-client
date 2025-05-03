@@ -35,11 +35,11 @@ const SignUp = () => {
 
     try {
       const result = await createUser(email, password);
-      console.log("user created", result);
+//       console.log("user created", result);
 
       await updateUserProfile(name);
 
-      console.log(result);
+//       console.log(result);
       form.reset();
       navigate("/");
       toast.success("Signup Successful");
@@ -52,17 +52,13 @@ const SignUp = () => {
   const handleGoogleSignIn = async () => {
     try {
       await signInWithGoogle();
-      navigate("/");
+//       navigate("/");
       toast.success("Signup Successful");
       setLoading(false)
     } catch (err) {
       console.log(err);
       toast.error(err?.message);
-      if (err.code === "auth/popup-closed-by-user") {
-        toast.error("Popup closed before completing the login process.");
-      } else {
-        toast.error(err?.message || "An error occurred during Google sign-in.");
-      }
+      
       setLoading(false);
     }
   };

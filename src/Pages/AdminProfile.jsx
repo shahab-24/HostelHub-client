@@ -11,15 +11,18 @@ const AdminProfile = () => {
                 queryFn: async () => {
 
                         try {
-                                const {data} = await axiosSecure('/api/admin/profile')
+                                const {data} = await axiosSecure.get('/api/admin/profile')
                                 return data
                         } catch (error) {
                                 console.log(error)
-                                
+                                throw new Error(error.response?.data?.message || error.message)
+                               
                         }
-                }
+                        
+                },
+                retry: false, 
         })
-
+console.log('admin profile', profile)
         if (isLoading) return <Loader />;
   if (isError) return <p className="text-red-500">{error.message}</p>;
 

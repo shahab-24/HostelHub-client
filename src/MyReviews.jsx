@@ -89,7 +89,7 @@ const MyReviews = () => {
         });
     };
 
-    if (isLoading) return <div>Loading...</div>;
+//     if (isLoading) return <div>Loading...</div>;
 
     return (
         <div className="p-4 max-w-7xl mx-auto">

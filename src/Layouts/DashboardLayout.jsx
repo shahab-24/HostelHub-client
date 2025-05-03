@@ -2,7 +2,7 @@ import { NavLink, Outlet } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import { motion } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
-import useAuth from "../hooks/useAuth";
+// import useAuth from "../hooks/useAuth";
 import useRole from "../hooks/useRole";
 import Loader from "../Components/Shared/Loader";
 import { Menu, X } from "lucide-react"; 
@@ -40,7 +40,7 @@ const DashboardLayout = () => {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  if (isLoading) return <Loader />;
+//   if (isLoading) return <Loader />;
 
   return (
     <div className="flex flex-col md:flex-row min-h-screen">

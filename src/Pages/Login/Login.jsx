@@ -33,6 +33,7 @@ const Login = () => {
     }
   };
 
+  
   const handleGoogleSignIn = async () => {
     try {
       await signInWithGoogle();
@@ -42,11 +43,7 @@ const Login = () => {
     } catch (err) {
       console.log(err);
       toast.error(err?.message);
-      if (err.code === "auth/popup-closed-by-user") {
-        toast.error("Popup closed before completing the login process.");
-      } else {
-        toast.error(err?.message || "An error occurred during Google sign-in.");
-      }
+      
       setLoading(false);
     }
   };

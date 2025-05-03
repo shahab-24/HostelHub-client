@@ -10,6 +10,8 @@ import useAuth from "../hooks/useAuth";
 
 const UserProfile = () => {
         const {user} = useAuth()
+        console.log("👤 Logged-in user:", user);
+        const email = user?.email;
   const axiosSecure = useAxiosSecure();
   const [isEditing, setIsEditing] = useState(false);
   const [updatedProfile, setUpdatedProfile] = useState({
@@ -21,7 +23,7 @@ const UserProfile = () => {
   // ✅ Fetch user profile
   const { data: userProfile, isLoading, isError, error, refetch } = useQuery({
     queryKey: ["userData"],
-    enabled: !!user?.email,
+    enabled: !!email,
 
     queryFn: async () => {
         if (!user?.email) return [];
@@ -41,7 +43,7 @@ const UserProfile = () => {
         image: userProfile.image || "",
       });
     }
-    console.log('hello from user',userProfile)
+//     console.log('hello from user',userProfile)
   }, [userProfile]);
 
   // ✅ Update profile mutation

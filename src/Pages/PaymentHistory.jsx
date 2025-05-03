@@ -9,16 +9,13 @@ const PaymentHistory = () => {
 //   console.log(user)
 
   useEffect(() => {
-    // Fetch payment history from your backend
+    // get payment history from backend
     if(user?.email){
         axiosSecure.get(`dashboard/payment-history?email=${user?.email}`)
         .then((res) => setPayments(res.data?.data || []))
         .catch((error) => console.error("Error fetching payments:", error));
     }
-//     fetch("/payments")
-//       .then((res) => res.json())
-//       .then((data) => setPayments(data.data))  // Adjust according to the API response structure
-//       .catch((error) => console.error("Error fetching payments:", error));
+
   }, [user?.email, axiosSecure]);
 
   return (

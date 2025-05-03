@@ -8,7 +8,7 @@ const AdminRoute = ({children}) => {
         
         const [role, isLoading] = useRole()
 
-        if(isLoading) return <Loader></Loader>
+        // if(isLoading) return <Loader></Loader>
         if(role === 'admin') return children;
 
         return <Navigate to='/dashboard'  replace='true' />
