@@ -10,7 +10,7 @@ import useAuth from "../hooks/useAuth";
 
 const UserProfile = () => {
         const {user} = useAuth()
-        console.log("👤 Logged-in user:", user);
+        // console.log(" Logged-in user:", user);
         const email = user?.email;
   const axiosSecure = useAxiosSecure();
   const [isEditing, setIsEditing] = useState(false);
@@ -75,7 +75,7 @@ const UserProfile = () => {
     updateProfileMutation.mutate(updatedProfile);
   };
 
-  if (isLoading) return <Loader />;
+//   if (isLoading) return <Loader />;
   if (isError) return <p className="text-red-500">{error.message}</p>;
 
   return (

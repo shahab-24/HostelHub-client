@@ -61,9 +61,9 @@ const AuthProvider = ({ children }) => {
 
       if (currentUser?.email) {
         setUser(currentUser)
-        console.log('User set:', currentUser);
-        const token = await currentUser.getIdToken()
-        localStorage.setItem("accessToken", token);
+        // console.log('User set:', currentUser);
+        // const token = await currentUser.getIdToken()
+        // localStorage.setItem("accessToken", token);
 
         // save user
         // setLoading(false)
@@ -74,7 +74,7 @@ const AuthProvider = ({ children }) => {
             email: currentUser?.email
         },
 )
-        setLoading(false)
+        // setLoading(false)
 
         // Get JWT token
         await axios.post(
@@ -82,24 +82,34 @@ const AuthProvider = ({ children }) => {
           {
             email: currentUser?.email
           },
-          { withCredentials: true }
-        )
+        //   { withCredentials: true }
+        ).then((res) => {
+                
+                const token = res.data?.token;
+                
+                if(token){
+                        localStorage.setItem('accessToken', token)
+                }
+        })
         
         
         setLoading(false)
       } else {
         setUser(null)
         localStorage.removeItem("accessToken"); 
-        await axios.get(`${import.meta.env.VITE_API_URL}/api/logout`, {
-          withCredentials: true,
-        })
+        await axios.get(`${import.meta.env.VITE_API_URL}/api/logout`
+        //         ,
+        //          {
+        //   withCredentials: true,
+        // }
+)
         setLoading(false)
       }
       
     })
-    return () => {
-      return unsubscribe()
-    }
+    
+      return  unsubscribe
+    
   }, [])
 
   const authInfo = {

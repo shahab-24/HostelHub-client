@@ -60,7 +60,7 @@ const ServeMeals = () => {
               <tr key={meal._id} className="hover:bg-gray-50">
                 <td className="p-3 border-b">{meal.title}</td>
                 <td className="p-3 border-b">{meal.email}</td>
-                <td className="p-3 border-b">{meal.userId.name}</td> {/* Assuming name is stored inside userId */}
+                <td className="p-3 border-b">{meal.userId.name}</td>
                 <td className="p-3 border-b">{meal.status}</td>
                 <td className="p-3 border-b">
                   {meal.status === 'pending' ? (

@@ -5,13 +5,15 @@ import { useEffect } from "react";
 
 const axiosSecure = axios.create({
         baseURL: import.meta.env.VITE_API_URL, 
-        withCredentials: true
+        // withCredentials: true
 })
 
+
 const useAxiosSecure = () => {
+        const navigate = useNavigate()
         const {logOut,setLoading} = useAuth()
         // console.log(user.accessToken)
-        const navigate = useNavigate()
+        
 
         useEffect(() => {
                 const requestInterceptor = axiosSecure.interceptors.request.use(
@@ -19,14 +21,16 @@ const useAxiosSecure = () => {
                         function(config){
                                 setLoading(true)
                                 
-                                // const token = localStorage.getItem('accessToken')
+                                const token = localStorage.getItem('accessToken')
+
+                                // console.log("Token inside interceptor:", token);
 
 
                                 // console.log("Token being added to headers:", token);
                                 
-                                // if(token){
-                                //         config.headers.Authorization = `Bearer ${token}`
-                                // }
+                                if(token){
+                                        config.headers.Authorization = `Bearer ${token}`
+                                }
                                 // console.log('before adding token interceptor', token)
                                 return config
                         }, 
@@ -35,6 +39,7 @@ const useAxiosSecure = () => {
                                 const status = error?.response?.status;
         
                                 if(status === 401 || status === 403){
+                                        console.warn("🔐 Token rejected. Logging out user.");
                                         await logOut()
                                         navigate('/login')
                                 }

@@ -22,7 +22,7 @@ const AdminProfile = () => {
                 },
                 retry: false, 
         })
-console.log('admin profile', profile)
+// console.log('admin profile', profile)
         if (isLoading) return <Loader />;
   if (isError) return <p className="text-red-500">{error.message}</p>;
 

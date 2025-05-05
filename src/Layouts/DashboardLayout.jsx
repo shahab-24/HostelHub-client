@@ -7,9 +7,10 @@ import useRole from "../hooks/useRole";
 import Loader from "../Components/Shared/Loader";
 import { Menu, X } from "lucide-react"; 
 import DashboardNavbar from "../Components/DashboardNavbar";
+import useAuth from "../hooks/useAuth";
 
 const DashboardLayout = () => {
-//   const { user } = useAuth();
+  const { user, loading } = useAuth();
   const [role, isLoading] = useRole();
   const [menuOpen, setMenuOpen] = useState(false);
   const [text, setText] = useState("");
@@ -40,7 +41,11 @@ const DashboardLayout = () => {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-//   if (isLoading) return <Loader />;
+//   if (loading) return <Loader />;
+//   if (loading) return <Loader />;
+
+// if (!role && isLoading) return <Loader />;
+
 
   return (
     <div className="flex flex-col md:flex-row min-h-screen">

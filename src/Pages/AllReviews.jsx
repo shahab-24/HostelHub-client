@@ -4,12 +4,13 @@ import useAxiosSecure from "../hooks/useAxiosSecure";
 import { Helmet } from "react-helmet-async";
 import Swal from "sweetalert2";
 import { useState } from "react";
+import Loader from "../Components/Shared/Loader";
 
 const AllReviews = () => {
   const axiosSecure = useAxiosSecure();
   const [selectedMeal, setSelectedMeal] = useState(null);
 
-  const { data: reviews = [], refetch } = useQuery({
+  const { data: reviews = [], refetch, isLoading } = useQuery({
     queryKey: ["reviews"],
     queryFn: async () => {
       const { data } = await axiosSecure("/api/reviews");
@@ -51,6 +52,7 @@ const AllReviews = () => {
       Swal.fire("Error!", "Failed to fetch meal details.", error);
     }
   };
+  if (isLoading) return <Loader />;
 
   return (
     <div className="p-5 w-full max-w-7xl mx-auto overflow-x-auto">
