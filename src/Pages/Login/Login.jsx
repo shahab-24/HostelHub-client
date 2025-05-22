@@ -9,7 +9,7 @@ import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { Helmet } from 'react-helmet-async';
 
 const Login = () => {
-        const [showPassword, setShowPassword] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
   const { signIn, signInWithGoogle, setLoading, user } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
@@ -33,7 +33,6 @@ const Login = () => {
     }
   };
 
-  
   const handleGoogleSignIn = async () => {
     try {
       await signInWithGoogle();
@@ -43,95 +42,92 @@ const Login = () => {
     } catch (err) {
       console.log(err);
       toast.error(err?.message);
-      
       setLoading(false);
     }
   };
+
   const handleShowPassword = () => {
-        setShowPassword(!showPassword);
-      };
+    setShowPassword(!showPassword);
+  };
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-white px-4 sm:px-6 lg:px-8 pt-20">
-    <Helmet>
+    <div className="flex justify-center items-center min-h-screen bg-base-200 px-4 sm:px-6 lg:px-8 pt-20">
+      <Helmet>
         <title> Login | HostelHub </title>
       </Helmet>
-      <div className="flex flex-col gap-10 md:flex-row items-center max-w-5xl w-full bg-gray-100 p-6 sm:p-10 rounded-lg shadow-md">
+
+      <div className="flex flex-col md:flex-row items-center max-w-5xl w-full bg-base-100 p-8 rounded-lg shadow-lg">
         {/* Lottie Animation */}
-        <div className="w-full md:w-1/2 flex justify-center">
+        <div className="w-full md:w-1/2 flex justify-center mb-8 md:mb-0">
           <Lottie animationData={lottieLoginData} className="w-3/4 md:w-full" />
         </div>
 
         {/* Login Form */}
-        <div className="w-full md:w-1/2 mt-6 md:mt-0">
+        <div className="w-full md:w-1/2">
           <div className="text-center mb-6">
-            <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">Log In</h1>
-            <p className="text-sm text-gray-500 mt-2">Sign in to access your account</p>
+            <h1 className="text-3xl font-bold text-base-content">Log In</h1>
+            <p className="text-base-content opacity-70 mt-2">Sign in to access your account</p>
           </div>
-          <form
-            onSubmit={handleSubmit}
-            className="space-y-6"
-          >
-            <div className="space-y-4">
-              <div>
-                <label htmlFor="email" className="block text-sm font-medium text-gray-700">
-                  Email
-                </label>
-                <input
-                  type="email"
-                  name="email"
-                  id="email"
-                  required
-                  placeholder="Enter your email"
-                  className="w-full px-4 py-2 border rounded-md border-gray-300 focus:ring-lime-500 focus:border-lime-500 text-gray-900"
-                />
-              </div>
-              <div className="relative">
-              <label htmlFor="password" className="block text-sm font-medium text-gray-700">
-                Password
+          <form onSubmit={handleSubmit} className="space-y-6">
+            <div className="form-control w-full">
+              <label className="label">
+                <span className="label-text text-base-content">Email</span>
+              </label>
+              <input
+                type="email"
+                name="email"
+                id="email"
+                required
+                placeholder="Enter your email"
+                className="input input-bordered w-full text-base-content"
+              />
+            </div>
+            <div className="form-control w-full relative">
+              <label className="label">
+                <span className="label-text text-base-content">Password</span>
               </label>
               <input
                 type={showPassword ? "text" : "password"}
                 name="password"
                 id="password"
-                placeholder="Enter your password"
-                className="w-full px-4 py-2 border rounded-md border-gray-300 focus:ring-lime-500 focus:border-lime-500 text-gray-900"
                 required
+                placeholder="Enter your password"
+                className="input input-bordered w-full text-base-content pr-10"
               />
               <button
                 type="button"
                 onClick={handleShowPassword}
-                className="absolute inset-y-0 right-3 top-5 flex items-center text-gray-600"
+                className="absolute top-[2.6rem] right-3 text-base-content opacity-60 hover:opacity-100"
+                aria-label={showPassword ? "Hide password" : "Show password"}
               >
                 {showPassword ? <FaEyeSlash /> : <FaEye />}
               </button>
             </div>
-            </div>
             <button
               type="submit"
-              className="relative mt-4 px-6 py-3 font-bold text-lg text-white bg-gradient-to-r from-blue-500 to-purple-500 rounded-lg shadow-lg 
-                         transition-all duration-300 ease-in-out transform hover:scale-105 hover:shadow-xl w-full"
+              className="btn btn-primary btn-block text-lg"
             >
               Log In
             </button>
           </form>
-          <div className="flex items-center my-4">
-            <div className="flex-grow border-t border-gray-300"></div>
-            <p className="mx-4 text-sm text-gray-500">or</p>
-            <div className="flex-grow border-t border-gray-300"></div>
-          </div>
-          <div
+
+          <div className="divider">or</div>
+
+          <div>
+          <button
             onClick={handleGoogleSignIn}
-            className="flex items-center justify-center space-x-3 border border-gray-300 py-2 px-4 rounded-md cursor-pointer hover:bg-gray-200 transition duration-200"
+            className="btn btn-outline btn-block flex items-center  justify-center space-x-3 text-base-content"
           >
-            <FcGoogle size={24} />
-            <p className="text-gray-700">Continue with Google</p>
+            <FcGoogle size={24} className=''/>
+            <p className=''>Continue with Google</p>
+          </button>
           </div>
-          <p className="text-center text-sm text-gray-500 mt-4">
+
+          <p className="text-center text-base-content opacity-70 mt-6 text-sm">
             Don&apos;t have an account?{' '}
             <Link
               to="/signup"
-              className="text-blue-500 hover:underline text-lg"
+              className="link link-primary text-lg"
             >
               Sign up
             </Link>

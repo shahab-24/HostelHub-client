@@ -6,14 +6,15 @@ import { FaEye, FaEdit, FaTrash } from "react-icons/fa";
 import { Helmet } from "react-helmet-async";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2"; // Import SweetAlert
+import useAuth from "../hooks/useAuth";
 
 const AllMealsPage = () => {
   const [sortBy, setSortBy] = useState("likes");
   const [order, setOrder] = useState("desc");
   const axiosSecure = useAxiosSecure();
   const navigate = useNavigate();
-  const queryClient = useQueryClient(); // For UI update after delete
-
+  const queryClient = useQueryClient(); 
+  const {loading} = useAuth()
   // State for update modal
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedMeal, setSelectedMeal] = useState(null);

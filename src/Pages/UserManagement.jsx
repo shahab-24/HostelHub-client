@@ -3,15 +3,22 @@ import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../hooks/useAxiosSecure";
 import { toast } from "react-toastify";
 import { Helmet } from "react-helmet-async";
+import Loader from "../Components/Shared/Loader";
+import { motion } from "framer-motion";
 
 const UserManagement = () => {
   const axiosSecure = useAxiosSecure();
   const [search, setSearch] = useState("");
 
-  const { data: users = [], isLoading, error, refetch } = useQuery({
+  const {
+    data: users = [],
+    isLoading,
+    error,
+    refetch,
+  } = useQuery({
     queryKey: ["users", search],
     queryFn: async () => {
-      const { data } = await axiosSecure.get(`/users?search=${search}`);
+      const { data } = await axiosSecure.get(`/api/users?search=${search}`);
       return data;
     },
     keepPreviousData: true,
@@ -23,92 +30,89 @@ const UserManagement = () => {
       toast.success("User role updated to admin");
       refetch();
     } catch (err) {
-        console.log(err)
+      console.log(err);
       toast.error("Error updating user role");
     }
   };
 
+  if (isLoading) return <Loader />;
+
   return (
-    <div className="container mx-auto p-6 space-y-6">
-    <Helmet>
-        <title>User Mangament | HotelHub-Dashboard</title>
-    </Helmet>
-      {/* Header */}
-      <div className="flex justify-between items-center">
-        <h1 className="text-2xl font-bold text-gray-800">User Management</h1>
-      </div>
+    <div className="min-h-screen px-4 py-10 bg-gradient-to-br from-[#f1f5f9] via-[#e2e8f0] to-[#f8fafc] dark:from-[#1e293b] dark:via-[#0f172a] dark:to-[#0f172a]">
+      <Helmet>
+        <title>User Management | HotelHub Dashboard</title>
+      </Helmet>
 
-      {/* Search and Loading Indicator */}
-      <div className="flex justify-between items-center mb-4">
-        <input
-          type="text"
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-          className="input input-bordered w-full max-w-md"
-          placeholder="Search by username or email"
-        />
-        {isLoading && (
-          <div className="flex items-center space-x-2">
-            <span className="loading loading-spinner loading-sm"></span>
-            <span className="text-gray-500">Loading...</span>
-          </div>
+      <motion.div
+        initial={{ opacity: 0, y: 30 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6 }}
+        className="max-w-6xl mx-auto bg-white dark:bg-slate-900 shadow-xl rounded-2xl p-6 space-y-8"
+      >
+        {/* Header */}
+        <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
+          <h1 className="text-3xl font-extrabold text-slate-800 dark:text-slate-200">
+            User Management
+          </h1>
+          <input
+            type="text"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            placeholder="Search by name or email"
+            className="input input-bordered w-full sm:w-80 bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 text-slate-800 dark:text-white placeholder:text-slate-500"
+          />
+        </div>
+
+        {/* Error */}
+        {error && (
+          <p className="text-center text-red-500">Error loading users</p>
         )}
-      </div>
 
-      {/* Error Handling */}
-      {error && (
-        <p className="text-center text-red-500">Error loading users</p>
-      )}
-
-      {/* User Table */}
-      <div className="overflow-x-auto bg-white shadow-lg rounded-lg">
-        <table className="table w-full">
-          <thead className="bg-gray-200">
-            <tr>
-              <th className="px-6 py-3 text-left text-sm font-medium text-gray-600">
-                User
-              </th>
-              <th className="px-6 py-3 text-left text-sm font-medium text-gray-600">
-                Email
-              </th>
-              <th className="px-6 py-3 text-left text-sm font-medium text-gray-600">
-                Role
-              </th>
-              <th className="px-6 py-3 text-center text-sm font-medium text-gray-600">
-                Action
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            {users?.map((user) => (
-              <tr
-                key={user._id}
-                className="hover:bg-gray-100 border-t text-sm text-gray-800"
-              >
-                <td className="px-6 py-3">{user.name || "Unknown"}</td>
-                <td className="px-6 py-3">{user.email}</td>
-                <td className="px-6 py-3">{user.role}</td>
-                <td className="px-6 py-3 text-center">
-                  {user?.role !== "admin" && (
-                    <button
-                      className="btn btn-primary btn-sm"
-                      onClick={() => handleMakeAdmin(user._id)}
-                    >
-                      Make Admin
-                    </button>
-                  )}
-                </td>
+        {/* Table */}
+        <div className="overflow-x-auto rounded-lg border border-slate-200 dark:border-slate-700">
+          <table className="table w-full text-sm">
+            <thead className="bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300">
+              <tr>
+                <th className="px-4 py-3 text-left">User</th>
+                <th className="px-4 py-3 text-left">Email</th>
+                <th className="px-4 py-3 text-left">Role</th>
+                <th className="px-4 py-3 text-center">Action</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody className="divide-y divide-slate-200 dark:divide-slate-700">
+              {users?.map((user, index) => (
+                <motion.tr
+                  key={user._id}
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: index * 0.05 }}
+                  className="hover:bg-slate-50 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300"
+                >
+                  <td className="px-4 py-3">{user.name || "Unknown"}</td>
+                  <td className="px-4 py-3">{user.email}</td>
+                  <td className="px-4 py-3 capitalize">{user.role}</td>
+                  <td className="px-4 py-3 text-center">
+                    {user.role !== "admin" && (
+                      <button
+                        onClick={() => handleMakeAdmin(user._id)}
+                        className="btn btn-sm btn-primary"
+                      >
+                        Make Admin
+                      </button>
+                    )}
+                  </td>
+                </motion.tr>
+              ))}
+            </tbody>
+          </table>
 
-        {users?.length === 0 && (
-          <div className="text-center py-6 text-gray-500">
-            No users found.
-          </div>
-        )}
-      </div>
+          {users?.length === 0 && (
+            <div className="text-center py-6 text-slate-500 dark:text-slate-400">
+              No users found.
+            </div>
+          )}
+        </div>
+      </motion.div>
     </div>
   );
 };

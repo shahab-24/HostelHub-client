@@ -31,12 +31,13 @@ import AdminRoute from "./AdminRoute";
 import AdminDashboard from "../Pages/AdminDashboard/AdminDashboard";
 import UserDashboard from "../Pages/UsersDashboard/UserDashboard";
 import Payment from "../Pages/Payment/Payment";
+import ErrorPage from "../Pages/ErrorPage/ErrorPage";
 
 export const router = createBrowserRouter([
   {
     path: "/",
     element: <MainLayout></MainLayout>,
-    errorElement: <h3>Error, page not found</h3>, //to do error page
+    errorElement: <ErrorPage></ErrorPage>, //to do error page
     children: [
       {
         path: "signup",
@@ -55,7 +56,7 @@ export const router = createBrowserRouter([
         element: <MealsPage></MealsPage>,
       },
       {
-        path: "api/meals/:id",
+        path: "api/meals/:mealId",
         element: <MealDetailPage></MealDetailPage>,
       },
       {
@@ -65,9 +66,9 @@ export const router = createBrowserRouter([
       {
         path: "checkout/payment",
         element: (
-        //   <PrivateRoute>
+          <PrivateRoute>
             <Payment></Payment>
-        //   </PrivateRoute>
+           </PrivateRoute>
         ),
       },
       {
@@ -84,39 +85,40 @@ export const router = createBrowserRouter([
   {
     path: "/dashboard",
     element: (
-      <PrivateRoute>
-        <DashboardLayout></DashboardLayout>
-      </PrivateRoute>
+        <PrivateRoute><DashboardLayout></DashboardLayout></PrivateRoute>
+      
+        
+      
     ),
     children: [
         // normal user related route=========
         {
                 path: "user-dashboard",
                 element: (
-                 
-                    <UserDashboard></UserDashboard>
+                 <PrivateRoute><UserDashboard></UserDashboard></PrivateRoute>
+                    
                  
                 ),
               },
       {
         path: "user-profile",
         element: (
-        
-            <UserProfile></UserProfile>
+                <PrivateRoute><UserProfile></UserProfile></PrivateRoute>
+            
            
         ),
       },
       {
         path: "my-reviews",
-        element: <MyReviews></MyReviews>,
+        element:  <PrivateRoute><MyReviews></MyReviews></PrivateRoute>,
       },
       {
         path: "requested-meals",
-        element: <RequestedMeals></RequestedMeals>,
+        element:  <PrivateRoute><RequestedMeals></RequestedMeals></PrivateRoute>,
       },
       {
         path: "payment-history",
-        element: <PaymentHistory></PaymentHistory>,
+        element:  <PrivateRoute><PaymentHistory></PaymentHistory></PrivateRoute>,
       },
     
       {

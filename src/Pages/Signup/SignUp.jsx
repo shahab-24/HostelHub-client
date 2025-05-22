@@ -8,8 +8,6 @@ import { useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { Helmet } from "react-helmet-async";
 
-// import axios from "axios";
-
 const SignUp = () => {
   const [showPassword, setShowPassword] = useState(false);
   const { createUser, updateUserProfile, signInWithGoogle, setLoading } = useAuth();
@@ -21,7 +19,6 @@ const SignUp = () => {
     const name = form.name.value;
     const email = form.email.value;
     const password = form.password.value;
-    console.log("hello from sign up", name, email, password);
 
     const passwordRegex =
       /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/;
@@ -35,11 +32,7 @@ const SignUp = () => {
 
     try {
       const result = await createUser(email, password);
-//       console.log("user created", result);
-
       await updateUserProfile(name);
-
-//       console.log(result);
       form.reset();
       navigate("/");
       toast.success("Signup Successful");
@@ -54,11 +47,10 @@ const SignUp = () => {
       await signInWithGoogle();
       navigate("/");
       toast.success("Signup Successful");
-      setLoading(false)
+      setLoading(false);
     } catch (err) {
       console.log(err);
       toast.error(err?.message);
-      
       setLoading(false);
     }
   };
@@ -69,103 +61,96 @@ const SignUp = () => {
 
   return (
     <div className="flex flex-col lg:flex-row-reverse items-center justify-center min-h-screen bg-base-200 px-4 sm:px-6 lg:px-8 pt-20">
-    <Helmet>
+      <Helmet>
         <title> Sign Up | HostelHub </title>
       </Helmet>
+
       {/* Lottie Animation */}
       <div className="w-full lg:w-1/3 flex justify-center lg:justify-end mb-6 lg:mb-0 lg:pr-16">
         <Lottie animationData={lottieLoginData} className="w-3/4 lg:w-4/5" />
       </div>
 
       {/* Signup Form */}
-      <div className="w-full lg:w-1/3">
+      <div className="w-full lg:w-1/3 bg-base-100 p-8 rounded-lg shadow-md">
         <div className="text-center mb-6">
-          <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 font-poppins">
+          <h1 className="text-3xl font-bold text-base-content font-poppins">
             Sign Up Now!
           </h1>
         </div>
         <form onSubmit={handleSubmit} className="space-y-6">
-          <div className="space-y-4">
-            <div>
-              <label
-                htmlFor="name"
-                className="block text-sm font-medium text-gray-700"
-              >
-                Name
-              </label>
-              <input
-                type="text"
-                name="name"
-                id="name"
-                placeholder="Enter your name"
-                className="w-full px-4 py-2 border rounded-md border-gray-300 focus:ring-lime-500 focus:border-lime-500 text-gray-900"
-                required
-              />
-            </div>
-            <div>
-              <label
-                htmlFor="email"
-                className="block text-sm font-medium text-gray-700"
-              >
-                Email
-              </label>
-              <input
-                type="email"
-                name="email"
-                id="email"
-                placeholder="Enter your email"
-                className="w-full px-4 py-2 border rounded-md border-gray-300 focus:ring-lime-500 focus:border-lime-500 text-gray-900"
-                required
-              />
-            </div>
-            <div className="relative">
-              <label
-                htmlFor="password"
-                className="block text-sm font-medium text-gray-700"
-              >
-                Password
-              </label>
-              <input
-                type={showPassword ? "text" : "password"}
-                name="password"
-                id="password"
-                placeholder="Enter your password"
-                className="w-full px-4 py-2 border rounded-md border-gray-300 focus:ring-lime-500 focus:border-lime-500 text-gray-900"
-                required
-              />
-              <button
-                type="button"
-                onClick={handleShowPassword}
-                className="absolute inset-y-0 right-3 top-5 flex items-center text-gray-600"
-              >
-                {showPassword ? <FaEyeSlash /> : <FaEye />}
-              </button>
-            </div>
+          <div className="form-control w-full">
+            <label htmlFor="name" className="label">
+              <span className="label-text text-base-content font-semibold">Name</span>
+            </label>
+            <input
+              type="text"
+              name="name"
+              id="name"
+              placeholder="Enter your name"
+              className="input input-bordered w-full text-base-content"
+              required
+            />
+          </div>
+          <div className="form-control w-full">
+            <label htmlFor="email" className="label">
+              <span className="label-text text-base-content font-semibold">Email</span>
+            </label>
+            <input
+              type="email"
+              name="email"
+              id="email"
+              placeholder="Enter your email"
+              className="input input-bordered w-full text-base-content"
+              required
+            />
+          </div>
+          <div className="form-control w-full relative">
+            <label htmlFor="password" className="label">
+              <span className="label-text text-base-content font-semibold">Password</span>
+            </label>
+            <input
+              type={showPassword ? "text" : "password"}
+              name="password"
+              id="password"
+              placeholder="Enter your password"
+              className="input input-bordered w-full pr-10 text-base-content"
+              required
+            />
+            <button
+              type="button"
+              onClick={handleShowPassword}
+              className="absolute top-[2.9rem] right-3 text-lg text-gray-500 hover:text-gray-700 focus:outline-none"
+              aria-label={showPassword ? "Hide password" : "Show password"}
+            >
+              {showPassword ? <FaEyeSlash /> : <FaEye />}
+            </button>
           </div>
           <button
             type="submit"
-            className="relative mt-4 px-6 py-3 font-bold text-lg text-white bg-gradient-to-r from-blue-500 to-purple-500 rounded-lg shadow-lg 
-                         transition-all duration-300 ease-in-out transform hover:scale-105 hover:shadow-xl w-full"
+            className="btn btn-primary w-full text-lg font-bold transition-transform duration-300 hover:scale-105"
           >
             Sign Up
           </button>
         </form>
-        <p className="text-center my-2">Already Sing up ? please <Link to="/login" className="text-blue-500 hover:underline text-lg">Login</Link> </p>
-        <div className="flex items-center my-4">
-        
-          <div className="flex-grow border-t border-gray-300"></div>
-          
-          
-          <p className="mx-4 text-sm text-gray-500">or</p>
-          <div className="flex-grow border-t border-gray-300"></div>
+
+        <p className="text-center my-4 text-base-content">
+          Already signed up? Please{" "}
+          <Link to="/login" className="text-primary hover:underline font-semibold">
+            Login
+          </Link>
+        </p>
+
+        <div className="flex items-center my-6">
+          <div className="divider before:bg-gray-300 after:bg-gray-300">OR</div>
         </div>
-        <div
+
+        <button
           onClick={handleGoogleSignIn}
-          className="flex items-center justify-center space-x-3 border border-gray-300 py-2 px-4 rounded-md cursor-pointer hover:bg-gray-200 transition duration-200"
+          className="btn btn-outline btn-primary w-full flex items-center justify-center gap-3"
         >
           <FcGoogle size={24} />
-          <p className="text-gray-700">Continue with Google</p>
-        </div>
+          <span className="text-base-content font-semibold">Continue with Google</span>
+        </button>
       </div>
     </div>
   );

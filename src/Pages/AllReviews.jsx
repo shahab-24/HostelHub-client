@@ -5,10 +5,12 @@ import { Helmet } from "react-helmet-async";
 import Swal from "sweetalert2";
 import { useState } from "react";
 import Loader from "../Components/Shared/Loader";
+import useAuth from "../hooks/useAuth";
 
 const AllReviews = () => {
   const axiosSecure = useAxiosSecure();
   const [selectedMeal, setSelectedMeal] = useState(null);
+  const {loading} = useAuth()
 
   const { data: reviews = [], refetch, isLoading } = useQuery({
     queryKey: ["reviews"],

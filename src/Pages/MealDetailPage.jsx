@@ -20,10 +20,10 @@ const MealDetailPage = () => {
   //   const axiosPublic = useAxiosPublic();
   const axiosSecure = useAxiosSecure();
   const queryClient = useQueryClient();
-  const { id } = useParams();
+  const  {mealId} = useParams();
   const { user } = useAuth();
 
-  //   console.log(id, user.email)
+  
 
   const {
     data: meal = {},
@@ -32,21 +32,22 @@ const MealDetailPage = () => {
     error,
     refetch,
   } = useQuery({
-    queryKey: ["meal", id],
+    queryKey: ["meal", mealId],
     queryFn: async () => {
-      const { data } = await axiosSecure(`/api/meals/${id}`);
+      const { data } = await axiosSecure.get(`/api/meals/${mealId}`);
       return data;
     },
   });
 //   console.log(meal)
+// console.log(mealId, user?.email)
 
 //   const totalPrice = meal.reduce((total, item) => total + item.price,0)
 //   console.log(totalPrice)
 
   const { data: reviews } = useQuery({
-    queryKey: ["reviews", id],
+    queryKey: ["reviews", mealId],
     queryFn: async () => {
-      const response = await axiosSecure(`/api/reviews/${id}`);
+      const response = await axiosSecure(`/api/reviews/${mealId}`);
       return response.data;
     },
   });
@@ -62,12 +63,12 @@ const MealDetailPage = () => {
       if (meal?.likedBy?.includes(user?.email)) {
         throw new Error("You have already liked this meal.");
       }
-      await axiosSecure.patch(`/api/meals/${id}/like`);
+      await axiosSecure.patch(`/api/meals/${mealId}/like`);
     },
-    onSuccess: () => {
+    onSuccess: async () => {
       setLikedMeals((prev) => prev + 1);
       toast.success("Liked the meal successfully!");
-      queryClient.invalidateQueries(["meal", id]);
+      await queryClient.refetchQueries(["meal", mealId]);
       refetch();
     },
     onError: (error) => {
@@ -87,7 +88,7 @@ const MealDetailPage = () => {
         return;
       }
       const payload = {
-        mealId: id,
+        mealId: mealId,
         comment: reviewText,
         rating,
         title: meal.title,
@@ -96,8 +97,8 @@ const MealDetailPage = () => {
     },
     onSuccess: () => {
       toast.success("Review added successfully!");
-      queryClient.invalidateQueries(["reviews", id]);
-      queryClient.invalidateQueries(["meal", id]);
+      queryClient.invalidateQueries(["reviews", mealId]);
+      queryClient.invalidateQueries(["meal", mealId]);
       setReviewText("");
       setRating(0);
     },
@@ -115,10 +116,10 @@ const MealDetailPage = () => {
           return;
         }
         const response = await axiosSecure.patch(
-          `/api/reviews/${updatedReview.id}`,
+          `/api/reviews/${updatedReview.mealId}`,
           updatedReview
         );
-        return response.data; // Ensure the response is captured for success
+        return response.data; 
       } catch (error) {
         throw new Error(
           error.response?.data?.message || "Failed to update review."
@@ -127,7 +128,7 @@ const MealDetailPage = () => {
     },
     onSuccess: () => {
       toast.success("Review updated!");
-      queryClient.invalidateQueries(["reviews", id]);
+      queryClient.invalidateQueries(["reviews", mealId]);
       setEditingReview(null);
     },
     onError: (error) => {
@@ -147,7 +148,7 @@ const MealDetailPage = () => {
     },
     onSuccess: () => {
       toast.success("Review deleted!");
-      queryClient.invalidateQueries(["reviews", id]);
+      queryClient.invalidateQueries(["reviews", mealId]);
     },
     onError: (error) => {
       toast.error(error.response?.data?.message || "Failed to delete review.");
@@ -174,7 +175,7 @@ const MealDetailPage = () => {
       if (result.isConfirmed) {
         // Proceed with the meal request
 
-        await axiosSecure.post(`/api/request-meals/${id}`, {
+        await axiosSecure.post(`/api/request-meals/${mealId}`, {
           email: user?.email,
         });
         toast.success("Meal request submitted successfully!");
@@ -224,158 +225,189 @@ const MealDetailPage = () => {
   };
 
   return (
-    <section className="py-10 px-4 md:px-10 bg-gradient-to-r from-gray-50 to-gray-100">
-      <Helmet>
-        <title>Meal Details | HostelHub</title>
-      </Helmet>
-      <div className="max-w-6xl mx-auto bg-white rounded-lg shadow-lg overflow-hidden">
-        <motion.div
-          className="h-64 md:h-96 bg-gray-200"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.5 }}
-        >
-          <img
-            src={meal?.image}
-            alt={meal?.title || "Meal Image"}
-            className="w-full h-full object-cover"
-          />
-        </motion.div>
-
-        <div className="p-6 md:p-10">
-          <h2 className="text-3xl font-bold text-blue-600 mb-2">
-            {meal?.title}
-          </h2>
-          <p className="text-gray-600 mb-4">{meal?.description}</p>
-          <h3 className="text-lg font-semibold mb-2">Ingredients:</h3>
-          <ul className="list-disc pl-5 mb-6">
-            {meal?.ingredients?.split(",").map((ingredient, idx) => (
-              <li key={idx}>{ingredient}</li>
-            ))}
-          </ul>
-          <button
-            className={`bg-blue-500 text-white px-4 py-2 rounded-lg ${
-              meal?.likedBy?.includes(user?.email)
-                ? "opacity-50 cursor-not-allowed"
-                : ""
-            }`}
-            onClick={() => handleLike.mutate()}
-            disabled={meal?.likedBy?.includes(user?.email)}
-          >
-            Like ({meal?.likes || 0})
-          </button>
-          <button
-            className="bg-green-500 text-white px-4 py-2 ml-4 rounded-lg"
-            onClick={() => handleMealRequest.mutate()}
-          >
-            Request Meal
-          </button>
-
-          <div className="border-t pt-6">
-            <h3 className="text-2xl font-semibold mb-4">Reviews</h3>
-            {reviews?.map((review) => (
-              <div key={review._id} className="mb-4 border-b pb-4">
-                <p>
-                  <strong>{review.email}:</strong> {review.comment}
-                </p>
-                <p>
-                  Rating:{" "}
-                  {[...Array(review.rating)].map((_, index) => (
-                    <span key={index} className="text-yellow-500">
-                      ★
-                    </span>
+        <section className="py-12 px-4 md:px-10 bg-gradient-to-r from-gray-50 to-gray-100 min-h-screen mt-16 bg-base-200">
+          <Helmet>
+            <title>Meal Details | HostelHub</title>
+          </Helmet>
+      
+          <div className="max-w-4xl mx-auto bg-white rounded-2xl shadow-xl overflow-hidden">
+            {/* Animated Image Section */}
+            <motion.div
+              className="h-64 sm:h-80 md:h-96 bg-gray-200 overflow-hidden group relative"
+              initial={{ opacity: 0, y: 50 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, ease: "easeOut" }}
+            >
+              <motion.img
+                src={meal?.image}
+                alt={meal?.title || "Meal Image"}
+                className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-in-out"
+                whileHover={{ scale: 1.1, rotate: 1 }}
+              />
+              <motion.div
+                className="absolute inset-0 bg-black bg-opacity-10 group-hover:bg-opacity-0 transition duration-500"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+              />
+            </motion.div>
+      
+            {/* Content Section */}
+            <div className="p-6 md:p-10 text-center">
+              <h2 className="text-3xl md:text-4xl font-bold text-blue-600 mb-4">{meal?.title}</h2>
+              <p className="text-gray-700 mb-6 text-lg leading-relaxed">{meal?.description}</p>
+      
+              {/* Ingredients */}
+              <div className="mb-8 text-left">
+                <h3 className="text-xl font-semibold text-gray-800 mb-2">Ingredients:</h3>
+                <ul className="list-disc pl-6 text-gray-600 space-y-1">
+                  {meal?.ingredients?.split(",").map((ingredient, idx) => (
+                    <li key={idx}>{ingredient.trim()}</li>
                   ))}
-                </p>
+                </ul>
+              </div>
+      
+              {/* Buttons */}
+              <div className="flex justify-center gap-4 mb-10 flex-wrap sm:flex-nowrap">
+  {/* Like Button */}
+  <motion.button
+    whileHover={{ scale: 1.05 }}
+    className={`w-36 sm:w-40 py-2 rounded-lg font-semibold shadow transition duration-300 text-white ${
+      meal?.likedBy?.includes(user?.email)
+        ? "bg-blue-300 cursor-not-allowed"
+        : "bg-blue-500 hover:bg-blue-600"
+    }`}
+    onClick={() =>{ 
+        if(!meal?.likedBy?.includes(user?.email)){
+        handleLike.mutate()
+    }}}
+    disabled={meal?.likedBy?.includes(user?.email)}
+  >
+    {meal?.likedBy?.includes(user?.email) ? "❤️ Liked" : "❤️ Like"}
+  </motion.button>
 
-                {/* Only show edit and delete for the logged-in user */}
-                {review.email === user?.email && (
-                  <div className="flex space-x-2 mt-2">
-                    <button
-                      className="text-blue-500"
-                      onClick={() => {
-                        setEditingReview(review._id);
-                        setEditText(review.comment);
-                        setEditRating(review.rating);
-                      }}
-                    >
-                      Edit
-                    </button>
-                    <button
-                      className="text-red-500"
-                      onClick={() =>
-                        confirmAction(
-                          () => deleteReview.mutate(review._id),
-                          "Are you sure you want to delete this review?"
-                        )
-                      }
-                    >
-                      Delete
-                    </button>
+  {/* Request Meal Button */}
+  <motion.button
+    whileHover={{ scale: 1.05 }}
+    className={`w-36 sm:w-40 py-2 rounded-lg font-semibold shadow transition duration-300 text-white ${
+      meal?.requestedBy?.includes(user?.email)
+        ? "bg-green-300 cursor-not-allowed"
+        : "bg-green-500 hover:bg-green-600"
+    }`}
+    onClick={() => handleMealRequest.mutate()}
+    disabled={meal?.requestedBy?.includes(user?.email)}
+  >
+    {meal?.requestedBy?.includes(user?.email) ? "🍽️ Requested" : "🍽️ Request Meal"}
+  </motion.button>
+</div>
+
+              {/* Reviews */}
+              <div className="border-t pt-8 text-left">
+                <h3 className="text-2xl font-bold text-gray-800 mb-6">Reviews</h3>
+      
+                {reviews?.map((review) => (
+                  <div
+                    key={review._id}
+                    className="bg-gray-50 p-4 rounded-lg shadow-sm mb-4"
+                  >
+                    <p className="text-gray-800 mb-2">
+                      <strong>{review.email}</strong>: {review.comment}
+                    </p>
+                    <p className="text-yellow-500 mb-2">
+                      {[...Array(review.rating)].map((_, index) => (
+                        <span key={index}>★</span>
+                      ))}
+                    </p>
+                    {review.email === user?.email && (
+                      <div className="flex space-x-4">
+                        <button
+                          className="text-blue-500 hover:underline"
+                          onClick={() => {
+                            setEditingReview(review._id);
+                            setEditText(review.comment);
+                            setEditRating(review.rating);
+                          }}
+                        >
+                          ✏️ Edit
+                        </button>
+                        <button
+                          className="text-red-500 hover:underline"
+                          onClick={() =>
+                            confirmAction(
+                              () => deleteReview.mutate(review._id),
+                              "Are you sure you want to delete this review?"
+                            )
+                          }
+                        >
+                          🗑️ Delete
+                        </button>
+                      </div>
+                    )}
+                  </div>
+                ))}
+      
+                {/* Edit Review Form */}
+                {editingReview && (
+                  <div className="mt-6 p-6 bg-yellow-50 border border-yellow-300 rounded-xl">
+                    <h3 className="text-2xl font-semibold mb-4">Edit Your Review</h3>
+                    {renderStars(editRating, setEditRating)}
+                    <textarea
+                      value={editText}
+                      onChange={(e) => setEditText(e.target.value)}
+                      className="w-full mt-3 p-3 border rounded-md focus:outline-none focus:ring focus:ring-blue-300"
+                      placeholder="Edit your review..."
+                    />
+                    <div className="mt-4 space-x-3">
+                      <button
+                        className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg"
+                        onClick={() =>
+                          confirmAction(
+                            () =>
+                              handleEditReview.mutate({
+                                mealId: editingReview,
+                                comment: editText,
+                                rating: editRating,
+                              }),
+                            "Are you sure you want to save changes?"
+                          )
+                        }
+                      >
+                        ✅ Save
+                      </button>
+                      <button
+                        className="bg-gray-400 hover:bg-gray-500 text-white px-4 py-2 rounded-lg"
+                        onClick={() => setEditingReview(null)}
+                      >
+                        ❌ Cancel
+                      </button>
+                    </div>
                   </div>
                 )}
+      
+                {/* Add New Review Form */}
+                <div className="mt-10">
+                  <h3 className="text-2xl font-semibold mb-4">Leave a Review</h3>
+                  {renderStars(rating, setRating)}
+                  <textarea
+                    value={reviewText}
+                    onChange={(e) => setReviewText(e.target.value)}
+                    className="w-full mt-3 p-3 border rounded-md focus:outline-none focus:ring focus:ring-green-300"
+                    placeholder="Write your review here..."
+                  />
+                  <button
+                    className="mt-4 w-full bg-green-500 hover:bg-green-600 text-white px-5 py-2 rounded-lg transition duration-300"
+                    onClick={() => handleAddReview.mutate()}
+                  >
+                    ✍️ Submit Review
+                  </button>
+                </div>
               </div>
-            ))}
-
-            {/* Edit review */}
-            {editingReview && (
-              <div className="mt-4">
-                <h3 className="text-xl font-semibold mb-4">Edit Review</h3>
-                {renderStars(editRating, setEditRating)}{" "}
-                {/* Display star rating */}
-                <textarea
-                  value={editText}
-                  onChange={(e) => setEditText(e.target.value)}
-                  className="w-full mt-3 p-3 border rounded-md focus:outline-none focus:ring focus:ring-blue-300"
-                  placeholder="Edit your review..."
-                />
-                <button
-                  className="bg-blue-500 text-white px-4 py-2 mt-4 rounded-lg"
-                  onClick={() => {
-                    confirmAction(
-                      () =>
-                        handleEditReview.mutate({
-                          id: editingReview,
-                          comment: editText,
-                          rating: editRating,
-                        }),
-                      "Are you sure you want to save changes?"
-                    );
-                  }}
-                >
-                  Save Changes
-                </button>
-                <button
-                  className="bg-gray-500 text-white px-4 py-2 mt-4 ml-2 rounded-lg"
-                  onClick={() => setEditingReview(null)}
-                >
-                  Cancel
-                </button>
-              </div>
-            )}
-
-            {/* Add a new review */}
-            <div className="mt-6">
-              <h3 className="text-xl font-semibold mb-4">Add a Review</h3>
-              {renderStars(rating, setRating)}
-              <textarea
-                value={reviewText}
-                onChange={(e) => setReviewText(e.target.value)}
-                className="w-full mt-3 p-3 border rounded-md focus:outline-none focus:ring focus:ring-blue-300"
-                placeholder="Write your review..."
-              />
-              <button
-                className="relative mt-4 px-6 py-3 font-semibold text-lg text-white bg-gradient-to-r from-blue-500 to-purple-500 rounded-md shadow-lg 
-                         transition-all duration-300 ease-in-out transform hover:scale-105 hover:shadow-xl"
-                onClick={() => handleAddReview.mutate()}
-              >
-                Submit
-              </button>
             </div>
           </div>
-        </div>
-      </div>
-    </section>
-  );
+        </section>
+      );
+      
+      
+      
 };
 
 export default MealDetailPage;

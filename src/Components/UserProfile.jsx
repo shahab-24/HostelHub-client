@@ -75,7 +75,7 @@ const UserProfile = () => {
     updateProfileMutation.mutate(updatedProfile);
   };
 
-//   if (isLoading) return <Loader />;
+  if (isLoading) return <Loader />;
   if (isError) return <p className="text-red-500">{error.message}</p>;
 
   return (

@@ -4,27 +4,32 @@ import { motion } from 'framer-motion';
 import useAxiosSecure from '../hooks/useAxiosSecure';
 import useAuth from '../hooks/useAuth';
 import { Helmet } from 'react-helmet-async';
+import { Loader } from 'lucide-react';
 
 const RequestedMeals = () => {
   const axiosSecure = useAxiosSecure();
   const queryClient = useQueryClient();
-  const { user } = useAuth(); // Assuming you're using Firebase/AuthContext to get the logged-in user
+  const [showConfirmation, setShowConfirmation] = useState(false);
+  const [mealToCancel, setMealToCancel] = useState(null);
+  const { user , loading } = useAuth();
 
   const { data: requestMeals, isLoading, error } = useQuery({
     queryKey: ['requestedMeals', user?.email], // Include email in the query key for caching
     queryFn: async () => {
-      if (!user?.email) return []; // Prevent API call if email is undefined
+      if (!user?.email) return [];
       const { data } = await axiosSecure(`/api/requested-meals/${user.email}`);
       return data;
     },
-    enabled: !!user?.email, // Only run the query when email is available
+    enabled: !!user?.email, 
   });
 
 //   console.log(requestMeals)
 
   const mutation = useMutation({
     mutationFn: async (id) => {
+        console.log('console from server meals before api call')
       const { data } = await axiosSecure.delete(`/api/meals/requests/${id}`);
+      console.log('console from server meals after api call', data)
       return data;
     },
     onSuccess: () => {
@@ -32,8 +37,7 @@ const RequestedMeals = () => {
     },
   });
 
-  const [showConfirmation, setShowConfirmation] = useState(false);
-  const [mealToCancel, setMealToCancel] = useState(null);
+ 
 
   const handleCancelClick = (id) => {
     setMealToCancel(id);
@@ -49,7 +53,7 @@ const RequestedMeals = () => {
     setShowConfirmation(false);
   };
 
-  if (isLoading) return <div className="text-center text-lg">Loading...</div>;
+//   if (loading) return <Loader></Loader>
   if (error) return <div className="text-center text-lg text-red-500">Error fetching meals</div>;
 
   return (

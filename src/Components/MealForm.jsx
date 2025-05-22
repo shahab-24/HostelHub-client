@@ -7,11 +7,12 @@ import toast from "react-hot-toast";
 import useAxiosSecure from "../hooks/useAxiosSecure";
 import { useState } from "react";
 import { Helmet } from "react-helmet-async";
+import { Loader } from "lucide-react";
 
 const MealForm = () => {
-  const { user } = useAuth();
+  const { user , loading} = useAuth();
   const axiosSecure = useAxiosSecure();
-  const [loading, setLoading] = useState(false);
+//   const [loading, setLoading] = useState(false);
   const [uploadImagePreview, setUploadImagePreview] = useState(null);
 
 
@@ -49,7 +50,7 @@ const MealForm = () => {
     },
   });
 
-  // Handle form submission
+  
   const onSubmit = async (data) => {
     setLoading(true);
     try {
@@ -66,7 +67,7 @@ const MealForm = () => {
 
       const imageUrl = imageResponse.data.data.display_url;
 
-      // Add meal data with uploaded image URL
+     
       const mealData = {
         ...data,
         image: imageUrl,
@@ -87,7 +88,7 @@ const MealForm = () => {
     }
   };
 
-  // Handle image upload preview
+
   const handleImagePreview = (event) => {
         const file = event.target.files[0];
         if (file) {
@@ -97,6 +98,7 @@ const MealForm = () => {
         }
       };
 
+      if(loading) return <Loader></Loader>
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50">
       <Helmet>

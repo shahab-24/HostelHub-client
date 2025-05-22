@@ -11,7 +11,7 @@ const UserDashboard = () => {
 
   useEffect(() => {
     axiosSecure.get(`/api/requested-meals/${user?.email}`).then(res => setRequestedMeals(res.data));
-    axiosSecure("/user-reviews").then(res => setReviews(res.data));
+    axiosSecure.get("/user-reviews").then(res => setReviews(res.data));
   }, [user?.email, axiosSecure]);
 
   // Bar Chart Data (Requested Meals)

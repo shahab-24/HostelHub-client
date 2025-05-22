@@ -38,7 +38,7 @@ const PublishMeals = () => {
     },
   });
 
-  if (isLoading) return <p>Loading...</p>;
+//   if (isLoading) return <p>Loading...</p>;
   if (error) return <p>Error loading meals: {error.message}</p>;
 
   // Confirm before publishing

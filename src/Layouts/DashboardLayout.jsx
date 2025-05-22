@@ -1,22 +1,28 @@
 import { NavLink, Outlet } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import { motion } from "framer-motion";
-import { useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 // import useAuth from "../hooks/useAuth";
 import useRole from "../hooks/useRole";
 import Loader from "../Components/Shared/Loader";
 import { Menu, X } from "lucide-react"; 
 import DashboardNavbar from "../Components/DashboardNavbar";
 import useAuth from "../hooks/useAuth";
+import { ThemeContext } from "../Context/ThemeProvider";
+import { FiMoon, FiSun } from "react-icons/fi";
 
 const DashboardLayout = () => {
   const { user, loading } = useAuth();
   const [role, isLoading] = useRole();
   const [menuOpen, setMenuOpen] = useState(false);
   const [text, setText] = useState("");
-  const fullText = "Welcome to your Dashboard";
+  const fullText = "Welcome to ";
 
-  // Ref for dropdown and event listener to detect clicks outside
+  const {theme, toggleTheme} = useContext(ThemeContext)
+
+//   console.log(role)
+
+
   const dropdownRef = useRef(null);
 
   useEffect(() => {
@@ -30,7 +36,7 @@ const DashboardLayout = () => {
   }, []);
 
 
-  // Close menu when clicking outside
+  
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
@@ -44,7 +50,7 @@ const DashboardLayout = () => {
 //   if (loading) return <Loader />;
 //   if (loading) return <Loader />;
 
-// if (!role && isLoading) return <Loader />;
+if (!isLoading && loading) return <Loader />;
 
 
   return (
@@ -66,9 +72,17 @@ const DashboardLayout = () => {
         ref={dropdownRef}
         className={`${
           menuOpen ? "translate-x-0" : "-translate-x-full"
-        } md:translate-x-0 fixed md:static bg-gradient-to-r from-gray-700 to-gray-800 text-white w-64 md:w-72 p-4 transition-transform duration-300`}
+        } md:translate-x-0 fixed md:static bg-gradient-to-r from-gray-700 to-gray-800 text-white w-64 md:w-72 p-4 transition-transform duration-300 z-50`}
       >
-        <h2 className="text-2xl font-bold mb-4">Dashboard</h2>
+        <div className="flex justify-between"><h2 className="text-2xl font-bold mb-4">Dashboard</h2>
+        {/* Theme Toggle */}
+        <button
+          onClick={toggleTheme}
+          className="btn btn-circle btn-ghost text-xl tooltip tooltip-bottom"
+          data-tip={theme === "dark" ? "Switch to Light Mode" : "Switch to Dark Mode"}
+        >
+          {theme === "dark" ? <FiSun /> : <FiMoon />}
+        </button></div>
 
         {role === "admin" ? (
           <nav>
@@ -259,14 +273,15 @@ const DashboardLayout = () => {
           animate={{ opacity: 1 }}
           transition={{ duration: 1 }}
         >
-          {text}
+           <p>{text} <span className='text-green-600'>{user?.displayName}</span></p>
           <span className="animate-pulse">|</span>
         </motion.h2>
         <div>
                 <DashboardNavbar></DashboardNavbar>
         </div>
 
-        <div className="bg-white shadow-md rounded-lg p-6">
+        <div className="bg-base-100 shadow-md rounded-lg p-6">
+
           <Outlet />
         </div>
       </main>

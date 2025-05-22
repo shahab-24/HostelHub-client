@@ -4,11 +4,13 @@ import useAxiosSecure from '../hooks/useAxiosSecure';
 import useAuth from '../hooks/useAuth';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { Helmet } from 'react-helmet-async';
+import Loader from '../Components/Shared/Loader';
+
 
 const ServeMeals = () => {
   const axiosSecure = useAxiosSecure();
   const queryClient = useQueryClient();
-  const { user } = useAuth();
+  const { user, loading } = useAuth();
   
   // Fetch requested meals
   const { data: requestedMeals, isLoading, error } = useQuery({
@@ -22,7 +24,11 @@ const ServeMeals = () => {
   // Change meal status to delivered
   const mutation = useMutation({
     mutationFn: async (mealId) => {
+        
+      console.log('console from server meals before api call')
+
       const { data } = await axiosSecure.patch(`/api/meals/requests/${mealId}`, { status: 'delivered' });
+      console.log('console from server meals after api call', data)
       return data;
     },
     onSuccess: () => {
@@ -34,7 +40,7 @@ const ServeMeals = () => {
     mutation.mutate(mealId);
   };
 
-  if (isLoading) return <div>Loading...</div>;
+  if (loading) return <Loader></Loader>
   if (error) return <div>Error fetching meals</div>;
 
   return (

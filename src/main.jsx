@@ -10,12 +10,14 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { HelmetProvider } from "react-helmet-async";
 
 import { Toaster } from "react-hot-toast";
+import { ThemeProvider } from "./Context/ThemeProvider.jsx";
 const queryClient = new QueryClient();
 
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <AuthProvider>
+  <ThemeProvider>
+  <AuthProvider>
       <HelmetProvider>
         {/* <ToastContainer> */}
           <QueryClientProvider client={queryClient}>
@@ -25,5 +27,7 @@ createRoot(document.getElementById("root")).render(
         {/* </ToastContainer> */}
       </HelmetProvider>
     </AuthProvider>
+  </ThemeProvider>
+ 
   </StrictMode>
 );

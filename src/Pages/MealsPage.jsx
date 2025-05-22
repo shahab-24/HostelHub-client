@@ -63,8 +63,10 @@ const MealsPage = () => {
     fetchMeals(1, true);
   };
 
+//   if(loading) return <Loader></Loader>
+
   return (
-    <div className="px-4 md:px-10 py-10 bg-gradient-to-r from-blue-200 to-blue-500 min-h-screen">
+    <div className="px-4 md:px-10 py-10 bg-gradient-to-r from-blue-200 to-blue-500 min-h-screen mt-16">
       <Helmet>
         <title>Meals Menu | HotelHub</title>
       </Helmet>
