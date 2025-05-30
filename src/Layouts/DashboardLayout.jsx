@@ -78,7 +78,7 @@ if (!isLoading && loading) return <Loader />;
         {/* Theme Toggle */}
         <button
           onClick={toggleTheme}
-          className="btn btn-circle btn-ghost text-xl tooltip tooltip-bottom"
+           className="btn btn-sm btn-circle text-xl tooltip tooltip-bottom"
           data-tip={theme === "dark" ? "Switch to Light Mode" : "Switch to Dark Mode"}
         >
           {theme === "dark" ? <FiSun /> : <FiMoon />}

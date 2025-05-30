@@ -11,6 +11,10 @@ export default {
                 poppins: ['Poppins', 'sans-serif'], 
                 roboto: ['Roboto', 'sans-serif'], 
               },
+              colors: {
+                primary: '#6366f1',
+                secondary: '#ec4899',
+              },
     },
   },
   plugins: [ require('daisyui'),],

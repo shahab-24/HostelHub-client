@@ -31,11 +31,11 @@ const DashboardNavbar = () => {
       </div>
 
       {/* Right: Theme Toggle, User Info, Dropdown */}
-      <div className="flex-none gap-4 items-center">
+      <div className="flex-none gap-3 items-center">
         {/* Theme Toggle */}
         <button
           onClick={toggleTheme}
-          className="btn btn-circle btn-ghost text-xl tooltip tooltip-bottom"
+           className="btn btn-sm btn-circle text-xl tooltip tooltip-bottom"
           data-tip={theme === "dark" ? "Switch to Light Mode" : "Switch to Dark Mode"}
         >
           {theme === "dark" ? <FiSun /> : <FiMoon />}

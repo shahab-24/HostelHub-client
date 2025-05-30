@@ -2,19 +2,25 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import useAxiosPublic from "../hooks/useAxiosPublic";
+import useAuth from "../hooks/useAuth";
+
 
 const BannerSection = () => {
+        const {loading, setLoading} = useAuth()
   const axiosPublic = useAxiosPublic();
   const [banners, setBanners] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const navigate = useNavigate();
 
   useEffect(() => {
+        setLoading(true)
     axiosPublic
       .get("/api/meals")
-      .then((response) => setBanners(response.data?.meals || []))
+      .then((response) => {
+        setBanners(response.data?.meals || [],
+        setLoading(false))})
       .catch((error) => console.error("Error fetching banner data:", error));
-  }, [axiosPublic]);
+  }, []);
 
   useEffect(() => {
     if (banners.length > 0) {
@@ -24,7 +30,7 @@ const BannerSection = () => {
 
       return () => clearInterval(interval);
     }
-  }, [banners.length]);
+  }, [banners]);
 
   const handleSearch = (e) => {
     e.preventDefault();
@@ -33,7 +39,7 @@ const BannerSection = () => {
   };
 
   return (
-    <div className="relative w-full h-screen text-white overflow-hidden mt-16">
+    <div className="relative w-full h-[90vh] text-white overflow-hidden pt-16">
       <AnimatePresence mode="popLayout">
         {banners.length > 0 && (
           <motion.div
