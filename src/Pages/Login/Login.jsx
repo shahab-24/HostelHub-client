@@ -97,7 +97,7 @@ const Login = () => {
               <button
                 type="button"
                 onClick={handleShowPassword}
-                className="absolute top-[2.6rem] right-3 text-base-content opacity-60 hover:opacity-100"
+                className="absolute top-12 right-3 text-base-content opacity-60 hover:opacity-100"
                 aria-label={showPassword ? "Hide password" : "Show password"}
               >
                 {showPassword ? <FaEyeSlash /> : <FaEye />}

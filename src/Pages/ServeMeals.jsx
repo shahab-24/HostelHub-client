@@ -40,7 +40,7 @@ const ServeMeals = () => {
     mutation.mutate(mealId);
   };
 
-  if (loading) return <Loader></Loader>
+  if (isLoading) return <Loader></Loader>
   if (error) return <div>Error fetching meals</div>;
 
   return (

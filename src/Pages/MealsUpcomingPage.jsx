@@ -2,13 +2,14 @@ import { useQuery } from '@tanstack/react-query';
 import { motion } from 'framer-motion';
 import useAxiosSecure from '../hooks/useAxiosSecure';
 import { Link } from 'react-router-dom';
+import Loader from '../Components/Shared/Loader';
 
 
 const MealsUpcomingPage = () => {
   const axiosSecure = useAxiosSecure();
 
   const fetchUpcomingMeals = async () => {
-    const { data } = await axiosSecure.get('/api/upcoming-meals'); 
+    const { data } = await axiosSecure.get("/api/upcoming-meals"); 
     return data;
   };
 
@@ -17,11 +18,11 @@ const MealsUpcomingPage = () => {
     queryFn: fetchUpcomingMeals,
   });
 
-  if (isLoading) return <p className="text-center text-xl">Loading meals...</p>;
+  if (isLoading) return <Loader></Loader>
   if (isError) return <p className="text-center text-xl text-red-500">Failed to load meals.</p>;
 
   return (
-    <div className="container mx-auto px-4 py-8">
+    <div className="container mx-auto px-4 py-8 mt-16">
       <h2 className="text-3xl font-bold text-center mb-6">Upcoming Meals</h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {meals?.map((meal) => (

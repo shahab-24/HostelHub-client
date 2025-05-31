@@ -2,6 +2,9 @@ import { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import Swal from 'sweetalert2';
 import useAxiosSecure from '../hooks/useAxiosSecure';
+import Loader from './Shared/Loader';
+
+
 
 const PublishMeals = () => {
   const axiosSecure = useAxiosSecure();
@@ -38,7 +41,7 @@ const PublishMeals = () => {
     },
   });
 
-//   if (isLoading) return <p>Loading...</p>;
+  if (isLoading) return <Loader></Loader>;
   if (error) return <p>Error loading meals: {error.message}</p>;
 
   // Confirm before publishing

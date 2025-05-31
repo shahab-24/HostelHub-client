@@ -12,11 +12,11 @@ const Checkout = () => {
   }
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gray-50 py-10 px-4 sm:px-6 md:px-8">
+    <div className="flex justify-center items-center min-h-screen bg-base-100 py-10 px-4 sm:px-6 md:px-8">
     <Helmet>
         <title>Check out | HotelHub</title>
     </Helmet>
-      <div className="max-w-lg w-full bg-white rounded-lg shadow-lg p-8 space-y-6">
+      <div className="max-w-lg w-full bg-gray-200 rounded-lg shadow-lg p-8 space-y-6 mt-16">
         {/* Title with Framer Motion and Typewriter.js */}
         <motion.h2
           className="text-3xl font-semibold text-center text-blue-600"

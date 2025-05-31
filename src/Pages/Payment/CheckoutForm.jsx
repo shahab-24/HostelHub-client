@@ -4,6 +4,7 @@ import useAxiosSecure from "../../hooks/useAxiosSecure";
 import { useLocation } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
 import Swal from "sweetalert2";
+import { motion } from "framer-motion";
 
 const CheckoutForm = () => {
   const { user } = useAuth();
@@ -13,48 +14,37 @@ const CheckoutForm = () => {
   const axiosSecure = useAxiosSecure();
   const [clientSecret, setClientSecret] = useState("");
   const [transactionId, setTransactionId] = useState("");
-  //   const [packages, setPackages] = useState()
   const { state } = useLocation();
   const { packageDetails } = state || {};
-//   console.log(packageDetails.name);
-//   console.log(packageDetails.price);
-  
-//   console.log(packageDetails);
 
   useEffect(() => {
-    axiosSecure
-      .post("/api/payment-intent", { price: packageDetails?.price })
-      .then((res) => {
-        console.log(res.data.clientSecret);
-        setClientSecret(res.data.clientSecret);
-      });
-  }, [axiosSecure, packageDetails.price]);
+    if (packageDetails?.price) {
+      axiosSecure
+        .post("/api/payment-intent", { price: packageDetails?.price })
+        .then((res) => {
+          setClientSecret(res.data.clientSecret);
+        });
+    }
+  }, [axiosSecure, packageDetails?.price]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    if (!stripe || !elements) {
-      return;
-    }
+    if (!stripe || !elements) return;
 
     const card = elements.getElement(CardElement);
-    if (card == null) {
-      return;
-    }
+    if (!card) return;
 
     const { error, paymentMethod } = await stripe.createPaymentMethod({
       type: "card",
       card,
     });
+
     if (error) {
-      console.log("payment error", error);
       setError(error.message);
     } else {
-      console.log("payment method", paymentMethod);
       setError("");
     }
 
-    //     confime payment ==================
     const { error: confirmError, paymentIntent } =
       await stripe.confirmCardPayment(clientSecret, {
         payment_method: {
@@ -67,73 +57,85 @@ const CheckoutForm = () => {
       });
 
     if (confirmError) {
-      console.log("error in payment intent", confirmError);
+      console.error("Payment intent error", confirmError);
     } else {
-      console.log("paymenht intent", paymentIntent);
       if (paymentIntent.status === "succeeded") {
         setTransactionId(paymentIntent.id);
         const payment = {
-                email: user?.email,
-                id: packageDetails?._id,
-                transactionId: paymentIntent?.id,
-                price: parseFloat(packageDetails?.price),
-                date: new Date(),
-                badge: packageDetails?.name
+          email: user?.email,
+          id: packageDetails?._id,
+          transactionId: paymentIntent?.id,
+          price: parseFloat(packageDetails?.price),
+          date: new Date(),
+          badge: packageDetails?.name,
+        };
+
+        const res = await axiosSecure.post("/api/save-payment", payment);
+        if (res.data?.paymentResult?.insertedId) {
+          Swal.fire({
+            position: "top-end",
+            icon: "success",
+            title: "Payment successful",
+            showConfirmButton: false,
+            timer: 1500,
+          });
         }
-
-        const res = await axiosSecure.post('/api/save-payment', payment)
-        console.log('payment details',res.data)
-        if(res.data?.paymentResult?.insertedId){
-                Swal.fire({
-                        position: "top-end",
-                        icon: "success",
-                        title: "Your payment has been saved",
-                        showConfirmButton: false,
-                        timer: 1500
-                      });
-
-        }
-
       }
     }
   };
+
   return (
-    <div className="my-20 flex justify-center items-center border-orange-400 border-2 w-1/2">
-      <div className="my-10">
-        <p className="text-center">Total Fee: {packageDetails.price}</p>
-        <form onSubmit={handleSubmit}>
-          <CardElement
-            className="bg-gray-400 w-[500px] py-2 my-2 border-blue-400 border-2 "
-            options={{
-              style: {
-                base: {
-                  fontSize: "16px",
-                  color: "#424770",
-                  "::placeholder": {
-                    color: "#aab7c4",
+    <div className="min-h-screen flex justify-center items-center bg-base-200 dark:bg-gray-900 px-4 w-full">
+      <motion.div
+        initial={{ y: -100, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.6, ease: "easeOut" }}
+        className="w-full max-w-lg p-6 bg-white dark:bg-base-300 shadow-xl rounded-xl"
+      >
+        <h2 className="text-2xl font-bold text-center text-gray-800 dark:text-white mb-2">
+          Checkout
+        </h2>
+        <p className="text-center text-gray-600 dark:text-gray-300 mb-6">
+          <span className="font-semibold">Total Fee:</span> ${packageDetails?.price || 0}
+        </p>
+
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <div className="p-4 bg-base-100 dark:bg-gray-700 text-gray-700 rounded-md border border-blue-300 dark:border-blue-500">
+            <CardElement
+              options={{
+                style: {
+                  base: {
+                    fontSize: "16px",
+                    color: "#ffffff",
+                    "::placeholder": { color: "#aab7c4" },
+                  },
+                  invalid: {
+                    color: "#fa755a",
                   },
                 },
-                invalid: {
-                  color: "#9e2146",
-                },
-              },
-            }}
-          />
+              }}
+            />
+          </div>
+
           <button
-            className="bg-green-400 w-full text-white px-4 py-2 rounded-md font-semibold"
+            className="btn btn-success w-full text-white disabled:opacity-50"
             type="submit"
             disabled={!stripe || !clientSecret}
           >
-            Pay
+            Pay Now
           </button>
-          <p className="text-red-400">{error}</p>
         </form>
+
+        {error && (
+          <p className="text-red-500 text-sm mt-2 text-center">{error}</p>
+        )}
+
         {transactionId && (
-          <p className="text-green-500">
-            Your transactionId is: {transactionId}
+          <p className="mt-4 text-green-600 dark:text-green-400 text-center font-medium">
+            ✅ Transaction ID: {transactionId}
           </p>
         )}
-      </div>
+      </motion.div>
     </div>
   );
 };
