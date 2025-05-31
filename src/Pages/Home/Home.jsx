@@ -10,6 +10,7 @@ import WhyChooseUs from "../../Components/WhyChooseUs";
 import FeaturedHostels from "../../Components/FeaturedHostels";
 import { motion } from "framer-motion";
 import SectionWrapper from "../../Components/Shared/SectionWrapper";
+import { Link } from "react-router-dom";
 
 
 
@@ -88,7 +89,7 @@ const Home = () => {
             Experience the best meals, community, and comfort at unbeatable value.
             Join us today and make your hostel life truly memorable!
           </p>
-          <button className="btn btn-accent btn-wide text-lg">Join Now</button>
+         <Link to='/signup'> <button className="btn btn-accent btn-wide text-lg">Join Now</button></Link>
         </div>
       </SectionWrapper>
     </div>

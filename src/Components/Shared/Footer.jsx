@@ -1,6 +1,6 @@
 import Typewriter from "typewriter-effect"; // Import Typewriter.js
 import { Link } from "react-router-dom";
-import logo from "../../assets/logo2.webp";
+import logo from "../../assets/logo3.png";
 
 const Footer = () => {
   return (

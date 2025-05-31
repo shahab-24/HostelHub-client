@@ -223,12 +223,12 @@ const MealDetailPage = () => {
   };
 
   return (
-    <section className="py-12 px-4 md:px-10 bg-gradient-to-r from-gray-50 to-gray-100 min-h-screen mt-16 bg-base-200">
+    <section className="py-12 px-4 md:px-10  min-h-screen mt-16 bg-base-200">
       <Helmet>
         <title>Meal Details | HostelHub</title>
       </Helmet>
 
-      <div className="max-w-4xl mx-auto bg-white rounded-2xl shadow-xl overflow-hidden">
+      <div className="max-w-4xl mx-auto bg-gray-200 rounded-2xl shadow-xl overflow-hidden">
         {/* Animated Image Section */}
         <motion.div
           className="h-64 sm:h-80 md:h-96 bg-gray-200 overflow-hidden group relative"
