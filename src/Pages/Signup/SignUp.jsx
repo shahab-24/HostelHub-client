@@ -10,7 +10,8 @@ import { Helmet } from "react-helmet-async";
 
 const SignUp = () => {
   const [showPassword, setShowPassword] = useState(false);
-  const { createUser, updateUserProfile, signInWithGoogle, setLoading } = useAuth();
+  const { createUser, updateUserProfile, signInWithGoogle, setLoading } =
+    useAuth();
   const navigate = useNavigate();
 
   const handleSubmit = async (event) => {
@@ -65,12 +66,10 @@ const SignUp = () => {
         <title> Sign Up | HostelHub </title>
       </Helmet>
 
-      {/* Lottie Animation */}
       <div className="w-full lg:w-1/3 flex justify-center lg:justify-end mb-6 lg:mb-0 lg:pr-16">
         <Lottie animationData={lottieLoginData} className="w-3/4 lg:w-4/5" />
       </div>
 
-      {/* Signup Form */}
       <div className="w-full lg:w-1/3 bg-base-100 p-8 rounded-lg shadow-md">
         <div className="text-center mb-6">
           <h1 className="text-3xl font-bold text-base-content font-poppins">
@@ -80,7 +79,9 @@ const SignUp = () => {
         <form onSubmit={handleSubmit} className="space-y-6">
           <div className="form-control w-full">
             <label htmlFor="name" className="label">
-              <span className="label-text text-base-content font-semibold">Name</span>
+              <span className="label-text text-base-content font-semibold">
+                Name
+              </span>
             </label>
             <input
               type="text"
@@ -93,7 +94,9 @@ const SignUp = () => {
           </div>
           <div className="form-control w-full">
             <label htmlFor="email" className="label">
-              <span className="label-text text-base-content font-semibold">Email</span>
+              <span className="label-text text-base-content font-semibold">
+                Email
+              </span>
             </label>
             <input
               type="email"
@@ -106,7 +109,9 @@ const SignUp = () => {
           </div>
           <div className="form-control w-full relative">
             <label htmlFor="password" className="label">
-              <span className="label-text text-base-content font-semibold">Password</span>
+              <span className="label-text text-base-content font-semibold">
+                Password
+              </span>
             </label>
             <input
               type={showPassword ? "text" : "password"}
@@ -125,32 +130,31 @@ const SignUp = () => {
               {showPassword ? <FaEyeSlash /> : <FaEye />}
             </button>
           </div>
-          <button
-            type="submit"
-            className="btn btn-primary w-full text-lg font-bold transition-transform duration-300 hover:scale-105"
-          >
+          <button type="submit" className="btn-primary">
             Sign Up
           </button>
         </form>
 
         <p className="text-center my-4 text-base-content">
           Already signed up? Please{" "}
-          <Link to="/login" className="text-primary hover:underline font-semibold">
+          <Link
+            to="/login"
+            className="text-primary hover:underline font-semibold"
+          >
             Login
           </Link>
         </p>
+        <div className="divider">or</div>
 
-        <div className="flex items-center my-6">
-          <div className="divider before:bg-gray-300 after:bg-gray-300">OR</div>
+        <div>
+          <button
+            onClick={handleGoogleSignIn}
+            className="btn btn-outline btn-block flex items-center  justify-center space-x-1 md:space-x-3 text-base-content"
+          >
+            <FcGoogle size={24} className="" />
+            <p className="">Continue with Google</p>
+          </button>
         </div>
-
-        <button
-          onClick={handleGoogleSignIn}
-          className="btn btn-outline btn-primary w-full flex items-center justify-center gap-3"
-        >
-          <FcGoogle size={24} />
-          <span className="text-base-content font-semibold">Continue with Google</span>
-        </button>
       </div>
     </div>
   );

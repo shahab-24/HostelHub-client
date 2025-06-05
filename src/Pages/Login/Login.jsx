@@ -1,21 +1,21 @@
-import { Link, Navigate, useLocation, useNavigate } from 'react-router-dom';
-import { FcGoogle } from 'react-icons/fc';
-import useAuth from '../../hooks/useAuth';
-import toast from 'react-hot-toast';
-import Lottie from 'lottie-react';
-import lottieLoginData from '../../assets/login.json';
+import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
+import { FcGoogle } from "react-icons/fc";
+import useAuth from "../../hooks/useAuth";
+import toast from "react-hot-toast";
+import Lottie from "lottie-react";
+import lottieLoginData from "../../assets/login.json";
 import { useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-import { Helmet } from 'react-helmet-async';
+import { Helmet } from "react-helmet-async";
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const { signIn, signInWithGoogle, setLoading, user } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
-  const from = location?.state?.from?.pathname || '/';
+  const from = location?.state?.from?.pathname || "/";
 
-  if (user) return <Navigate to={from} replace={true} />;
+  //   if (user) return <Navigate to={from} replace={true} />;
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -26,7 +26,7 @@ const Login = () => {
     try {
       await signIn(email, password);
       navigate(from, { replace: true });
-      toast.success('Login Successful');
+      toast.success("Login Successful");
     } catch (err) {
       console.log(err);
       toast.error(err?.message);
@@ -37,8 +37,8 @@ const Login = () => {
     try {
       await signInWithGoogle();
       navigate(from, { replace: true });
-      toast.success('Login Successful');
-      setLoading(false)
+      toast.success("Login Successful");
+      setLoading(false);
     } catch (err) {
       console.log(err);
       toast.error(err?.message);
@@ -57,16 +57,16 @@ const Login = () => {
       </Helmet>
 
       <div className="flex flex-col md:flex-row items-center max-w-5xl w-full bg-base-100 p-8 rounded-lg shadow-lg">
-        {/* Lottie Animation */}
         <div className="w-full md:w-1/2 flex justify-center mb-8 md:mb-0">
           <Lottie animationData={lottieLoginData} className="w-3/4 md:w-full" />
         </div>
 
-        {/* Login Form */}
         <div className="w-full md:w-1/2">
           <div className="text-center mb-6">
             <h1 className="text-3xl font-bold text-base-content">Log In</h1>
-            <p className="text-base-content opacity-70 mt-2">Sign in to access your account</p>
+            <p className="text-base-content opacity-70 mt-2">
+              Log in to access your account
+            </p>
           </div>
           <form onSubmit={handleSubmit} className="space-y-6">
             <div className="form-control w-full">
@@ -103,10 +103,7 @@ const Login = () => {
                 {showPassword ? <FaEyeSlash /> : <FaEye />}
               </button>
             </div>
-            <button
-              type="submit"
-              className="btn btn-primary btn-block text-lg"
-            >
+            <button type="submit" className="btn-primary">
               Log In
             </button>
           </form>
@@ -114,21 +111,18 @@ const Login = () => {
           <div className="divider">or</div>
 
           <div>
-          <button
-            onClick={handleGoogleSignIn}
-            className="btn btn-outline btn-block flex items-center  justify-center space-x-3 text-base-content"
-          >
-            <FcGoogle size={24} className=''/>
-            <p className=''>Continue with Google</p>
-          </button>
+            <button
+              onClick={handleGoogleSignIn}
+              className="btn btn-outline btn-block flex items-center  justify-center space-x-1  md:space-x-3 text-base-content"
+            >
+              <FcGoogle size={24} className="" />
+              <p className="">Continue with Google</p>
+            </button>
           </div>
 
           <p className="text-center text-base-content opacity-70 mt-6 text-sm">
-            Don&apos;t have an account?{' '}
-            <Link
-              to="/signup"
-              className="link link-primary text-lg"
-            >
+            Don&apos;t have an account?{" "}
+            <Link to="/signup" className="link link-primary text-lg">
               Sign up
             </Link>
           </p>

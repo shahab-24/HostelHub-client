@@ -37,7 +37,7 @@ export const router = createBrowserRouter([
   {
     path: "/",
     element: <MainLayout></MainLayout>,
-    errorElement: <ErrorPage></ErrorPage>, //to do error page
+    errorElement: <ErrorPage></ErrorPage>,
     children: [
       {
         path: "signup",
@@ -68,7 +68,7 @@ export const router = createBrowserRouter([
         element: (
           <PrivateRoute>
             <Payment></Payment>
-           </PrivateRoute>
+          </PrivateRoute>
         ),
       },
       {
@@ -85,42 +85,53 @@ export const router = createBrowserRouter([
   {
     path: "/dashboard",
     element: (
-        <PrivateRoute><DashboardLayout></DashboardLayout></PrivateRoute>
-      
-        
-      
+      <PrivateRoute>
+        <DashboardLayout></DashboardLayout>
+      </PrivateRoute>
     ),
     children: [
-        // normal user related route=========
-        {
-                path: "user-dashboard",
-                element: (
-                 <PrivateRoute><UserDashboard></UserDashboard></PrivateRoute>
-                    
-                 
-                ),
-              },
+      // normal user related route=========
+      {
+        path: "user-dashboard",
+        element: (
+          <PrivateRoute>
+            <UserDashboard></UserDashboard>
+          </PrivateRoute>
+        ),
+      },
       {
         path: "user-profile",
         element: (
-                <PrivateRoute><UserProfile></UserProfile></PrivateRoute>
-            
-           
+          <PrivateRoute>
+            <UserProfile></UserProfile>
+          </PrivateRoute>
         ),
       },
       {
         path: "my-reviews",
-        element:  <PrivateRoute><MyReviews></MyReviews></PrivateRoute>,
+        element: (
+          <PrivateRoute>
+            <MyReviews></MyReviews>
+          </PrivateRoute>
+        ),
       },
       {
         path: "requested-meals",
-        element:  <PrivateRoute><RequestedMeals></RequestedMeals></PrivateRoute>,
+        element: (
+          <PrivateRoute>
+            <RequestedMeals></RequestedMeals>
+          </PrivateRoute>
+        ),
       },
       {
         path: "payment-history",
-        element:  <PrivateRoute><PaymentHistory></PaymentHistory></PrivateRoute>,
+        element: (
+          <PrivateRoute>
+            <PaymentHistory></PaymentHistory>
+          </PrivateRoute>
+        ),
       },
-    
+
       {
         path: "admin-dashboard",
         element: (
@@ -129,7 +140,7 @@ export const router = createBrowserRouter([
           </AdminRoute>
         ),
       },
-     
+
       {
         path: "admin/manage-users",
         element: (
@@ -197,19 +208,6 @@ export const router = createBrowserRouter([
           </AdminRoute>
         ),
       },
-      //       {
-      //         path: "admin/upcoming-meals",
-      //         element: <UpcomingMealsPage></UpcomingMealsPage>,
-      //       },
-      //       {
-      //         path: "admin/upcoming-meals/table",
-      //         element: <MealsUpcoming></MealsUpcoming>,
-      //       },
-      //       user related routes==================
-//       {
-//         path: "Meal-user-profile",
-//         element: <UserProfile></UserProfile>,
-//       },
       
     ],
   },

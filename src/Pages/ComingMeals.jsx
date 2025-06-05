@@ -95,7 +95,7 @@ const ComingMeals = () => {
               <div className="flex justify-between items-center mt-2">
                 <span className="text-gray-500">Likes: {meal.likes}</span>
                 <button
-                  className="btn btn-primary flex items-center gap-2"
+                  className="btn flex items-center gap-2"
                   onClick={() => handleLike(meal._id)}
                   disabled={
                     !user ||
