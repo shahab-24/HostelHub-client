@@ -61,7 +61,7 @@ const RequestedMeals = () => {
       <Helmet>
         <title>Requested Meals | HotelHub-Dashboard</title>
       </Helmet>
-      <h1 className="text-2xl font-semibold text-gray-800 mb-6">Requested Meals</h1>
+      <h1 className="text-2xl text-center font-bold all-title mb-6">Requested Meals</h1>
 
       {showConfirmation && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">

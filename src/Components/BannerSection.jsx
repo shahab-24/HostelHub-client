@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import useAxiosPublic from "../hooks/useAxiosPublic";
 import useAuth from "../hooks/useAuth";
+// import Loader from "./Shared/Loader";
 
 
 const BannerSection = () => {
@@ -38,6 +39,7 @@ const BannerSection = () => {
     navigate(`/search?query=${query}`);
   };
 
+//   if(loading) return <p>Data is Fetching</p>
   return (
     <div className="relative w-full h-[90vh] text-white overflow-hidden pt-16">
       <AnimatePresence mode="popLayout">

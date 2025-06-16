@@ -1,10 +1,14 @@
 import { FaUtensils, FaChartPie, FaWallet, FaLeaf } from "react-icons/fa";
+import { ThemeContext } from "../Context/ThemeProvider";
+import { useContext } from "react";
 
 const AboutMe = () => {
+        const {theme, toggleTheme} = useContext(ThemeContext)
+
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 p-6 pt-20">
+    <div className="flex flex-col items-center justify-center min-h-screen bg-base-100 p-6 pt-20">
       <div className="max-w-4xl text-center">
-        <h1 className="text-4xl font-bold text-gray-800 mb-4">About Hostel Hub</h1>
+        <h1 className="text-4xl font-bold title-color mb-4">About HostelHub</h1>
         <p className="text-gray-600 text-lg">
           A smart food management platform that makes hostel meal planning and tracking easy for students and hostel admins.
         </p>

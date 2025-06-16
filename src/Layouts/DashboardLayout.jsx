@@ -5,7 +5,7 @@ import { useContext, useEffect, useRef, useState } from "react";
 // import useAuth from "../hooks/useAuth";
 import useRole from "../hooks/useRole";
 import Loader from "../Components/Shared/Loader";
-import { Menu, X } from "lucide-react"; 
+import { Menu, X } from "lucide-react";
 import DashboardNavbar from "../Components/DashboardNavbar";
 import useAuth from "../hooks/useAuth";
 import { ThemeContext } from "../Context/ThemeProvider";
@@ -18,10 +18,9 @@ const DashboardLayout = () => {
   const [text, setText] = useState("");
   const fullText = "Welcome to ";
 
-  const {theme, toggleTheme} = useContext(ThemeContext)
+  const { theme, toggleTheme } = useContext(ThemeContext);
 
-//   console.log(role)
-
+  //   console.log(role)
 
   const dropdownRef = useRef(null);
 
@@ -35,8 +34,6 @@ const DashboardLayout = () => {
     return () => clearInterval(interval);
   }, []);
 
-
-  
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
@@ -47,11 +44,10 @@ const DashboardLayout = () => {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-//   if (loading) return <Loader />;
-//   if (loading) return <Loader />;
 
-if (!isLoading && loading) return <Loader />;
+  if (loading) return <Loader />;
 
+  
 
   return (
     <div className="flex flex-col md:flex-row min-h-screen">
@@ -74,15 +70,22 @@ if (!isLoading && loading) return <Loader />;
           menuOpen ? "translate-x-0" : "-translate-x-full"
         } md:translate-x-0 fixed md:static bg-gradient-to-r from-gray-700 to-gray-800 text-white w-64 md:w-72 p-4 transition-transform duration-300 z-50`}
       >
-        <div className="flex justify-between"><h2 className="text-2xl font-bold mb-4">Dashboard</h2>
-        {/* Theme Toggle */}
-        <button
-          onClick={toggleTheme}
-           className="btn btn-sm btn-circle text-xl tooltip tooltip-bottom"
-          data-tip={theme === "dark" ? "Switch to Light Mode" : "Switch to Dark Mode"}
-        >
-          {theme === "dark" ? <FiSun /> : <FiMoon />}
-        </button></div>
+        <div className="flex justify-between">
+          <div>
+                
+          <h2 className="text-2xl font-bold title-color mb-4">HostelHub</h2>
+          </div>
+          {/* Theme Toggle */}
+          <button
+            onClick={toggleTheme}
+            className="btn btn-sm text-xl tooltip tooltip-bottom"
+            data-tip={
+              theme === "dark" ? "Switch to Light Mode" : "Switch to Dark Mode"
+            }
+          >
+            {theme === "dark" ? <FiSun /> : <FiMoon />}
+          </button>
+        </div>
 
         {role === "admin" ? (
           <nav>
@@ -266,22 +269,23 @@ if (!isLoading && loading) return <Loader />;
       </aside>
 
       {/* Main Content */}
-      <main className="flex-1 p-6 bg-gray-100">
+      <main className="flex-1 p-6 bg-base-100">
         <motion.h2
-          className="text-2xl font-bold text-gray-800 mb-6"
+          className="text-2xl font-bold text-gray-400 mb-6"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 1 }}
         >
-           <p>{text} <span className='text-green-600'>{user?.displayName}</span></p>
-          <span className="animate-pulse">|</span>
+          <p>
+            {text} <span className="title-color text-xl md:text-3xl">{user?.displayName}</span>
+          </p>
+          {/* <span className="animate-pulse">|</span> */}
         </motion.h2>
         <div>
-                <DashboardNavbar></DashboardNavbar>
+          <DashboardNavbar></DashboardNavbar>
         </div>
 
         <div className="bg-base-100 shadow-md rounded-lg p-6">
-
           <Outlet />
         </div>
       </main>

@@ -2,9 +2,10 @@ import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import "react-tabs/style/react-tabs.css";
 import useMeal from "../../hooks/useMeal";
 import MealsCategoryTab from "../MealsCategoryTab";
+// import Loader from "./Loader";
 
 const MealsTabs = () => {
-  const [meals] = useMeal();
+  const [meals, isLoading] = useMeal();
 //   console.log(meals.meals);
 
   // Group meals by category
@@ -15,6 +16,8 @@ const MealsTabs = () => {
   }, {});
 
   const categories = groupedMeals ? Object.keys(groupedMeals) : [];
+
+//   if(isLoading) return <Loader></Loader>
 
 //   const categories = Object.keys(groupedMeals);
 

@@ -25,7 +25,7 @@ const PaymentHistory = () => {
         transition={{ duration: 0.6 }}
         className="bg-white rounded-2xl shadow-xl p-6 md:p-10 max-w-5xl mx-auto"
       >
-        <h2 className="text-3xl font-bold text-gray-800 mb-6 text-center">
+        <h2 className="text-3xl font-bold  mb-6 text-center all-tile">
           Payment History
         </h2>
 

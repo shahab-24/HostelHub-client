@@ -9,22 +9,27 @@ const UserDashboard = () => {
   const axiosSecure = useAxiosSecure();
   const { user } = useAuth();
 
+
   useEffect(() => {
-    axiosSecure.get(`/api/requested-meals/${user?.email}`).then(res => setRequestedMeals(res.data));
-    axiosSecure.get("/user-reviews").then(res => setReviews(res.data));
+    axiosSecure.get(`/api/requested-meals/${user?.email}`)
+    .then(res => setRequestedMeals(res.data));
+
+    axiosSecure.get(`/user-reviews/${user?.email}`)
+    .then(res => setReviews(res.data));
   }, [user?.email, axiosSecure]);
 
-  // Bar Chart Data (Requested Meals)
-  const mealData = requestedMeals?.map(meal => ({ name: meal.mealType, count: meal.count }));
+  
+  const mealData = requestedMeals?.map(meal => ({ name: meal?.category, count: meal?.likes }));
 
-  // Pie Chart Data (Review Ratings)
+ 
   const reviewData = [
     { name: "5 Stars", value: reviews.filter(r => r.rating === 5).length },
     { name: "4 Stars", value: reviews.filter(r => r.rating === 4).length },
     { name: "3 Stars", value: reviews.filter(r => r.rating === 3).length },
   ];
-  const COLORS = ["#4CAF50", "#FF9800", "#FF5722"];  // More vibrant and modern colors
+  const COLORS = ["#4CAF50", "#FF9800", "#FF5722"];  
 
+//   console.log(mealData, reviews)
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
       {/* Requested Meals (Bar Chart) */}

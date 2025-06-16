@@ -29,20 +29,20 @@ const Checkout = () => {
               strings: [`${packageDetails?.name} Package`],
               autoStart: true,
               loop: false,
-              delay: 100, // Controls typing speed
+              delay: 100, 
             }}
           />
         </motion.h2>
 
-        {/* Price and benefits section */}
+        
         <div className="text-center">
-          <p className="text-xl font-semibold text-gray-700">
-            Price: <span className="text-2xl text-blue-600">${packageDetails?.price}</span>/month
+          <p className="text-xl font-semibold all-title">
+            Price: <span className="text-2xl">${packageDetails?.price}</span>/month
           </p>
         </div>
 
         <div className="space-y-4">
-          <h3 className="text-2xl font-medium text-gray-800">Benefits:</h3>
+          <h3 className="text-2xl font-medium all-title">Benefits:</h3>
           <ul className="list-disc list-inside text-gray-600">
             {packageDetails?.benefits?.map((benefit, index) => (
               <li key={index} className="text-lg">{benefit}</li>
@@ -53,7 +53,7 @@ const Checkout = () => {
         <div className="text-center">
         <Link to='/checkout/payment' state={{packageDetails}}>
         <motion.button
-            className="w-full py-3 bg-blue-600 text-white text-lg font-semibold rounded-md hover:bg-blue-700 transition duration-300"
+            className="w-full py-3 text-lg font-semibold rounded-md transition duration-300 btn-primary "
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >

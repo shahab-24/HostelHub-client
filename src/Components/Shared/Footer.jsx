@@ -8,7 +8,7 @@ const Footer = () => {
       {/* Logo & Name */}
       <div className="flex flex-col items-center space-y-2">
         <img src={logo} alt="HostelHub Logo" className="rounded-lg w-16 h-16" />
-        <span className="text-2xl font-semibold text-blue-400">
+        <span className="text-2xl font-semibold title-color">
           <Typewriter
             options={{
               strings: ["HostelHub"],

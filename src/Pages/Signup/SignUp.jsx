@@ -7,6 +7,7 @@ import { FcGoogle } from "react-icons/fc";
 import { useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { Helmet } from "react-helmet-async";
+import axios from "axios";
 
 const SignUp = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -34,9 +35,18 @@ const SignUp = () => {
     try {
       const result = await createUser(email, password);
       await updateUserProfile(name);
+      
+      const saveUser = {
+        name: name,
+        email: email,
+        image: result?.user?.photoURL || null
+      }
+      await axios.post(`${import.meta.env.VITE_API_URL}/api/users`, saveUser);
+
       form.reset();
-      navigate("/");
+     
       toast.success("Signup Successful");
+      navigate("/");
     } catch (err) {
       console.log(err);
       toast.error(err?.message);
@@ -46,6 +56,15 @@ const SignUp = () => {
   const handleGoogleSignIn = async () => {
     try {
       await signInWithGoogle();
+
+      const googleUser = {
+        name: result?.user?.name,
+        email: result?.user?.email,
+        image: result?.user?.photoURL
+      }
+
+      await axios.post(`${import.meta.env.VITE_API_URL}/api/users`, googleUser);
+
       navigate("/");
       toast.success("Signup Successful");
       setLoading(false);

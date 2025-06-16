@@ -118,7 +118,7 @@ const CheckoutForm = () => {
           </div>
 
           <button
-            className="btn btn-success w-full text-white disabled:opacity-50"
+            className="btn-primary btn-success w-full text-white disabled:opacity-50"
             type="submit"
             disabled={!stripe || !clientSecret}
           >
