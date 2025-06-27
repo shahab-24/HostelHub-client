@@ -171,11 +171,11 @@ const UpcomingMealForm = () => {
           />
         </div>
 
-        <div className="flex justify-end space-x-4 mt-4">
+        <div className="flex justify-center space-x-2 mt-4">
           <button type="reset" className="btn btn-secondary bg-red-500 hover:bg-red-700 text-white px-4 py-2 rounded-md">
             Reset
           </button>
-          <button type="submit" className="btn btn-primary bg-green-500 hover:bg-green-700 text-white px-4 py-2 rounded-md">
+          <button type="submit" className="btn bg-gradient-to-r from-blue-500 to-purple-500 shadow-lg hover:scale-105 hover:bg-green-700 text-white px-4 py-2 rounded-md">
             Add Meal
           </button>
         </div>

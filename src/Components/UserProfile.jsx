@@ -185,7 +185,7 @@ const UserProfile = () => {
         ) : (
           <motion.button
             onClick={() => setIsEditing(true)}
-            className="w-full px-4 py-2 mt-4 bg-yellow-500 rounded-lg shadow-lg hover:bg-yellow-600"
+            className="w-full px-4 py-2 mt-4 bg-gradient-to-r from-blue-500 to-purple-500 rounded-lg shadow-lg hover:scale-105"
             whileTap={{ scale: 0.9 }}
           >
             Edit Profile

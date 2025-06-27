@@ -72,7 +72,7 @@ const ServeMeals = () => {
                   {meal.status === 'pending' ? (
                     <button
                       onClick={() => handleServeMeal(meal._id)}
-                      className="px-4 py-2 bg-green-500 text-white rounded-lg"
+                      className="px-4 py-2 bg-gradient-to-r from-blue-500 to-purple-500  shadow-lg bg-green-500 text-white rounded-lg"
                     >
                       Serve
                     </button>

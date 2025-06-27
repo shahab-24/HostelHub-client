@@ -101,7 +101,7 @@ const AllReviews = () => {
                     Delete
                   </motion.button>
                   <motion.button
-                    className="btn btn-sm btn-primary"
+                    className="btn btn-sm bg-gradient-to-r from-blue-500 to-purple-500 rounded-lg shadow-lg"
                     whileHover={{ scale: 1.1 }}
                     onClick={() => handleViewMeal(review.mealId)}
                   >

@@ -1,4 +1,4 @@
-import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { FcGoogle } from "react-icons/fc";
 import useAuth from "../../hooks/useAuth";
 import toast from "react-hot-toast";
@@ -15,7 +15,7 @@ const Login = () => {
   const location = useLocation();
   const from = location?.state?.from?.pathname || "/";
 
-  //   if (user) return <Navigate to={from} replace={true} />;
+  
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -28,7 +28,7 @@ const Login = () => {
       navigate(from, { replace: true });
       toast.success("Login Successful");
     } catch (err) {
-      console.log(err);
+//       console.log(err);
       toast.error(err?.message);
     }
   };
@@ -40,7 +40,7 @@ const Login = () => {
       toast.success("Login Successful");
       setLoading(false);
     } catch (err) {
-      console.log(err);
+//       console.log(err);
       toast.error(err?.message);
       setLoading(false);
     }

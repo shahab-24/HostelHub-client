@@ -257,7 +257,7 @@ const MealForm = () => {
 
           <button
             type="submit"
-            className="w-full bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700"
+            className="w-full bg-gradient-to-r from-blue-500 to-purple-500 shadow-lg bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700"
           >
             Add Meal
           </button>

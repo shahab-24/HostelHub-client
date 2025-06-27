@@ -83,7 +83,7 @@ const PublishMeals = () => {
                 <td className="px-4 py-2 border">{meal.likes}</td>
                 <td className="px-4 py-2 border">
                   <button
-                    className={`px-4 py-2 rounded ${
+                    className={`px-4 py-2 bg-gradient-to-r from-blue-500 to-purple-500 rounded-lg shadow-lg ${
                       meal.status === 'published'
                         ? 'bg-gray-500 cursor-not-allowed'
                         : 'bg-blue-500 text-white hover:bg-blue-700'
